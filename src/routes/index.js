@@ -1,12 +1,10 @@
-import React from 'react';
-import {View} from 'react-native';
-import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import {
   Home,
   Login,
   Register,
-} from '../../pages';
+} from '../screens/index';
 
 const Router = createStackNavigator(
   {

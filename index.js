@@ -11,9 +11,9 @@ import {Provider as StoreProvider} from 'react-redux';
 
 const AppContainer = () => {
     return (
-      <StoreProvider store={store}>
+      //<StoreProvider store={store}>
           <App />
-      </StoreProvider>
+      //</StoreProvider>
     );
   };
 AppRegistry.registerComponent(appName, () => AppContainer);

@@ -2,41 +2,52 @@ import {StyleSheet} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
+  container: {
+    height: '100%',
+    width: '100%',
     backgroundColor: 'white',
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  search: {
+    marginHorizontal: 30,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
+  imageSlider: {
+    justifyContent: 'flex-end',
+    height: 190,
+    backgroundColor: '#62BA67',
+    marginBottom: 20,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
+  readMoreImageSlider: {
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    paddingVertical: 7,
+    paddingHorizontal: 15,
+    borderTopStartRadius: 20,
   },
-  highlight: {
-    fontWeight: '700',
+  readMoreImageSliderText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
+  bottomImageSlider: {
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    height: 35,
+  },
+  category: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginHorizontal: 15,
+  },
+  categoryContainer: {
+    // height: 500,
+  },
+  categoryContainerTop: {
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginHorizontal: 10,
+    flexDirection: 'row',
+    height: 45,
+  },
+  categoryContainerBot: {
+    flexDirection: 'row',
   },
 });
 

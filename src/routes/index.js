@@ -12,7 +12,7 @@ const StackAuth = createStackNavigator(
     Register,
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'Register',
     headerMode: 'none',
   }
 );

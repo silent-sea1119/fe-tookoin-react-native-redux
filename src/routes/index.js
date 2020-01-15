@@ -6,22 +6,36 @@ import {
   Register,
 } from '../screens/index';
 
-const Router = createStackNavigator(
+const StackAuth = createStackNavigator(
   {
-    Register: {
-        screen: Register,
-      },
-    Login: {
-      screen: Login,
-    },
-    Home: {
-      screen: Home,
-    },
+    Login,
+    Register,
   },
   {
-    headerMode: 'None',
+    initialRouteName: 'Login',
+    headerMode: 'none',
+  }
+);
+
+const StackHome = createStackNavigator(
+  {
+      Home,
+  },
+  {
     initialRouteName: 'Home',
+    headerMode: 'none',
+  }
+);
+
+const Router = createSwitchNavigator(
+  {
+    StackAuth,
+    StackHome,
   },
+  {
+    initialRouteName: 'StackAuth',
+    headerMode: 'none',
+  }
 );
 
 export default createAppContainer(Router);

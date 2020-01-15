@@ -36,6 +36,8 @@ target 'FEtookoinReactNative' do
 
   pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'FEtookoinReactNativeTests' do
     inherit! :search_paths
     # Pods for testing

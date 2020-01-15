@@ -25,18 +25,24 @@ export default class Register extends Component {
         {/* Navbar */}
 
         <View
-          style={{backgroundColor: '#FFF', height: 50, flexDirection: 'row', alignItems:'center', paddingHorizontal:10}}>
+          style={{backgroundColor: '#FFF', height: 50, flexDirection: 'row', alignItems:'center', justifyContent:'space-between', paddingHorizontal:10}}>
           <Ionicons
             name="ios-arrow-back"
             style={{
               fontSize: 30,
               color: 'black',
             }}>
-            {' '}
           </Ionicons>
-          <Text>
-              Register
-          </Text>
+
+          <Text style={{color: '#000'}}>Daftar Sekarang</Text>
+
+          <Ionicons
+            name="ios-arrow-back"
+            style={{
+              fontSize: 30,
+              color: 'white',
+            }}>
+          </Ionicons>
         </View>
 
         <View style={{backgroundColor: '#F6F6F6', padding: 10}}>

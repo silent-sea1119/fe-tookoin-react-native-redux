@@ -15,7 +15,7 @@ const StackAuth = createStackNavigator(
     Register,
   },
   {
-    initialRouteName: 'Register',
+    initialRouteName: 'Login',
     headerMode: 'none',
   },
 );
@@ -38,7 +38,7 @@ const Router = createSwitchNavigator(
     StackHome,
   },
   {
-    initialRouteName: 'StackHome',
+    initialRouteName: 'StackAuth',
     headerMode: 'none',
   },
 );

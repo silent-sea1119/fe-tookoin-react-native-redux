@@ -7,6 +7,7 @@ import AccountOption from '../../../components/accountOption/accountOption';
 import Footer from '../../../components/footer/footer';
 
 class ProfileBuyer extends Component {
+  state = {name: 'Larklane 7'};
   render() {
     const {
       container,
@@ -30,7 +31,9 @@ class ProfileBuyer extends Component {
               style={headerAvatar}
               source={require('../../../assets/images/Avatar.png')}
             />
-            <Text style={{fontWeight: 'bold', fontSize: 18}}>Larklane</Text>
+            <Text style={{fontWeight: 'bold', fontSize: 18}}>
+              {this.state.name}
+            </Text>
           </View>
           <View style={headerCode}>
             <View
@@ -82,6 +85,14 @@ class ProfileBuyer extends Component {
             <AccountOption title="Privasi dan Kebijakan" />
             <AccountOption title="Bantuan" />
             <AccountOption color="red" title="Keluar" />
+            <View
+              style={{
+                padding: 15,
+                alignItems: 'center',
+                backgroundColor: '#F5F5F6',
+              }}>
+              <Text style={{fontSize: 12, color: 'gray'}}>App Version 0.1</Text>
+            </View>
           </ScrollView>
         </View>
         <Footer />

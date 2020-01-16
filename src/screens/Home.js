@@ -12,13 +12,15 @@ import {
   Text,
   DrawerLayoutAndroid,
 } from 'react-native';
+import HomeBuyer from './buyer/home/home';
 
 export default class Home extends Component {
-    render() {
-        return (
-            <View>
-                <Text>Ini Home Page</Text>
-            </View>
-        )
-    }
+  render() {
+    return (
+      <View>
+        {/* <Text>Ini Home Page</Text> */}
+        <HomeBuyer />
+      </View>
+    );
+  }
 }

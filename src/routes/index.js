@@ -19,7 +19,7 @@ const StackHome = createStackNavigator(
     MyOrder,
   },
   {
-    initialRouteName: 'MyOrder',
+    initialRouteName: 'HomeBuyer',
     headerMode: 'none',
   }
 );
@@ -35,4 +35,16 @@ const Router = createSwitchNavigator(
   }
 );
 
-export default createAppContainer(Router);
+const RouterDEV = createStackNavigator(
+  {
+    Register,
+    Login
+  },
+  {
+    initialRouteName: 'Register',
+    headerMode: 'none',
+  }
+);
+
+export default createAppContainer(RouterDEV);
+// export default createAppContainer(Router);

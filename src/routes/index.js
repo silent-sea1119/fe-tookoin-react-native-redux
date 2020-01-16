@@ -7,6 +7,7 @@ import {
   Login,
   Register,
   Profile,
+  InboxBuyer,
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -23,11 +24,12 @@ const StackAuth = createStackNavigator(
 const StackHome = createStackNavigator(
   {
     HomeBuyer,
+    InboxBuyer,
     Profile,
     MyOrder,
   },
   {
-    initialRouteName: 'Profile',
+    initialRouteName: 'InboxBuyer',
     headerMode: 'none',
   },
 );
@@ -38,7 +40,7 @@ const Router = createSwitchNavigator(
     StackHome,
   },
   {
-    initialRouteName: 'StackAuth',
+    initialRouteName: 'StackHome',
     headerMode: 'none',
   },
 );

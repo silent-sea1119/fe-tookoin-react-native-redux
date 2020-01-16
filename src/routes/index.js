@@ -1,10 +1,6 @@
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
-import {
-  Home,
-  Login,
-  Register,
-} from '../screens/index';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+import {Home, Login, Register} from '../screens/index';
 
 const StackAuth = createStackNavigator(
   {
@@ -12,7 +8,7 @@ const StackAuth = createStackNavigator(
     Register,
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'Register',
     headerMode: 'none',
   }
 );
@@ -33,7 +29,7 @@ const Router = createSwitchNavigator(
     StackHome,
   },
   {
-    initialRouteName: 'StackAuth',
+    initialRouteName: 'StackHome',
     headerMode: 'none',
   }
 );

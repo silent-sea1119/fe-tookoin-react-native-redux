@@ -13,7 +13,7 @@ import {
   DrawerLayoutAndroid,
 } from 'react-native';
 
-export default class Register extends Component {
+export default class Login extends Component {
     render() {
         return (
             <View>

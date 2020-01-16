@@ -1,6 +1,6 @@
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-import {Home, Login, Register} from '../screens/index';
+import {Home, Login, Register, Profile} from '../screens/index';
 
 const StackAuth = createStackNavigator(
   {
@@ -16,9 +16,10 @@ const StackAuth = createStackNavigator(
 const StackHome = createStackNavigator(
   {
       Home,
+      Profile,
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Profile',
     headerMode: 'none',
   }
 );

@@ -7,6 +7,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   header: {
+    flex: 1,
+    backgroundColor: 'purple',
     // height: 100,
   },
   headerText: {
@@ -26,6 +28,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue',
   },
   body: {
+    flex: 1,
     // height: '75%',
     backgroundColor: 'red',
   },

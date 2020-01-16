@@ -1,8 +1,10 @@
-import HomeBuyer from './Home'
-import ProfileBuyer from './buyer/profile/profile'
+
+import Login from './auth/login';
+import Register from './auth/register'
+import Home from './home'
 
 export {
-    HomeBuyer,
-    ProfileBuyer,
-
+    Home,
+    Login,
+    Register
 }

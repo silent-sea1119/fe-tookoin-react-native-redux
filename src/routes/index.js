@@ -1,20 +1,37 @@
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-import {HomeBuyer, ProfileBuyer} from '../screens/index';
+import {Home, Login, Register} from '../screens/index';
 
-const Router = createStackNavigator(
+const StackAuth = createStackNavigator(
   {
-    HomeBuyer: {
-      screen: HomeBuyer,
-    },
-    ProfileBuyer: {
-      screen: ProfileBuyer,
-    },
+    Login,
+    Register,
   },
   {
-    headerMode: 'None',
-    initialRouteName: 'ProfileBuyer',
+    initialRouteName: 'Register',
+    headerMode: 'none',
+  }
+);
+
+const StackHome = createStackNavigator(
+  {
+      Home,
   },
+  {
+    initialRouteName: 'Home',
+    headerMode: 'none',
+  }
+);
+
+const Router = createSwitchNavigator(
+  {
+    StackAuth,
+    StackHome,
+  },
+  {
+    initialRouteName: 'StackHome',
+    headerMode: 'none',
+  }
 );
 
 export default createAppContainer(Router);

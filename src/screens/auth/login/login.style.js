@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    paddingVertical: 15,
+    paddingVertical: 10,
     borderBottomColor: '#F5F5F6',
     borderBottomWidth: 4,
   },

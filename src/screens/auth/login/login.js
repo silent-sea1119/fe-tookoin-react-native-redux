@@ -29,10 +29,10 @@ export default class Login extends Component {
     } = styles;
     return (
       <View style={container}>
+        <View style={header}>
+          <Text style={{fontWeight: 'bold', fontSize: 16}}>Login</Text>
+        </View>
         <ScrollView>
-          <View style={header}>
-            <Text style={{fontWeight: 'bold', fontSize: 16}}>Login</Text>
-          </View>
           <View style={body}>
             <Image
               style={{

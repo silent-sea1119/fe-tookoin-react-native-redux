@@ -3,34 +3,44 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: '100%',
+    height: '100%',
     backgroundColor: 'white',
   },
   header: {
-    flex: 1,
-    backgroundColor: 'purple',
-    // height: 100,
+    backgroundColor: 'white',
   },
   headerText: {
-    // height: 20,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
+    height: 50,
     borderBottomColor: '#F5F5F6',
-    borderBottomWidth: 10,
+    borderBottomWidth: 4,
   },
-  username: {
-    // height: 100,
+  headerUsername: {
     flexDirection: 'row',
-    backgroundColor: 'green',
+    alignItems: 'center',
   },
-  code: {
-    // height: 100,
-    backgroundColor: 'blue',
+  headerAvatar: {
+    borderColor:'gray',
+    borderWidth:2,
+    borderRadius:40,
+    height: 80,
+    width: 80,
+    marginLeft: 24,
+    marginRight: 14,
+    marginVertical: 12,
+  },
+  headerCode: {
+    flexDirection: 'row',
+    alignItems:'center',
   },
   body: {
     flex: 1,
-    // height: '75%',
-    backgroundColor: 'red',
+  },
+  footer: {
+    height: 40,
+    backgroundColor: 'purple',
   },
 });
 

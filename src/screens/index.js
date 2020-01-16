@@ -1,5 +1,8 @@
-import Home from './Home'
+import HomeBuyer from './Home'
+import ProfileBuyer from './buyer/profile/profile'
 
 export {
-    Home,
+    HomeBuyer,
+    ProfileBuyer,
+
 }

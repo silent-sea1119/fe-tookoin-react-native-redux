@@ -18,7 +18,6 @@ export default class Home extends Component {
   render() {
     return (
       <View>
-        {/* <Text>Ini Home Page</Text> */}
         <HomeBuyer />
       </View>
     );

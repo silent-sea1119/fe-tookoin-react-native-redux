@@ -1,16 +1,19 @@
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-import {Home} from '../screens/index';
+import {HomeBuyer, ProfileBuyer} from '../screens/index';
 
 const Router = createStackNavigator(
   {
-    Home: {
-      screen: Home,
+    HomeBuyer: {
+      screen: HomeBuyer,
+    },
+    ProfileBuyer: {
+      screen: ProfileBuyer,
     },
   },
   {
     headerMode: 'None',
-    initialRouteName: 'Home',
+    initialRouteName: 'ProfileBuyer',
   },
 );
 

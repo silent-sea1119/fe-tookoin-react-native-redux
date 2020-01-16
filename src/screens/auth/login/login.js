@@ -18,7 +18,15 @@ import Footer from '../../../components/footer/footer';
 
 export default class Login extends Component {
   render() {
-    const {container, header, body, bodyText, formLogin, buttonLogin} = styles;
+    const {
+      container,
+      header,
+      body,
+      bodyText,
+      formLogin,
+      buttonLogin,
+      buttonRegister,
+    } = styles;
     return (
       <View style={container}>
         <ScrollView>
@@ -62,8 +70,7 @@ export default class Login extends Component {
                 placeholder="Input Email"
                 label="Email"
               />
-              <View
-                style={{paddingRight: 10}}>
+              <View style={{paddingRight: 10}}>
                 {/* <Text style={{fontSize: 12, color: 'red'}}>Invalid Email</Text> */}
                 <Text style={{fontSize: 12, color: 'red'}}> </Text>
               </View>
@@ -78,8 +85,7 @@ export default class Login extends Component {
                 placeholder="Input Password"
                 label="Password"
               />
-              <View
-                style={{paddingRight: 10}}>
+              <View style={{paddingRight: 10}}>
                 {/* <Text style={{fontSize: 12, color: 'red'}}>Invalid Email</Text> */}
                 <Text style={{fontSize: 12, color: 'red'}}> </Text>
               </View>
@@ -100,6 +106,7 @@ export default class Login extends Component {
               <Text
                 style={{
                   fontSize: 12,
+                  color: 'gray',
                 }}>
                 Lupa Password ?
               </Text>
@@ -113,6 +120,25 @@ export default class Login extends Component {
                   }}>
                   ketuk di sini
                 </Text>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                paddingHorizontal: 20,
+                marginVertical: 10,
+              }}>
+              <Text style={{fontSize: 12, color: 'gray'}}>
+                Belum punya akun ?
+              </Text>
+              <TouchableOpacity>
+                <View style={buttonRegister}>
+                  <Text style={{color: '#62BA67', fontWeight: 'bold'}}>
+                    Daftar
+                  </Text>
+                </View>
               </TouchableOpacity>
             </View>
           </View>

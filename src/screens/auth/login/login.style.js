@@ -29,6 +29,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: '#62BA67',
   },
+  buttonRegister: {
+    padding: 12,
+    borderRadius: 10,
+    borderColor: '#62BA67',
+    borderWidth: 1,
+  },
 });
 
 export default styles;

@@ -11,9 +11,9 @@ import {
   Text,
   DrawerLayoutAndroid,
 } from 'react-native';
-import {registerAccount} from '../../redux/actions/auth/index';
+// import {registerAccount} from '../../redux/actions/auth/index';
+import {registerAccount} from '../../../redux/actions/auth/index';
 import {connect} from 'react-redux';
-
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ButtonGroup} from 'react-native-elements';

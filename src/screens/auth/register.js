@@ -28,6 +28,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 10,
+    borderBottomColor: '#F5F5F6',
+    borderBottomWidth: 4,
   },
 
   backIconNavbar: {

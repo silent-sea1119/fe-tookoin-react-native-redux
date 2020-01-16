@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
     borderBottomColor: '#F5F5F6',
   },
   body: {
-    flex: 1,
     backgroundColor: '#F5F5F6',
     alignItems: 'center',
   },

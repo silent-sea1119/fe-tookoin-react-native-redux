@@ -13,24 +13,6 @@ class InboxBuyer extends Component {
             Inbox
           </Text>
         </View>
-<<<<<<< HEAD
-        <View style={body}>
-          <Image
-            style={{width: '60%', resizeMode: 'contain'}}
-            source={require('../../../assets/images/Inbox.png')}
-          />
-          <Text
-            style={{
-              fontSize: 16,
-              color: 'black',
-              fontWeight: 'bold',
-              marginTop: -50,
-              color: 'gray',
-            }}>
-            Inbox is Empty
-          </Text>
-        </View>
-=======
         <ScrollView>
           <View style={body}>
             <Image
@@ -49,7 +31,6 @@ class InboxBuyer extends Component {
             </Text>
           </View>
         </ScrollView>
->>>>>>> 653e8bcacea2616dc22393350182e4ffa0e530f3
         <Footer />
       </View>
     );

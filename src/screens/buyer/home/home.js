@@ -36,12 +36,16 @@ class HomeBuyer extends Component {
           </View>
           <View style={category}>
             <Category
-              name="Sayuran Segar"
+              name="Sayuran Sega4"
               imgUri={require('../../../assets/icon/carrot.png')}
+              navigation={this.props.navigation}
+              id={1}
             />
             <Category
               name="Buah Segar"
               imgUri={require('../../../assets/icon/avocado.png')}
+              navigation={this.props.navigation}
+              id={2}
             />
             <Category
               name="Sumber Karbohidrat"

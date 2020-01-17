@@ -15,7 +15,8 @@ import {
   InboxBuyer,
   DetailProdukBuyer,
   DaftarAlamatBuyer,
-  ProductCategory
+  ProductCategory,
+  HomeSeller,
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -151,28 +152,26 @@ const RouteTab = createBottomTabNavigator(
   },
 );
 
+const StackSeller = createStackNavigator({
+  HomeSeller,
+}, {
+  headerMode: 'none',
+})
+
+
 const Router = createSwitchNavigator(
   {
     // StackAuth,
     // StackHome,
     RouteTab,
+    StackSeller
   },
   {
+    // initialRouteName: 'StackSeller',
     initialRouteName: 'RouteTab',
     headerMode: 'none',
   },
 );
 
-// const RouterDEV = createStackNavigator(
-//   {
-//     Register,
-//     Login,
-//   },
-//   {
-//     initialRouteName: 'Register',
-//     headerMode: 'none',
-//   },
-// );
 
-// export default createAppContainer(RouterDEV);
 export default createAppContainer(Router);

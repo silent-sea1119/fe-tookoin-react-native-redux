@@ -7,5 +7,6 @@ import Profile from '../screens/buyer/profile/profile';
 import InboxBuyer from '../screens/buyer/inbox/inbox';
 import DetailProdukBuyer from '../screens/buyer/detail-produk/detail-produk'
 import DaftarAlamatBuyer from '../screens/buyer/daftar-alamat/daftar-alamat';
+import ProductCategory from '../screens/buyer/product-category/product-category';
 
-export {Home, HomeBuyer, Login, MyOrder, Register, Profile, InboxBuyer, DetailProdukBuyer, DaftarAlamatBuyer};
+export {Home, HomeBuyer, Login, MyOrder, Register, Profile, InboxBuyer, DetailProdukBuyer, DaftarAlamatBuyer, ProductCategory};

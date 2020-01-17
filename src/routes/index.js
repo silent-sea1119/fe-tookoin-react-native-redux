@@ -9,7 +9,8 @@ import {
   Profile,
   InboxBuyer,
   DetailProdukBuyer,
-  DaftarAlamatBuyer
+  DaftarAlamatBuyer,
+  ProductCategory
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -30,14 +31,16 @@ const StackHome = createStackNavigator(
     Profile,
     MyOrder,
     DetailProdukBuyer,
-    DaftarAlamatBuyer
+    DaftarAlamatBuyer,
+    ProductCategory
   },
   {
     // initialRouteName: 'HomeBuyer',
     // initialRouteName: 'Profile',
     // initialRouteName: 'InboxBuyer',
     // initialRouteName: 'DetailProdukBuyer',
-    initialRouteName: 'DaftarAlamatBuyer',
+    // initialRouteName: 'DaftarAlamatBuyer',
+    initialRouteName: 'ProductCategory',
     headerMode: 'none',
   },
 );

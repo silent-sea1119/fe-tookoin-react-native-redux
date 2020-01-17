@@ -150,7 +150,6 @@ export default class MyOrder extends Component {
             )}
           </Tab>
         </Tabs>
-        <View style={styles.nav} />
       </View>
     );
   }

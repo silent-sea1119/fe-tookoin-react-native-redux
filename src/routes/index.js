@@ -198,7 +198,7 @@ const RouteTab2 = createBottomTabNavigator(
         tabBarIcon: ({tintColor}) => (
           <IconFA name="shopping-bag" size={22} color={tintColor} />
         ),
-        tabBarLabel: 'Shop',
+        tabBarLabel: 'My Store',
       },
     },
     InboxSeller: {
@@ -207,16 +207,16 @@ const RouteTab2 = createBottomTabNavigator(
         tabBarIcon: ({tintColor}) => (
           <Icon name="receipt" size={24} color={tintColor} />
         ),
-        tabBarLabel: 'My Order',
+        tabBarLabel: 'Transaction',
       },
     },
     ProfileSeller: {
       screen: HomeSeller,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
-          <Icon name="receipt" size={24} color={tintColor} />
+          <Icon name="user" type="font-awesome" size={24} color={tintColor} />
         ),
-        tabBarLabel: 'My Order',
+        tabBarLabel: 'Profile',
       },
     },
   },

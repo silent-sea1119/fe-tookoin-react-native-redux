@@ -14,6 +14,8 @@ import {
   Profile,
   InboxBuyer,
   DetailProdukBuyer,
+  DaftarAlamatBuyer,
+  ProductCategory
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -31,10 +33,20 @@ const StackAuth = createStackNavigator(
 const StackHomeBuyer = createStackNavigator(
   { 
     HomeBuyer,
+    InboxBuyer,
+    Profile,
+    MyOrder,
     DetailProdukBuyer,
+    DaftarAlamatBuyer,
+    ProductCategory
   },
   {
     initialRouteName: 'HomeBuyer',
+    // initialRouteName: 'Profile',
+    // initialRouteName: 'InboxBuyer',
+    // initialRouteName: 'DetailProdukBuyer',
+    // initialRouteName: 'DaftarAlamatBuyer',
+    // initialRouteName: 'ProductCategory',
     headerMode: 'none',
   },
 );

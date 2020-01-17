@@ -31,9 +31,14 @@ const MAX_HEIGHT = 250;
 class DetailProdukBuyer extends Component {
   constructor() {
     super();
-    this.state = {showNavTitle: false};
+    this.state = {showNavTitle: false, quantity: 0};
   }
 
+  componentDidMount() {
+    if (this.props.navigation.getParam('quantity') > 0) {
+      this.setState({quantity: this.props.navigation.getParam('quantity')});
+    }
+  }
   render() {
     const data = {
       title: this.props.navigation.getParam('name'),
@@ -51,6 +56,18 @@ class DetailProdukBuyer extends Component {
         'Dalam tiap 100 gram susu kuda liar menghasilkan 44 kalori, yang lebih sedikit ketimbang susu sapi yang sebesar 64 kalori sehingga membuat orang yang minum susu kuda tidak cepat gemuk.',
       prepAndStorage:
         'Kocok dahulu sebelum diminum jangan disimpan di dalam freezer dan jangan dimasak di atas panas api langsung. Kedua tindakan tersebut dapat menghilangkan khasiat susu kuda sumbawa asli',
+    };
+
+    const handleAddQuantity = () => {
+      this.setState({quantity: this.state.quantity + 1});
+    };
+
+    const handleQuantity = bool => {
+      if (bool) {
+        this.setState({quantity: this.state.quantity + 1});
+      } else if (!bool) {
+        this.setState({quantity: this.state.quantity - 1});
+      }
     };
 
     return (
@@ -96,9 +113,47 @@ class DetailProdukBuyer extends Component {
               </Text>
             </View>
             <View style={styles.PABbutton}>
-              <Button small style={styles.PABbuttonA}>
-                <Text style={{fontWeight: 'bold'}}>Beli</Text>
-              </Button>
+              {this.state.quantity > 0 ? (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <TouchableOpacity onPress={() => handleQuantity(false)}>
+                    <Icon
+                      name="minus-circle"
+                      type="font-awesome"
+                      size={28}
+                      color="#00B444"
+                    />
+                  </TouchableOpacity>
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      fontSize: 20,
+                      marginHorizontal: 10,
+                      marginVertical: 5,
+                    }}>
+                    {this.state.quantity}
+                  </Text>
+                  <TouchableOpacity onPress={() => handleQuantity(true)}>
+                    <Icon
+                      name="plus-circle"
+                      type="font-awesome"
+                      size={28}
+                      color="#00B444"
+                    />
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <Button
+                  small
+                  style={styles.PABbuttonA}
+                  onPress={() => handleAddQuantity()}>
+                  <Text style={{fontWeight: 'bold'}}>Beli</Text>
+                </Button>
+              )}
 
               <Button small icon bordered style={styles.PABbuttonB}>
                 <Icon name="comments" style={styles.PABbuttonBicon} />

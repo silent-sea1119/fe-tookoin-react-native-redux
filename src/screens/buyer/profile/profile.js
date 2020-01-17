@@ -80,11 +80,18 @@ class ProfileBuyer extends Component {
           <ScrollView showsVerticalScrollIndicator={false}>
             <AccountOption title="Masukkan Code Referral" />
             <AccountOption title="Voucher Saya" />
-            <AccountOption title="Alamat Saya" />
+            <AccountOption
+              title="Alamat Saya"
+              navigation={this.props.navigation}
+            />
             <AccountOption title="Blog" />
             <AccountOption title="Privasi dan Kebijakan" />
             <AccountOption title="Bantuan" />
-            <AccountOption color="red" title="Keluar" navigation={this.props.navigation}/>
+            <AccountOption
+              color="red"
+              title="Keluar"
+              navigation={this.props.navigation}
+            />
             <View
               style={{
                 padding: 15,

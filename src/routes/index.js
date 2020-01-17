@@ -15,14 +15,13 @@ import {
   InboxBuyer,
   DetailProdukBuyer,
   DaftarAlamatBuyer,
-  ProductCategory
+  ProductCategory,
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
   {
     Login,
     Register,
-    Profile,
   },
   {
     initialRouteName: 'Login',
@@ -30,15 +29,52 @@ const StackAuth = createStackNavigator(
   },
 );
 
+const StackProfile = createStackNavigator(
+  {
+    Profile,
+    DaftarAlamatBuyer,
+  },
+  {
+    initialRouteName: 'Profile',
+    headerMode: 'none',
+  },
+);
+
+StackProfile.navigationOptions = ({navigation}) => {
+  let tabBarVisible;
+  if (navigation.state.routes.length > 1) {
+    navigation.state.routes.map(route => {
+      if (route.routeName === 'DaftarAlamatBuyer') {
+        tabBarVisible = false;
+      } else {
+        tabBarVisible = true;
+      }
+    });
+  }
+
+  return {
+    tabBarVisible,
+  };
+};
+
+const StackAuthAndProfile = createSwitchNavigator(
+  {
+    StackAuth,
+    StackProfile,
+  },
+  {
+    initialRouteName: 'StackAuth',
+    headerMode: 'none',
+  },
+);
+
 const StackHomeBuyer = createStackNavigator(
-  { 
+  {
     HomeBuyer,
     InboxBuyer,
-    Profile,
     MyOrder,
     DetailProdukBuyer,
-    DaftarAlamatBuyer,
-    ProductCategory
+    ProductCategory,
   },
   {
     initialRouteName: 'HomeBuyer',
@@ -51,11 +87,11 @@ const StackHomeBuyer = createStackNavigator(
   },
 );
 
-StackHomeBuyer.navigationOptions = ({ navigation }) => {
+StackHomeBuyer.navigationOptions = ({navigation}) => {
   let tabBarVisible;
   if (navigation.state.routes.length > 1) {
     navigation.state.routes.map(route => {
-      if (route.routeName === "DetailProdukBuyer") {
+      if (route.routeName === 'DetailProdukBuyer') {
         tabBarVisible = false;
       } else {
         tabBarVisible = true;
@@ -64,7 +100,7 @@ StackHomeBuyer.navigationOptions = ({ navigation }) => {
   }
 
   return {
-    tabBarVisible
+    tabBarVisible,
   };
 };
 
@@ -135,7 +171,7 @@ const RouteTab = createBottomTabNavigator(
     },
 
     Profile: {
-      screen: StackAuth,
+      screen: StackAuthAndProfile,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <Icon name="user" type="font-awesome" size={24} color={tintColor} />

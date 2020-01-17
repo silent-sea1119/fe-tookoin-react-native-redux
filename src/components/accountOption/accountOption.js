@@ -9,8 +9,8 @@ const AccountOption = props => {
     if (props.title === 'Keluar'){
       props.navigation.navigate('Login')
     }
-    else {
-      console.log('Pressed')
+    else if (props.title === 'Alamat Saya'){
+      props.navigation.navigate('DaftarAlamatBuyer')
     }
   } 
   return (

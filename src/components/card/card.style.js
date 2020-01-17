@@ -49,6 +49,12 @@ const styles = StyleSheet.create({
     width: 140,
     height: 32,
   },
+  kuantity: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 2,
+  },
 });
 
 export default styles;

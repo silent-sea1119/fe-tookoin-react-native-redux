@@ -70,11 +70,16 @@ class ProductCategory extends Component {
                 name={item.name_product}
                 price={item.price}
                 unit={item.stock}
+                navigation={this.props.navigation}
               />
             </View>
           ))}
         </ScrollView>
         {/* <Footer /> */}
+
+
+  
+
       </View>
     );
   }

@@ -124,26 +124,30 @@ class HomeBuyer extends Component {
                 <Card
                   name="Bayam Hijau"
                   label="Conventional"
-                  price="Rp 4.300"
+                  price="4.300"
                   unit="250 gram"
+                  navigation={this.props.navigation}
                 />
                 <Card
                   name="Labu Siam"
                   label="Conventional"
-                  price="Rp 4.600"
+                  price="4.600"
                   unit="500 gram"
+                  navigation={this.props.navigation}
                 />
                 <Card
                   name="Paprika Kuning"
                   label="Organik"
-                  price="Rp 20.000"
+                  price="20.000"
                   unit="1 pcs"
+                  navigation={this.props.navigation}
                 />
                 <Card
                   name="Wortel Organik"
                   label="Organik"
-                  price="Rp 3.000"
+                  price="3.000"
                   unit="500 gram"
+                  navigation={this.props.navigation}
                 />
               </View>
             </ScrollView>
@@ -183,26 +187,30 @@ class HomeBuyer extends Component {
                   <Card
                     name="Alpukat Mentega"
                     label="Conventional"
-                    price="Rp 999"
+                    price="999"
                     unit="1 kg"
+                    navigation={this.props.navigation}
                   />
                   <Card
                     name="Pisang Raja"
                     label="Conventional"
-                    price="Rp 29.800"
+                    price="29.800"
                     unit="1 sisir"
+                    navigation={this.props.navigation}
                   />
                   <Card
                     name="Pisang Uli"
                     label="Organik"
-                    price="Rp 12.300"
+                    price="12.300"
                     unit="1 sisir"
+                    navigation={this.props.navigation}
                   />
                   <Card
                     name="Salak"
                     label="Organik"
-                    price="Rp 4.990"
+                    price="4.990"
                     unit="500 gram"
+                    navigation={this.props.navigation}
                   />
                 </View>
               </ScrollView>
@@ -210,7 +218,6 @@ class HomeBuyer extends Component {
             </View>
           </View>
         </ScrollView>
-        <Footer />
       </View>
     );
   }

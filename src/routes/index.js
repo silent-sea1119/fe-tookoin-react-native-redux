@@ -16,6 +16,8 @@ import {
   DetailProdukBuyer,
   DaftarAlamatBuyer,
   ProductCategory,
+  ProfileSeller,
+  InboxSeller
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -103,6 +105,22 @@ StackHomeBuyer.navigationOptions = ({navigation}) => {
 //   },
 // );
 
+const StackHomeSeller = createStackNavigator(
+  {
+    ProfileSeller,
+    InboxSeller,
+  },
+  {
+    initialRouteName: 'ProfileSeller',
+    // initialRouteName: 'Profile',
+    // initialRouteName: 'InboxBuyer',
+    // initialRouteName: 'DetailProdukBuyer',
+    // initialRouteName: 'DaftarAlamatBuyer',
+    // initialRouteName: 'ProductCategory',
+    headerMode: 'none',
+  },
+)
+
 const RouteTab = createBottomTabNavigator(
   {
     HomeBuyer: {
@@ -169,11 +187,41 @@ const RouteTab = createBottomTabNavigator(
   },
 );
 
+const RouteTab2 = createBottomTabNavigator(
+  {
+    HomeSeller: {
+      screen: StackHomeSeller,
+      navigationOptions: {
+        tabBarIcon: ({tintColor}) => (
+          <IconFA name="shopping-bag" size={22} color={tintColor} />
+        ),
+        tabBarLabel: 'Shop',
+      },
+    },
+    InboxSeller: {
+      screen: InboxSeller,
+      navigationOptions: {
+        tabBarIcon: ({tintColor}) => (
+          <Icon name="receipt" size={24} color={tintColor} />
+        ),
+        tabBarLabel: 'My Order',
+      },
+    },
+  },
+  {
+    initialRouteName: 'HomeSeller',
+    tabBarOptions: {
+      activeTintColor: '#00B444',
+    },
+  },
+);
+
 const Router = createSwitchNavigator(
   {
     // StackAuth,
     // StackHome,
     RouteTab,
+    RouteTab2,
   },
   {
     initialRouteName: 'RouteTab',

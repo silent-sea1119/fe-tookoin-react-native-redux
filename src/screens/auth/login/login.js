@@ -17,6 +17,16 @@ import styles from './login.style';
 import Footer from '../../../components/footer/footer';
 
 export default class Login extends Component {
+  handleMasuk = () => {
+    let stat = 'Admin'
+    if (stat === 'Admin'){
+      this.props.navigation.navigate('ProfileSeller')
+      console.log('MASOK')
+    }
+    else {
+      this.props.navigation.navigate('Profile')
+    }
+  }
   render() {
     const {
       container,
@@ -90,7 +100,7 @@ export default class Login extends Component {
                 <Text style={{fontSize: 12, color: 'red'}}> </Text>
               </View>
             </View>
-            <TouchableOpacity onPress={()=> this.props.navigation.navigate('Profile')}>
+            <TouchableOpacity onPress={()=> this.handleMasuk()}>
               <View style={buttonLogin}>
                 <Text
                   style={{

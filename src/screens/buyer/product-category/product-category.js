@@ -25,10 +25,10 @@ class ProductCategory extends Component {
   };
 
   getDataFromApi = async () => {
-    console.log(this.props.navigation.getParam('id'), 'enam tujuh');
+    console.log(this.props.navigation.getParam('id'), 'your-id-props');
     const id = this.props.navigation.getParam('id');
     const url = API_URL + '/product/?id_category=' + id;
-    // console.log(url);
+    console.log(url, 'your-url');
     const product = await this.props.fetchProduct(url);
     // console.log(product.value.data.data, 'great')
     // console.log(this.props.product)
@@ -48,12 +48,10 @@ class ProductCategory extends Component {
       label: this.props.navigation.getParam('name'),
     };
 
-    console.log(this.props.navigation.getParam('name'), ' sudah gila ');
-    // console.log(this.props.id);
+    // console.log(this.props.navigation.getParam('name'), ' sudah gila ');
+    // console.log(this.props.product);
     const productList = this.props.product.data.data;
     console.log(productList, '8989898');
-
-    // title: this.props.navigation.getParam('name'),
 
     return (
       <View style={container}>

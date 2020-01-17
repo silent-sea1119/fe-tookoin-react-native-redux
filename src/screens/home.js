@@ -13,12 +13,17 @@ import {
   DrawerLayoutAndroid,
 } from 'react-native';
 
+import HomeBuyer from './buyer/home/home';
+import MyOrder from './buyer/my-order/my-order';
+
 export default class Home extends Component {
-    render() {
-        return (
-            <View>
-                <Text>Ini Home Page</Text>
-            </View>
-        )
-    }
+  render() {
+    return (
+      <View>
+        <Text>Ini Default Home</Text>
+        {/* <HomeBuyer /> */}
+        {/* <MyOrder /> */} 
+      </View>
+    );
+  }
 }

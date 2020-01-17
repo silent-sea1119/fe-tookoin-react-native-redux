@@ -1,0 +1,219 @@
+import React, {Component} from 'react';
+import {Text, View, TouchableOpacity, ScrollView} from 'react-native';
+import Search from '../../../components/search/search.js';
+import Footer from '../../../components/footer/footer.js';
+import styles from './home.style';
+import Category from '../../../components/category/category.js';
+import Border from '../../../components/border/border';
+import Card from '../../../components/card/card';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+class HomeBuyer extends Component {
+  render() {
+    const {
+      container,
+      imageSlider,
+      readMoreImageSlider,
+      readMoreImageSliderText,
+      dotslider,
+      bottomImageSlider,
+      scroll,
+      category,
+      categoryContainer,
+      categoryContainerTop,
+      categoryContainerBot,
+    } = styles;
+    return (
+      <View style={container}>
+        <Search />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={imageSlider}>
+            <View style={bottomImageSlider}>
+              <TouchableOpacity style={readMoreImageSlider}>
+                <Text style={readMoreImageSliderText}> Lihat Semuanya</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={category}>
+            <Category
+              name="Sayuran Segar"
+              imgUri={require('../../../assets/icon/carrot.png')}
+            />
+            <Category
+              name="Buah Segar"
+              imgUri={require('../../../assets/icon/avocado.png')}
+            />
+            <Category
+              name="Sumber Karbohidrat"
+              imgUri={require('../../../assets/icon/wheat.png')}
+            />
+            <Category
+              name="Produk Terbaru"
+              imgUri={require('../../../assets/icon/new.png')}
+            />
+            <Category
+              name="Promo Spesial"
+              imgUri={require('../../../assets/icon/discount.png')}
+            />
+            <Category
+              name="Produk Terlaris"
+              imgUri={require('../../../assets/icon/star.png')}
+            />
+            <Category
+              name="Organik & Premium"
+              imgUri={require('../../../assets/icon/winner.png')}
+            />
+            <Category
+              name="Katering Sehat"
+              imgUri={require('../../../assets/icon/fruits.png')}
+            />
+            <Category
+              name="Grosir"
+              imgUri={require('../../../assets/icon/shoppingBasket.png')}
+            />
+            <Category
+              name="Makanan & Minuman"
+              imgUri={require('../../../assets/icon/food.png')}
+            />
+            <Category
+              name="Keperluan Dapur"
+              imgUri={require('../../../assets/icon/saltShaker.png')}
+            />
+            <Category
+              name="Daging & Seafood"
+              imgUri={require('../../../assets/icon/fish.png')}
+            />
+            <Category
+              name="Olahan Susu & Telur"
+              imgUri={require('../../../assets/icon/egg.png')}
+            />
+          </View>
+          <Border />
+          <View style={categoryContainer}>
+            <View style={categoryContainerTop}>
+              <View>
+                <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+                  Sayuran Segar
+                </Text>
+                <Text style={{fontSize: 12}}>Kumpulan Sayur Segar</Text>
+              </View>
+              <TouchableOpacity
+                style={{
+                  paddingLeft: 10,
+                  justifyContent: 'center',
+                }}>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                  }}>
+                  <Text
+                    style={{
+                      color: '#00B444',
+                      fontWeight: 'bold',
+                      paddingRight: 10,
+                    }}>
+                    Lihat Semua
+                  </Text>
+                  <Icon name="chevron-right" size={12} color="#00B444" />
+                </View>
+              </TouchableOpacity>
+            </View>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <View style={categoryContainerBot}>
+                <Card
+                  name="Bayam Hijau"
+                  label="Conventional"
+                  price="Rp 4.300"
+                  unit="250 gram"
+                />
+                <Card
+                  name="Labu Siam"
+                  label="Conventional"
+                  price="Rp 4.600"
+                  unit="500 gram"
+                />
+                <Card
+                  name="Paprika Kuning"
+                  label="Organik"
+                  price="Rp 20.000"
+                  unit="1 pcs"
+                />
+                <Card
+                  name="Wortel Organik"
+                  label="Organik"
+                  price="Rp 3.000"
+                  unit="500 gram"
+                />
+              </View>
+            </ScrollView>
+            <Border />
+            <View style={categoryContainer}>
+              <View style={categoryContainerTop}>
+                <View>
+                  <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+                    Buah Segar
+                  </Text>
+                  <Text style={{fontSize: 12}}>Kumpulan Buah Segar</Text>
+                </View>
+                <TouchableOpacity
+                  style={{
+                    paddingLeft: 10,
+                    justifyContent: 'center',
+                  }}>
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      flexDirection: 'row',
+                    }}>
+                    <Text
+                      style={{
+                        color: '#00B444',
+                        fontWeight: 'bold',
+                        paddingRight: 10,
+                      }}>
+                      Lihat Semua
+                    </Text>
+                    <Icon name="chevron-right" size={12} color="#00B444" />
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <View style={categoryContainerBot}>
+                  <Card
+                    name="Alpukat Mentega"
+                    label="Conventional"
+                    price="Rp 999"
+                    unit="1 kg"
+                  />
+                  <Card
+                    name="Pisang Raja"
+                    label="Conventional"
+                    price="Rp 29.800"
+                    unit="1 sisir"
+                  />
+                  <Card
+                    name="Pisang Uli"
+                    label="Organik"
+                    price="Rp 12.300"
+                    unit="1 sisir"
+                  />
+                  <Card
+                    name="Salak"
+                    label="Organik"
+                    price="Rp 4.990"
+                    unit="500 gram"
+                  />
+                </View>
+              </ScrollView>
+              <Border />
+            </View>
+          </View>
+        </ScrollView>
+        <Footer />
+      </View>
+    );
+  }
+}
+
+export default HomeBuyer;

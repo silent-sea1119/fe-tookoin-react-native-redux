@@ -9,6 +9,7 @@ import {
   Home,
   HomeBuyer,
   MyOrder,
+  Cart,
   Login,
   Register,
   Profile,
@@ -16,7 +17,6 @@ import {
   DetailProdukBuyer,
   DaftarAlamatBuyer,
   ProductCategory,
-  ProfileSeller,
   InboxSeller,
   HomeSeller,
 } from '../screens/index';
@@ -59,6 +59,7 @@ const StackHomeBuyer = createStackNavigator(
     HomeBuyer,
     InboxBuyer,
     MyOrder,
+    Cart,
     DetailProdukBuyer,
     ProductCategory,
   },
@@ -108,13 +109,12 @@ StackHomeBuyer.navigationOptions = ({navigation}) => {
 
 const StackHomeSeller = createStackNavigator(
   {
-    ProfileSeller,
-    InboxSeller,
     HomeSeller,
-    Home
+    InboxSeller,
+    Home,
   },
   {
-    initialRouteName: 'ProfileSeller',
+    initialRouteName: 'HomeSeller',
     // initialRouteName: 'Profile',
     // initialRouteName: 'InboxBuyer',
     // initialRouteName: 'DetailProdukBuyer',
@@ -145,7 +145,7 @@ const RouteTab = createBottomTabNavigator(
       },
     },
     Cart: {
-      screen: MyOrder,
+      screen: Cart,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <Icon
@@ -193,7 +193,7 @@ const RouteTab = createBottomTabNavigator(
 const RouteTab2 = createBottomTabNavigator(
   {
     HomeSeller: {
-      screen: StackHomeSeller,
+      screen: HomeSeller,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <IconFA name="shopping-bag" size={22} color={tintColor} />
@@ -203,6 +203,15 @@ const RouteTab2 = createBottomTabNavigator(
     },
     InboxSeller: {
       screen: InboxSeller,
+      navigationOptions: {
+        tabBarIcon: ({tintColor}) => (
+          <Icon name="receipt" size={24} color={tintColor} />
+        ),
+        tabBarLabel: 'My Order',
+      },
+    },
+    ProfileSeller: {
+      screen: HomeSeller,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <Icon name="receipt" size={24} color={tintColor} />

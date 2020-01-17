@@ -17,7 +17,8 @@ import {
   DaftarAlamatBuyer,
   ProductCategory,
   ProfileSeller,
-  InboxSeller
+  InboxSeller,
+  HomeSeller,
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -109,6 +110,8 @@ const StackHomeSeller = createStackNavigator(
   {
     ProfileSeller,
     InboxSeller,
+    HomeSeller,
+    Home
   },
   {
     initialRouteName: 'ProfileSeller',
@@ -224,21 +227,11 @@ const Router = createSwitchNavigator(
     RouteTab2,
   },
   {
+    // initialRouteName: 'StackSeller',
     initialRouteName: 'RouteTab',
     headerMode: 'none',
   },
 );
 
-// const RouterDEV = createStackNavigator(
-//   {
-//     Register,
-//     Login,
-//   },
-//   {
-//     initialRouteName: 'Register',
-//     headerMode: 'none',
-//   },
-// );
 
-// export default createAppContainer(RouterDEV);
 export default createAppContainer(Router);

@@ -19,6 +19,7 @@ import {
   ProductCategory,
   InboxSeller,
   HomeSeller,
+  Etalase,
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -112,6 +113,7 @@ const StackHomeSeller = createStackNavigator(
     HomeSeller,
     InboxSeller,
     Home,
+    Etalase,
   },
   {
     initialRouteName: 'HomeSeller',
@@ -122,7 +124,7 @@ const StackHomeSeller = createStackNavigator(
     // initialRouteName: 'ProductCategory',
     headerMode: 'none',
   },
-)
+);
 
 const RouteTab = createBottomTabNavigator(
   {
@@ -193,7 +195,7 @@ const RouteTab = createBottomTabNavigator(
 const RouteTab2 = createBottomTabNavigator(
   {
     HomeSeller: {
-      screen: HomeSeller,
+      screen: Etalase,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <IconFA name="shopping-bag" size={22} color={tintColor} />
@@ -241,6 +243,5 @@ const Router = createSwitchNavigator(
     headerMode: 'none',
   },
 );
-
 
 export default createAppContainer(Router);

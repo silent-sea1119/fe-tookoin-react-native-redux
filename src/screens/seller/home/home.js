@@ -25,7 +25,7 @@ class HomeSeller extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.headerProfile}>
             <Image source={avatar} style={styles.avatar} />
             <Text style={styles.profileName}>Bima Febriansyah</Text>

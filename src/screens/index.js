@@ -10,6 +10,7 @@ import DaftarAlamatBuyer from '../screens/buyer/daftar-alamat/daftar-alamat';
 import ProductCategory from '../screens/buyer/product-category/product-category';
 import InboxSeller from '../screens/seller/inbox/inbox';
 import HomeSeller from './seller/home/home';
+import Etalase from './seller/etalase/etalase';
 import Cart from './buyer/cart/cart';
 
 export {
@@ -26,4 +27,5 @@ export {
   ProductCategory,
   InboxSeller,
   HomeSeller,
+  Etalase,
 };

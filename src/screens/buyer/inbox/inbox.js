@@ -31,7 +31,6 @@ class InboxBuyer extends Component {
             </Text>
           </View>
         </ScrollView>
-        <Footer />
       </View>
     );
   }

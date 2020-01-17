@@ -2,10 +2,18 @@ import React from 'react';
 import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 import styles from './card.style';
 
-const category = props => {
+const Card = props => {
   const {container, name, image, price, priceText, unit, beli} = styles;
+  const goToDetail = () => {
+    props.navigation.push('DetailProdukBuyer', {
+      name: props.name,
+      label: props.label,
+      unit: props.unit,
+      price: props.price,
+    });
+  };
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => goToDetail()}>
       <View style={container}>
         <View style={image}>
           <Text
@@ -24,15 +32,17 @@ const category = props => {
           Imperfect: ukuran buah
         </Text>
         <View style={price}>
-          <Text style={priceText}>{props.price}</Text>
+          <Text style={priceText}>Rp {props.price}</Text>
           <Text style={unit}> / {props.unit}</Text>
         </View>
-        <View style={beli}>
-          <Text style={{fontWeight: 'bold', color: 'white'}}>Beli</Text>
-        </View>
+        <TouchableOpacity>
+          <View style={beli}>
+            <Text style={{fontWeight: 'bold', color: 'white'}}>Beli</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
 };
 
-export default category;
+export default Card;

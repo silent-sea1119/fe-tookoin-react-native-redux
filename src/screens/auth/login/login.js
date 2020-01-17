@@ -12,7 +12,7 @@ import {
   Text,
   DrawerLayoutAndroid,
 } from 'react-native';
-import {Input} from 'react-native-elements';
+import {Input, ThemeConsumer} from 'react-native-elements';
 import styles from './login.style';
 import Footer from '../../../components/footer/footer';
 
@@ -90,7 +90,7 @@ export default class Login extends Component {
                 <Text style={{fontSize: 12, color: 'red'}}> </Text>
               </View>
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=> this.props.navigation.navigate('Profile')}>
               <View style={buttonLogin}>
                 <Text
                   style={{
@@ -133,7 +133,7 @@ export default class Login extends Component {
               <Text style={{fontSize: 12, color: 'gray'}}>
                 Belum punya akun ?
               </Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={()=> this.props.navigation.navigate('Register')}>
                 <View style={buttonRegister}>
                   <Text style={{color: '#62BA67', fontWeight: 'bold'}}>
                     Daftar
@@ -143,7 +143,6 @@ export default class Login extends Component {
             </View>
           </View>
         </ScrollView>
-        <Footer />
       </View>
     );
   }

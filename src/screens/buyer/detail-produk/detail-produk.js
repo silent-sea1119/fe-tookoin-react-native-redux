@@ -19,7 +19,9 @@ import {BorderlessButton} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 //import
-import tvShowContent from '../../../assets/tvShowContent';
+// import tvShowContent from '../../../assets/tvShowContent';
+const imageUri = require('../../../assets/static-image/monster-egg.png');
+
 import styles from './detail-produk.styles';
 import Card from '../../../components/card/card';
 
@@ -61,7 +63,7 @@ class DetailProdukBuyer extends Component {
           minOverlayOpacity={0.3}
           fadeOutForeground
           renderHeader={() => (
-            <Image source={tvShowContent.image} style={styles2.image} />
+            <Image source={imageUri} style={styles2.image} />
           )}
           renderFixedForeground={() => (
             <Animatable.View

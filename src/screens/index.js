@@ -5,5 +5,6 @@ import HomeBuyer from './buyer/home/home';
 import Home from './home';
 import Profile from '../screens/buyer/profile/profile';
 import InboxBuyer from '../screens/buyer/inbox/inbox';
+import DetailProdukBuyer from './buyer/detail-produk/detail-produk'
 
-export {Home, HomeBuyer, Login, MyOrder, Register, Profile, InboxBuyer};
+export {Home, HomeBuyer, Login, MyOrder, Register, Profile, InboxBuyer, DetailProdukBuyer};

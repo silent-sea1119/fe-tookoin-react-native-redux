@@ -8,7 +8,8 @@ import {
   Register,
   Profile,
   InboxBuyer,
-  DetailProdukBuyer
+  DetailProdukBuyer,
+  DaftarAlamatBuyer
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -28,13 +29,15 @@ const StackHome = createStackNavigator(
     InboxBuyer,
     Profile,
     MyOrder,
-    DetailProdukBuyer
+    DetailProdukBuyer,
+    DaftarAlamatBuyer
   },
   {
     // initialRouteName: 'HomeBuyer',
     // initialRouteName: 'Profile',
     // initialRouteName: 'InboxBuyer',
-    initialRouteName: 'DetailProdukBuyer',
+    // initialRouteName: 'DetailProdukBuyer',
+    initialRouteName: 'DaftarAlamatBuyer',
     headerMode: 'none',
   },
 );

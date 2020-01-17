@@ -1,5 +1,5 @@
-import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import {
   Home,
   HomeBuyer,
@@ -8,7 +8,8 @@ import {
   Register,
   Profile,
   InboxBuyer,
-  DetailProdukBuyer
+  DetailProdukBuyer,
+  HomeSeller
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -39,13 +40,20 @@ const StackHome = createStackNavigator(
   },
 );
 
+const StackSeller = createStackNavigator({
+  HomeSeller,
+}, {
+  headerMode: 'none',
+})
+
 const Router = createSwitchNavigator(
   {
+    StackSeller,
     StackAuth,
     StackHome,
   },
   {
-    initialRouteName: 'StackHome',
+    initialRouteName: 'StackSeller',
     headerMode: 'none',
   },
 );

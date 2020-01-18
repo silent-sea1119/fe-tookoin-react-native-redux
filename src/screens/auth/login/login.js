@@ -11,12 +11,36 @@ import {
   Button,
   Text,
   DrawerLayoutAndroid,
+  Alert,
 } from 'react-native';
-import {Input} from 'react-native-elements';
+import {Input, ThemeConsumer} from 'react-native-elements';
 import styles from './login.style';
 import Footer from '../../../components/footer/footer';
 
 export default class Login extends Component {
+  constructor() {
+    super();
+    this.state = {
+      email: '',
+      password: '',
+      role: '',
+    };
+  }
+  handleMasuk = () => {
+    if (this.state.email === 'Seller') {
+      this.setState({role: '0'});
+    } else if (this.state.email === 'Buyer') {
+      this.setState({role: '1'});
+    }
+    if (this.state.role === '0') {
+      this.props.navigation.navigate('ProfileSeller');
+      console.log('MASOK');
+    } else if (this.state.role === '1') {
+      this.props.navigation.navigate('Profile');
+    } else {
+      Alert.alert('Info', 'ERROR');
+    }
+  };
   render() {
     const {
       container,
@@ -69,6 +93,10 @@ export default class Login extends Component {
                 inputStyle={{fontSize: 12}}
                 placeholder="Input Email"
                 label="Email"
+                onChange={e => {
+                  this.setState({email: e.nativeEvent.text});
+                  console.log(e.nativeEvent.text);
+                }}
               />
               <View style={{paddingRight: 10}}>
                 {/* <Text style={{fontSize: 12, color: 'red'}}>Invalid Email</Text> */}
@@ -84,13 +112,17 @@ export default class Login extends Component {
                 inputStyle={{fontSize: 12}}
                 placeholder="Input Password"
                 label="Password"
+                onChange={e => {
+                  this.setState({password: e.nativeEvent.text});
+                  console.log(e.nativeEvent.text);
+                }}
               />
               <View style={{paddingRight: 10}}>
                 {/* <Text style={{fontSize: 12, color: 'red'}}>Invalid Email</Text> */}
                 <Text style={{fontSize: 12, color: 'red'}}> </Text>
               </View>
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.handleMasuk()}>
               <View style={buttonLogin}>
                 <Text
                   style={{
@@ -133,7 +165,8 @@ export default class Login extends Component {
               <Text style={{fontSize: 12, color: 'gray'}}>
                 Belum punya akun ?
               </Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Register')}>
                 <View style={buttonRegister}>
                   <Text style={{color: '#62BA67', fontWeight: 'bold'}}>
                     Daftar
@@ -143,7 +176,6 @@ export default class Login extends Component {
             </View>
           </View>
         </ScrollView>
-        <Footer />
       </View>
     );
   }

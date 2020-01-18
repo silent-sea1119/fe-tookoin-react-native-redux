@@ -5,8 +5,29 @@ import HomeBuyer from './buyer/home/home';
 import Home from './home';
 import Profile from '../screens/buyer/profile/profile';
 import InboxBuyer from '../screens/buyer/inbox/inbox';
-import DetailProdukBuyer from '../screens/buyer/detail-produk/detail-produk'
+import DetailProdukBuyer from '../screens/buyer/detail-produk/detail-produk';
 import DaftarAlamatBuyer from '../screens/buyer/daftar-alamat/daftar-alamat';
 import ProductCategory from '../screens/buyer/product-category/product-category';
+import InboxSeller from '../screens/seller/inbox/inbox';
+import HomeSeller from './seller/home/home';
+import Etalase from './seller/etalase/etalase';
+import Cart from './buyer/cart/cart';
+import MyOrderSeller from './seller/my-order/my-order';
 
-export {Home, HomeBuyer, Login, MyOrder, Register, Profile, InboxBuyer, DetailProdukBuyer, DaftarAlamatBuyer, ProductCategory};
+export {
+  Home,
+  HomeBuyer,
+  Login,
+  MyOrder,
+  Cart,
+  Register,
+  Profile,
+  InboxBuyer,
+  DetailProdukBuyer,
+  DaftarAlamatBuyer,
+  ProductCategory,
+  InboxSeller,
+  HomeSeller,
+  Etalase,
+  MyOrderSeller
+};

@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
     width: '40%',
     // borderColor: 'yellow',
     // borderWidth: 2,
+    // alignItems: 'center',
   },
 
   PABbuttonA: {
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
     // width: 200,
     // height: 200,
     // borderWidth: 0.9,
-    borderTopWidth: 1/2,
+    borderTopWidth: 1 / 2,
     borderColor: 'gray',
     marginTop: 11,
   },
@@ -200,7 +201,7 @@ const styles = StyleSheet.create({
     marginVertical: 22,
     marginHorizontal: 20,
     color: 'gray',
-    fontSize: 14
+    fontSize: 14,
   },
 
   producersParent: {
@@ -252,15 +253,15 @@ const styles = StyleSheet.create({
     // width: '50%',
     // borderWidth: 2,
     borderColor: 'gray',
-    borderTopWidth: 1/2,
-    borderBottomWidth: 1/2,
+    borderTopWidth: 1 / 2,
+    borderBottomWidth: 1 / 2,
   },
 
   producersDescText: {
     color: 'gray',
     marginHorizontal: 20,
     marginVertical: 11,
-    fontSize: 14
+    fontSize: 14,
   },
 
   relatedProductText: {
@@ -271,7 +272,7 @@ const styles = StyleSheet.create({
 
   end: {
     marginVertical: 20,
-  }
+  },
 });
 
 export default styles;

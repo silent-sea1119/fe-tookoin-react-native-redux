@@ -31,26 +31,43 @@ const MAX_HEIGHT = 250;
 class DetailProdukBuyer extends Component {
   constructor() {
     super();
-    this.state = {showNavTitle: false};
+    this.state = {showNavTitle: false, quantity: 0};
   }
 
+  componentDidMount() {
+    if (this.props.navigation.getParam('quantity') > 0) {
+      this.setState({quantity: this.props.navigation.getParam('quantity')});
+    }
+  }
   render() {
     const data = {
-      title: 'Susu Ultra Full Cream',
-      dose: '1 pcs (1 liter)',
-      price: '40000',
+      title: this.props.navigation.getParam('name'),
+      dose: `1 pcs (${this.props.navigation.getParam('unit')})`,
+      price: this.props.navigation.getParam('price'),
       producer: 'Mawang',
       producerDesc:
         'Mawang adalah seorang musisi asal Bandung yang belakangan ini sedang viral. Lagunya yang berjudul Kasih Sayang Kepada Orang Tua',
       unit: '1 pcs',
       description:
         'Ultra Milk Rasa cocok untuk dikonsumsi sehari-hari dan juga diminum sehabis beraktivitas atau berolahraga untuk memenuhi kembali cairan tubuh dan membantu pembentukan tubuh. Produk ini baik untuk diminum anak-anak berumur 1 tahun ke atas, apalagi ditambah varian rasa dari bahan alami yang mengandung banyak nutrisi alami yang dibutuhkan tubuh, terutama bagi remaja yang sedang dalam masa pertumbuhan.',
-      label: 'Organic susu kuda',
+      label: this.props.navigation.getParam('label'),
       label2: 'Produk Lokal',
       healthAndBenefit:
         'Dalam tiap 100 gram susu kuda liar menghasilkan 44 kalori, yang lebih sedikit ketimbang susu sapi yang sebesar 64 kalori sehingga membuat orang yang minum susu kuda tidak cepat gemuk.',
       prepAndStorage:
         'Kocok dahulu sebelum diminum jangan disimpan di dalam freezer dan jangan dimasak di atas panas api langsung. Kedua tindakan tersebut dapat menghilangkan khasiat susu kuda sumbawa asli',
+    };
+
+    const handleAddQuantity = () => {
+      this.setState({quantity: this.state.quantity + 1});
+    };
+
+    const handleQuantity = bool => {
+      if (bool) {
+        this.setState({quantity: this.state.quantity + 1});
+      } else if (!bool) {
+        this.setState({quantity: this.state.quantity - 1});
+      }
     };
 
     return (
@@ -62,18 +79,14 @@ class DetailProdukBuyer extends Component {
           maxOverlayOpacity={0.6}
           minOverlayOpacity={0.3}
           fadeOutForeground
-          renderHeader={() => (
-            <Image source={imageUri} style={styles2.image} />
-          )}
+          renderHeader={() => <Image source={imageUri} style={styles2.image} />}
           renderFixedForeground={() => (
             <Animatable.View
               style={styles2.navTitleView}
               ref={navTitleView => {
                 this.navTitleView = navTitleView;
               }}>
-              <Text style={styles.navTitle}>
-                {data.title}
-              </Text>
+              <Text style={styles.navTitle}>{data.title}</Text>
             </Animatable.View>
           )}
           renderForeground={() => (
@@ -87,7 +100,7 @@ class DetailProdukBuyer extends Component {
             style={styles.section}
             onHide={() => this.navTitleView.fadeInUp(200)}
             onDisplay={() => this.navTitleView.fadeOut(100)}>
-            <Text style={styles.title}>{data.title}qweqew</Text>
+            <Text style={styles.title}>{data.title}</Text>
             <Text style={{fontSize: 14}}>{data.dose}</Text>
             {/* ({tvShowContent.year}) */}
           </TriggeringView>
@@ -95,12 +108,52 @@ class DetailProdukBuyer extends Component {
           <View style={styles.priceAndButton}>
             <View style={styles.PABprice}>
               <Text style={styles.price}>Rp {data.price}</Text>
-              <Text note style={{fontSize: 14}}>/ {data.unit}</Text>
+              <Text note style={{fontSize: 14}}>
+                / {data.unit}
+              </Text>
             </View>
             <View style={styles.PABbutton}>
-              <Button small style={styles.PABbuttonA}>
-                <Text style={{fontWeight: 'bold'}}>Beli</Text>
-              </Button>
+              {this.state.quantity > 0 ? (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <TouchableOpacity onPress={() => handleQuantity(false)}>
+                    <Icon
+                      name="minus-circle"
+                      type="font-awesome"
+                      size={28}
+                      color="#00B444"
+                    />
+                  </TouchableOpacity>
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      fontSize: 20,
+                      marginHorizontal: 10,
+                      marginVertical: 5,
+                    }}>
+                    {this.state.quantity}
+                  </Text>
+                  <TouchableOpacity onPress={() => handleQuantity(true)}>
+                    <Icon
+                      name="plus-circle"
+                      type="font-awesome"
+                      size={28}
+                      color="#00B444"
+                    />
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <Button
+                  small
+                  style={styles.PABbuttonA}
+                  onPress={() => handleAddQuantity()}>
+                  <Text style={{fontWeight: 'bold'}}>Beli</Text>
+                </Button>
+              )}
 
               <Button small icon bordered style={styles.PABbuttonB}>
                 <Icon name="comments" style={styles.PABbuttonBicon} />
@@ -117,7 +170,9 @@ class DetailProdukBuyer extends Component {
               <Text style={{fontSize: 14}}>{data.label2}</Text>
             </View>
             <View style={styles.descriptionProductDesc}>
-              <Text style={{color: 'gray', fontSize: 14}}>{data.description}</Text>
+              <Text style={{color: 'gray', fontSize: 14}}>
+                {data.description}
+              </Text>
             </View>
           </View>
 
@@ -178,50 +233,42 @@ class DetailProdukBuyer extends Component {
             </View>
           </View>
 
-          
-<Text
-style={styles.relatedProductText}
->
-  Related Products
-</Text>
-          
+          <Text style={styles.relatedProductText}>Related Products</Text>
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View style={{flexDirection: 'row'}}>
               <Card
                 name="Bayam Hijau"
                 label="Conventional"
-                price="Rp 4.300"
+                price="4.300"
                 unit="250 gram"
+                navigation={this.props.navigation}
               />
               <Card
                 name="Bayam Hijau"
                 label="Conventional"
-                price="Rp 4.300"
+                price="4.300"
                 unit="250 gram"
+                navigation={this.props.navigation}
               />
               <Card
                 name="Bayam Hijau"
                 label="Conventional"
-                price="Rp 4.300"
+                price="4.300"
                 unit="250 gram"
+                navigation={this.props.navigation}
               />
               <Card
                 name="Bayam Hijau"
                 label="Conventional"
-                price="Rp 4.300"
+                price="4.300"
                 unit="250 gram"
+                navigation={this.props.navigation}
               />
             </View>
           </ScrollView>
 
-          <View
-          style={styles.end}
-          >
-
-          </View>
-
-          
+          <View style={styles.end}></View>
         </HeaderImageScrollView>
       </View>
     );

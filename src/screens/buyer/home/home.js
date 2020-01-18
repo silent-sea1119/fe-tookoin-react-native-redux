@@ -36,56 +36,82 @@ class HomeBuyer extends Component {
           </View>
           <View style={category}>
             <Category
-              name="Sayuran Segar"
+              name="Sayuran sugar"
               imgUri={require('../../../assets/icon/carrot.png')}
+              navigation={this.props.navigation}
+              id={1}
             />
             <Category
               name="Buah Segar"
               imgUri={require('../../../assets/icon/avocado.png')}
+              navigation={this.props.navigation}
+              id={2}
             />
             <Category
               name="Sumber Karbohidrat"
               imgUri={require('../../../assets/icon/wheat.png')}
+              navigation={this.props.navigation}
+              id={3}
             />
             <Category
               name="Produk Terbaru"
               imgUri={require('../../../assets/icon/new.png')}
+              navigation={this.props.navigation}
+              id={4}
             />
             <Category
               name="Promo Spesial"
               imgUri={require('../../../assets/icon/discount.png')}
+              navigation={this.props.navigation}
+              id={5}
             />
             <Category
               name="Produk Terlaris"
               imgUri={require('../../../assets/icon/star.png')}
+              navigation={this.props.navigation}
+              id={6}
             />
             <Category
               name="Organik & Premium"
               imgUri={require('../../../assets/icon/winner.png')}
+              navigation={this.props.navigation}
+              id={7}
             />
             <Category
               name="Katering Sehat"
               imgUri={require('../../../assets/icon/fruits.png')}
+              navigation={this.props.navigation}
+              id={8}
             />
             <Category
               name="Grosir"
               imgUri={require('../../../assets/icon/shoppingBasket.png')}
+              navigation={this.props.navigation}
+              id={9}
             />
             <Category
               name="Makanan & Minuman"
               imgUri={require('../../../assets/icon/food.png')}
+              navigation={this.props.navigation}
+              id={10}
             />
             <Category
               name="Keperluan Dapur"
               imgUri={require('../../../assets/icon/saltShaker.png')}
+              navigation={this.props.navigation}
+              id={11}
             />
             <Category
               name="Daging & Seafood"
               imgUri={require('../../../assets/icon/fish.png')}
+              navigation={this.props.navigation}
+              id={12}
             />
             <Category
-              name="Olahan Susu & Telur"
+              name="Olahan Susu & Telurss"
               imgUri={require('../../../assets/icon/egg.png')}
+              navigation={this.props.navigation}
+              id={13}
             />
           </View>
           <Border />
@@ -124,26 +150,30 @@ class HomeBuyer extends Component {
                 <Card
                   name="Bayam Hijau"
                   label="Conventional"
-                  price="Rp 4.300"
+                  price="4.300"
                   unit="250 gram"
+                  navigation={this.props.navigation}
                 />
                 <Card
                   name="Labu Siam"
                   label="Conventional"
-                  price="Rp 4.600"
+                  price="4.600"
                   unit="500 gram"
+                  navigation={this.props.navigation}
                 />
                 <Card
                   name="Paprika Kuning"
                   label="Organik"
-                  price="Rp 20.000"
+                  price="20.000"
                   unit="1 pcs"
+                  navigation={this.props.navigation}
                 />
                 <Card
                   name="Wortel Organik"
                   label="Organik"
-                  price="Rp 3.000"
+                  price="3.000"
                   unit="500 gram"
+                  navigation={this.props.navigation}
                 />
               </View>
             </ScrollView>
@@ -183,26 +213,30 @@ class HomeBuyer extends Component {
                   <Card
                     name="Alpukat Mentega"
                     label="Conventional"
-                    price="Rp 999"
+                    price="999"
                     unit="1 kg"
+                    navigation={this.props.navigation}
                   />
                   <Card
                     name="Pisang Raja"
                     label="Conventional"
-                    price="Rp 29.800"
+                    price="29.800"
                     unit="1 sisir"
+                    navigation={this.props.navigation}
                   />
                   <Card
                     name="Pisang Uli"
                     label="Organik"
-                    price="Rp 12.300"
+                    price="12.300"
                     unit="1 sisir"
+                    navigation={this.props.navigation}
                   />
                   <Card
                     name="Salak"
                     label="Organik"
-                    price="Rp 4.990"
+                    price="4.990"
                     unit="500 gram"
+                    navigation={this.props.navigation}
                   />
                 </View>
               </ScrollView>
@@ -210,7 +244,6 @@ class HomeBuyer extends Component {
             </View>
           </View>
         </ScrollView>
-        <Footer />
       </View>
     );
   }

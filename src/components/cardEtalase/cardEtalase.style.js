@@ -3,11 +3,11 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   container: {
     borderColor: '#F5F5F6',
-    backgroundColor: 'red',
     borderWidth: 1,
-    justifyContent: 'flex-start',
-    width: 160,
+    alignItems: 'flex-start',
+    width: '100%',
     padding: 10,
+    marginHorizontal: 12,
     backgroundColor: 'white',
     // justifyContent: 'strecth'
   },
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height: 100,
     backgroundColor: '#62BA67',
-    width: 140,
+    width: '100%',
     alignItems: 'flex-start',
   },
   name: {
@@ -35,25 +35,11 @@ const styles = StyleSheet.create({
   unit: {
     marginVertical: 6,
     color: 'gray',
-    fontSize: 14,
+    fontSize: 12,
   },
   price: {
     flexDirection: 'row',
     marginVertical: 5,
-  },
-  beli: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 5,
-    backgroundColor: '#62BA67',
-    width: 140,
-    height: 32,
-  },
-  kuantity: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 2,
   },
 });
 

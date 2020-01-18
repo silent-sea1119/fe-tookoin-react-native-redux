@@ -17,7 +17,15 @@ import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ButtonGroup} from 'react-native-elements';
-import {Container, Header, Content, Button, Item, Input, Toast } from 'native-base';
+import {
+  Container,
+  Header,
+  Content,
+  Button,
+  Item,
+  Input,
+  Toast,
+} from 'native-base';
 // import {Input} from 'react-native-elements';
 
 const styles = StyleSheet.create({
@@ -65,6 +73,7 @@ class Register extends Component {
   };
 
   onClickSubmit = async () => {
+    this.props.navigation.navigate('Login');
     // console.log('register with: ',this.state.email, this.state.password, this.state.user_type)
 
     console.log('clicked submit');
@@ -72,39 +81,39 @@ class Register extends Component {
     console.log('password', this.state.password);
     console.log('role', this.state.role);
 
-    await this.props.dispatch(
-        registerAccount({
-          name_user: this.state.name_user,
-          email: this.state.email,
-          password: this.state.password,
-          role: this.state.role,
-        }),
-      )
-      .then(res => {
-        if(res.value.data.status===200){
-        console.log('reseponse',res)
-        this.setState({registered: !this.state.registered});
-        this.showToast("Register Success", "success");
-        alert('success')
-      }
-      else{
-        alert('failed')
-      }
-        // this.showToast("Register Success", "success");
-        // this.props.navigation.navigate('Login');
-      })
-      // .catch(err => this.showToast(`${err}`, "warning"));
+    // await this.props.dispatch(
+    //     registerAccount({
+    //       name_user: this.state.name_user,
+    //       email: this.state.email,
+    //       password: this.state.password,
+    //       role: this.state.role,
+    //     }),
+    //   )
+    //   .then(res => {
+    //     if(res.value.data.status===200){
+    //     console.log('reseponse',res)
+    //     this.setState({registered: !this.state.registered});
+    //     this.showToast("Register Success", "success");
+    //     alert('success')
+    //   }
+    //   else{
+    //     alert('failed')
+    //   }
+    //     this.showToast("Register Success", "success");
+    //     this.props.navigation.navigate('Login');
+    //   })
+    //   .catch(err => this.showToast(`${err}`, "warning"));
   };
 
-   showToast = (message, types) => {
+  showToast = (message, types) => {
     Toast.show({
       text: message,
-      buttonText: "Okay",
-      type: types == "warning" ? "warning":"success",
+      buttonText: 'Okay',
+      type: types == 'warning' ? 'warning' : 'success',
       duration: 3000,
-      position: "bottom"
-    })
-  }
+      position: 'bottom',
+    });
+  };
 
   render() {
     const role = ['Buyer', 'Seller'];
@@ -195,8 +204,6 @@ class Register extends Component {
   }
 }
 
-const mapDispatchToProps = state => ({
+const mapDispatchToProps = state => ({});
 
-})
-
-export default connect(mapDispatchToProps)(Register)
+export default connect(mapDispatchToProps)(Register);

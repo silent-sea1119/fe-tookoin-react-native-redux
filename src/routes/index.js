@@ -20,12 +20,9 @@ import {
   ProductCategory,
   InboxSeller,
   HomeSeller,
-<<<<<<< HEAD
   Etalase,
   MyOrderSeller,
-=======
   AddProduct
->>>>>>> b167b94b351db6f2e56684531d3c3c656baf145c
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -117,22 +114,16 @@ StackHomeBuyer.navigationOptions = ({ navigation }) => {
 const StackHomeSeller = createStackNavigator(
   {
     HomeSeller,
-<<<<<<< HEAD
     InboxSeller,
     Home,
     Etalase,
     MyOrderSeller,
-  },
-  {
-    initialRouteName: 'HomeSeller',
-=======
-    Home,
     AddProduct,
   },
   {
     initialRouteName: "AddProduct",
+    // initialRouteName: 'HomeSeller',
     // initialRouteName: 'ProfileSeller',
->>>>>>> b167b94b351db6f2e56684531d3c3c656baf145c
     // initialRouteName: 'Profile',
     // initialRouteName: 'InboxBuyer',
     // initialRouteName: 'DetailProdukBuyer',
@@ -267,7 +258,7 @@ const Router = createSwitchNavigator(
     RouteTab2,
   },
   {
-    initialRouteName: 'StackHomeSeller',
+    // initialRouteName: 'StackHomeSeller',
     //initialRouteName: 'RouteTab2',
     headerMode: 'none',
   },

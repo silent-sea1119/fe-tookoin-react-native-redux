@@ -121,8 +121,8 @@ const StackHomeSeller = createStackNavigator(
     AddProduct,
   },
   {
+    initialRouteName: 'HomeSeller',
     initialRouteName: "AddProduct",
-    // initialRouteName: 'HomeSeller',
     // initialRouteName: 'ProfileSeller',
     // initialRouteName: 'Profile',
     // initialRouteName: 'InboxBuyer',
@@ -258,7 +258,7 @@ const Router = createSwitchNavigator(
     RouteTab2,
   },
   {
-    // initialRouteName: 'StackHomeSeller',
+    initialRouteName: 'StackHomeSeller',
     //initialRouteName: 'RouteTab2',
     headerMode: 'none',
   },

@@ -24,7 +24,8 @@ import {
   MyOrderSeller,
   AddProduct,
   EditProfile,
-  SuccessOrder
+  SuccessOrder,
+  Splashscreen
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -126,7 +127,9 @@ const StackHomeSeller = createStackNavigator(
     EditProfile
   },
   {
-    initialRouteName: 'EditProfile',
+    // initialRouteName: 'MyOrderSeller',
+    // initialRouteName: 'EditProfile',
+    initialRouteName: "HomeSeller",
     // initialRouteName: 'HomeSeller',
     // initialRouteName: "AddProduct",
     // initialRouteName: 'ProfileSeller',
@@ -138,6 +141,13 @@ const StackHomeSeller = createStackNavigator(
     headerMode: 'none',
   },
 );
+
+const StackSplashscreen = createStackNavigator({
+  Splashscreen
+}, {
+  headerMode: 'none',
+  initialRouteName: "Splashscreen",
+})
 
 const RouteTab = createBottomTabNavigator(
   {
@@ -238,7 +248,7 @@ const RouteTab2 = createBottomTabNavigator(
     // },
 
     ProfileSeller: {
-      screen: HomeSeller,
+      screen: StackHomeSeller,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <Icon name="user" type="font-awesome" size={24} color={tintColor} />
@@ -259,14 +269,20 @@ const Router = createSwitchNavigator(
   {
     // StackAuth,
     // StackHome,
+    StackSplashscreen,
     StackHomeBuyer,
     StackHomeSeller,
+    // StackHomeSeller,
     RouteTab,
     RouteTab2,
   },
   {
-    initialRouteName: 'StackHomeBuyer',
+    //initialRouteName: 'StackHomeBuyer',
+    initialRouteName: 'StackSplashscreen',
+    // initialRouteName: 'StackHomeSeller',
     //initialRouteName: 'RouteTab2',
+    // initialRouteName: 'StackHomeSeller',
+    //initialRouteName: 'RouteTab',
     headerMode: 'none',
   },
 );

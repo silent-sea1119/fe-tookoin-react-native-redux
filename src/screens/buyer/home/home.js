@@ -36,56 +36,82 @@ class HomeBuyer extends Component {
           </View>
           <View style={category}>
             <Category
-              name="Sayuran Segar"
+              name="Sayuran sugar"
               imgUri={require('../../../assets/icon/carrot.png')}
+              navigation={this.props.navigation}
+              id={1}
             />
             <Category
               name="Buah Segar"
               imgUri={require('../../../assets/icon/avocado.png')}
+              navigation={this.props.navigation}
+              id={2}
             />
             <Category
               name="Sumber Karbohidrat"
               imgUri={require('../../../assets/icon/wheat.png')}
+              navigation={this.props.navigation}
+              id={3}
             />
             <Category
               name="Produk Terbaru"
               imgUri={require('../../../assets/icon/new.png')}
+              navigation={this.props.navigation}
+              id={4}
             />
             <Category
               name="Promo Spesial"
               imgUri={require('../../../assets/icon/discount.png')}
+              navigation={this.props.navigation}
+              id={5}
             />
             <Category
               name="Produk Terlaris"
               imgUri={require('../../../assets/icon/star.png')}
+              navigation={this.props.navigation}
+              id={6}
             />
             <Category
               name="Organik & Premium"
               imgUri={require('../../../assets/icon/winner.png')}
+              navigation={this.props.navigation}
+              id={7}
             />
             <Category
               name="Katering Sehat"
               imgUri={require('../../../assets/icon/fruits.png')}
+              navigation={this.props.navigation}
+              id={8}
             />
             <Category
               name="Grosir"
               imgUri={require('../../../assets/icon/shoppingBasket.png')}
+              navigation={this.props.navigation}
+              id={9}
             />
             <Category
               name="Makanan & Minuman"
               imgUri={require('../../../assets/icon/food.png')}
+              navigation={this.props.navigation}
+              id={10}
             />
             <Category
               name="Keperluan Dapur"
               imgUri={require('../../../assets/icon/saltShaker.png')}
+              navigation={this.props.navigation}
+              id={11}
             />
             <Category
               name="Daging & Seafood"
               imgUri={require('../../../assets/icon/fish.png')}
+              navigation={this.props.navigation}
+              id={12}
             />
             <Category
-              name="Olahan Susu & Telur"
+              name="Olahan Susu & Telurss"
               imgUri={require('../../../assets/icon/egg.png')}
+              navigation={this.props.navigation}
+              id={13}
             />
           </View>
           <Border />

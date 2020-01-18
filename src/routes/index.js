@@ -117,9 +117,7 @@ const StackHomeSeller = createStackNavigator(
     HomeSeller,
     InboxSeller,
     Home,
-    Etalase,
     MyOrderSeller,
-    AddProduct,
     EditProfile
   },
   {
@@ -137,6 +135,16 @@ const StackHomeSeller = createStackNavigator(
     headerMode: 'none',
   },
 );
+
+const StackEtalaseSeller = createStackNavigator(
+  {
+    Etalase,
+    AddProduct,
+  },
+  {initialRouteName:'Etalase',
+  headerMode: 'none'
+}
+)
 
 const RouteTab = createBottomTabNavigator(
   {
@@ -207,7 +215,7 @@ const RouteTab = createBottomTabNavigator(
 const RouteTab2 = createBottomTabNavigator(
   {
     HomeSeller: {
-      screen: Etalase,
+      screen: StackEtalaseSeller,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <IconFA name="shopping-bag" size={22} color={tintColor} />

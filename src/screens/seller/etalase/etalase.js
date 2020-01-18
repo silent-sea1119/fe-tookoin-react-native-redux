@@ -3,9 +3,40 @@ import {View, Text, ScrollView, Image} from 'react-native';
 import styles from './etalase.style';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import {Icon} from 'react-native-elements';
+import {connect} from 'react-redux';
+import AsyncStorage from '@react-native-community/async-storage';
 import CardEtalase from '../../../components/cardEtalase/cardEtalase';
+import {fetchEtalase} from '../../../redux/actions/etalase/etalase';
+import {SAPI_URL} from 'react-native-dotenv';
 
 class Etalase extends Component {
+  state = {
+    name_user: '',
+    token: '',
+    etalase: [],
+  };
+
+  handleGetItem = async () => {
+    let name_user = await AsyncStorage.getItem('name_user');
+
+    this.setState({name_user: name_user});
+  };
+  handleGetEtalaseItem = async () => {
+    let url = SAPI_URL + '/product/etalase';
+    let token = await AsyncStorage.getItem('token');
+    let config = {
+      headers: {Authorization: 'Bearer ' + token},
+    };
+    const dataEtalaseItem = await this.props.dispatch(
+      fetchEtalase(url, config),
+    );
+    this.setState({etalase: dataEtalaseItem.value.data.data});
+  };
+
+  componentDidMount() {
+    this.handleGetItem();
+    this.handleGetEtalaseItem();
+  }
   render() {
     const {
       container,
@@ -28,7 +59,9 @@ class Etalase extends Component {
                 style={headerAvatar}
                 source={require('../../../assets/images/Avatar.png')}
               />
-              <Text style={{fontWeight: 'bold', fontSize: 18}}>Seller 77</Text>
+              <Text style={{fontWeight: 'bold', fontSize: 18}}>
+                {this.state.name_user}
+              </Text>
             </View>
             <View style={headerCode}>
               <View
@@ -58,11 +91,7 @@ class Etalase extends Component {
                   flexDirection: 'row',
                   alignItems: 'center',
                 }}>
-                <Icon
-                  name="receipt"
-                  size={20}
-                  color="#DADADA"
-                />
+                <Icon name="receipt" size={20} color="#DADADA" />
                 <View style={{marginHorizontal: 5}}>
                   <Text style={{fontSize: 12}}>Transaction</Text>
                   <Text style={{fontWeight: 'bold', color: '#62BA67'}}>20</Text>
@@ -91,48 +120,18 @@ class Etalase extends Component {
             </View>
           </View>
           <View style={etalase}>
-            <CardEtalase
-              name="Bayam"
-              price="1000"
-              unit="250 Gram"
-              label="organik"
-            />
-            <CardEtalase
-              name="Bayam"
-              price="1000"
-              unit="250 Gram"
-              label="organik"
-            />
-            <CardEtalase
-              name="Bayam"
-              price="1000"
-              unit="250 Gram"
-              label="organik"
-            />
-            <CardEtalase
-              name="Bayam"
-              price="1000"
-              unit="250 Gram"
-              label="organik"
-            />
-            <CardEtalase
-              name="Bayam"
-              price="1000"
-              unit="250 Gram"
-              label="organik"
-            />
-            <CardEtalase
-              name="Bayam"
-              price="1000"
-              unit="250 Gram"
-              label="organik"
-            />
-            <CardEtalase
-              name="Bayam"
-              price="1000"
-              unit="250 Gram"
-              label="organik"
-            />
+            {this.state.etalase.length > 0
+              ? this.state.etalase.map((value, index) => (
+                  <CardEtalase
+                    name={value.name_product}
+                    price={value.price}
+                    unit={value.unit}
+                    label={value.label}
+                    key={index}
+                    navigation={this.props.navigation}
+                  />
+                ))
+              : null}
           </View>
         </ScrollView>
       </View>
@@ -140,4 +139,10 @@ class Etalase extends Component {
   }
 }
 
-export default Etalase;
+const mapStateToProps = state => {
+  return {
+    etalase: state.etalase,
+  };
+};
+
+export default connect(mapStateToProps)(Etalase);

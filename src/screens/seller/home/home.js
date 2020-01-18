@@ -3,12 +3,25 @@ import {Text, View, TouchableOpacity, ScrollView, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconMI from 'react-native-vector-icons/MaterialIcons';
 import styles from './home.style';
+import AsyncStorage from '@react-native-community/async-storage';
 import avatar from '../../../assets/images/Avatar.png';
 
 class HomeSeller extends Component {
+  state = {
+    name_user: '',
+  };
+
+  handleGetItem = async () => {
+    let name_user = await AsyncStorage.getItem('name_user');
+    this.setState({name_user: name_user});
+  };
+
   handleClick = () => {
     this.props.navigation.navigate('Login');
   };
+  componentDidMount() {
+    this.handleGetItem();
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -17,7 +30,7 @@ class HomeSeller extends Component {
             <TouchableOpacity style={styles.touchBackIcon}>
               <IconMI style={styles.backIcon} name="arrow-back" />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=> this.props.navigation.navigate('EditProfile')}>
               <Icon style={styles.gearIcon} name="cog" />
             </TouchableOpacity>
             <TouchableOpacity>
@@ -28,7 +41,7 @@ class HomeSeller extends Component {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.headerProfile}>
             <Image source={avatar} style={styles.avatar} />
-            <Text style={styles.profileName}>Bima Febriansyah</Text>
+            <Text style={styles.profileName}>{this.state.name_user}</Text>
           </View>
           <View style={styles.body}>
             <View style={styles.bodyHeader}>
@@ -59,7 +72,9 @@ class HomeSeller extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity style={styles.body2} onPress={()=> this.props.navigation.navigate('AddProduct')}>
+          <TouchableOpacity
+            style={styles.body2}
+            onPress={() => this.props.navigation.navigate('AddProduct',{title: 'Add'})}>
             <IconMI style={styles.addIcon} name="add-circle-outline" />
             <Text style={styles.addText}>Tambah Produk Baru</Text>
             <IconMI style={styles.detailAdd} name="navigate-next" />

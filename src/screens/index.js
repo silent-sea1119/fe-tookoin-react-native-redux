@@ -16,6 +16,7 @@ import MyOrderSeller from './seller/my-order/my-order';
 import AddProduct from "./seller/product/product";
 import EditProfile from "./seller/profile/editprofile";
 import SuccessOrder from "./buyer/my-order/success-order";
+import Splashscreen from "./splashscreen"
 
 export {
   Home,
@@ -35,5 +36,6 @@ export {
   MyOrderSeller,
   AddProduct,
   EditProfile,
-  SuccessOrder
+  SuccessOrder,
+  Splashscreen
 };

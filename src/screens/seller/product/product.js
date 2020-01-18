@@ -1,22 +1,145 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, ScrollView} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Picker,
+  Alert,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconMI from 'react-native-vector-icons/MaterialIcons';
 import styles from './product.style';
 import {TextInput} from 'react-native-gesture-handler';
+import Modal from 'react-native-modal';
 import NumericInput from '@wwdrew/react-native-numeric-textinput';
+import Axios from 'axios';
+import {SAPI_URL} from 'react-native-dotenv';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class AddProduct extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      price: '',
-      stock: '',
+      nama_produk: this.props.navigation.getParam('nama_produk') || '',
+      price: this.props.navigation.getParam('price') || '',
+      stock: this.props.navigation.getParam('stock') || '',
+      desc_produk: this.props.navigation.getParam('desc_produk') || '',
+      unit: this.props.navigation.getParam('unit') || '',
+      label: this.props.navigation.getParam('label') || '',
+      toggleModal: false,
+      id_category: '',
     };
   }
+
+  handleToggleModal = stat => {
+    this.setState({toggleModal: stat});
+  };
+  handleSubmitProduct = async () => {
+    let token = await AsyncStorage.getItem('token');
+    let id_seller = await AsyncStorage.getItem('id_user');
+    console.log(token);
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    let data = {
+      name_product: this.state.nama_produk,
+      desc_product: this.state.desc_produk,
+      price: this.state.price,
+      id_category: this.state.id_category,
+      image: null,
+      id_seller: id_seller,
+      unit: this.state.unit,
+      label: this.state.label,
+    };
+
+    let url = SAPI_URL + '/product/';
+    Axios.post(url, data, config)
+      .then(({data}) => {
+        if (data.msg === 'success') {
+          this.props.navigation.push('Etalase');
+        } else {
+          Alert.alert('Error', 'Something Went Wrong');
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        Alert.alert('Error', 'Something Went Wrong');
+      });
+  };
   render() {
     return (
       <View style={styles.container}>
+        <View>
+          <Modal
+            isVisible={this.state.toggleModal}
+            onModalHide={() => {
+              if (this.state.id_category) {
+                Alert.alert('Status', 'Category Selected');
+              }
+            }}
+            onBackdropPress={() => this.handleToggleModal(false)}
+            onBackButtonPress={() => this.handleToggleModal(false)}>
+            <View style={{flex: 1, position: 'absolute'}}>
+              <View
+                style={{
+                  width: 326,
+                  height: 150,
+                  backgroundColor: 'white',
+                  borderRadius: 15,
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    color: 'black',
+                    fontSize: 20,
+                    fontFamily: 'AirbnbCerealMedium',
+                    marginTop: 20,
+                  }}>
+                  Select Category
+                </Text>
+                <View
+                  style={{
+                    height: 50,
+                    width: 291,
+                    marginTop: 15,
+                    elevation: 2,
+                    borderRadius: 10,
+                  }}>
+                  <Picker
+                    selectedValue={this.state.id_category}
+                    style={{
+                      height: '100%',
+                      width: '100%',
+                    }}
+                    mode={'dropdown'}
+                    onValueChange={(itemValue, itemIndex) =>
+                      this.setState({id_category: itemValue})
+                    }>
+                    <Picker.Item
+                      color="#CECECE"
+                      label="Select Category"
+                      value=""
+                    />
+                    <Picker.Item label="Sayur Segar" value="1" />
+                    <Picker.Item label="Buah Segar" value="2" />
+                    <Picker.Item label="Sumber Karbohidrat" value="3" />
+                    <Picker.Item label="Organik dan Premium" value="4" />
+                    <Picker.Item label="Katering Sehat" value="5" />
+                    <Picker.Item label="Makanan dan Minuman" value="6" />
+                    <Picker.Item label="Keperluan Dapur" value="7" />
+                    <Picker.Item label="Daging dan Seafood" value="8" />
+                    <Picker.Item label="Olahan Susu dan Telur" value="9" />
+                  </Picker>
+                </View>
+              </View>
+            </View>
+          </Modal>
+        </View>
         <View style={styles.header}>
           <View style={styles.headerIcon}>
             <TouchableOpacity
@@ -27,7 +150,7 @@ class AddProduct extends Component {
             <Text style={styles.headerText}>
               {this.props.navigation.getParam('title')} Produk
             </Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.handleSubmitProduct()}>
               <IconMI style={styles.checkIcon} name="check" />
             </TouchableOpacity>
           </View>
@@ -38,15 +161,24 @@ class AddProduct extends Component {
               <Text style={styles.imagepickerText}>+ Tambah Foto/Video</Text>
             </TouchableOpacity>
             <View style={styles.hr} />
-            <TextInput style={styles.TextInput} placeholder="Nama Produk" />
+            <TextInput
+              style={styles.TextInput}
+              placeholder="Nama Produk"
+              defaultValue={this.state.nama_produk}
+              onChange={e => this.setState({nama_produk: e.nativeEvent.text})}
+            />
             <View style={styles.hr} />
             <TextInput
               style={styles.TextInput}
               placeholder="Deskripsi Produk"
+              defaultValue={this.state.desc_produk}
+              onChange={e => this.setState({desc_produk: e.nativeEvent.text})}
             />
           </View>
 
-          <TouchableOpacity style={styles.category}>
+          <TouchableOpacity
+            style={styles.category}
+            onPress={() => this.handleToggleModal(true)}>
             <Icon style={styles.categoryIcon} name="list-ul" />
             <Text style={styles.categoryText}>Kategori</Text>
             <IconMI style={styles.categoryNavigate} name="navigate-next" />
@@ -62,7 +194,7 @@ class AddProduct extends Component {
                   this.setState({price: value});
                 }}
                 type="decimal"
-                decimalPlaces={3}
+                decimalPlaces={0}
                 style={styles.TextInput2}
                 placeholder="Atur Harga"
               />
@@ -85,13 +217,23 @@ class AddProduct extends Component {
             <View style={styles.body2Content}>
               <Icon style={styles.body2Icon} name="balance-scale" />
               <Text style={styles.body2Text}>Unit</Text>
-              <TextInput style={styles.TextInput2} placeholder="Atur Unit" />
+              <TextInput
+                style={styles.TextInput2}
+                placeholder="Atur Unit"
+                defaultValue={this.state.unit}
+                onChange={e => this.setState({unit: e.nativeEvent.text})}
+              />
             </View>
             <View style={styles.hr} />
             <View style={styles.body2Content}>
               <Icon style={styles.body2Icon} name="tags" />
               <Text style={styles.body2Text}>Label</Text>
-              <TextInput style={styles.TextInput2} placeholder="Atur Label" />
+              <TextInput
+                style={styles.TextInput2}
+                placeholder="Atur Label"
+                defaultValue={this.state.label}
+                onChange={e => this.setState({label: e.nativeEvent.text})}
+              />
             </View>
           </View>
         </ScrollView>

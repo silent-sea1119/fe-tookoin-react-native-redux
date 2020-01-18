@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     width: '100%',
     padding: 10,
-    marginHorizontal: 12,
+    marginHorizontal: 20,
     backgroundColor: 'white',
     // justifyContent: 'strecth'
   },

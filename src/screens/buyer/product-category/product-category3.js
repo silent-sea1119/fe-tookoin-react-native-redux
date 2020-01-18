@@ -4,9 +4,8 @@ import styles from './product-category.style';
 import Footer from '../../../components/footer/footer';
 import Search from '../../../components/search/search';
 import Card from '../../../components/card/card';
-
-//redux
 import {bindActionCreators} from 'redux';
+
 import {connect} from 'react-redux';
 import {fetchProduct} from '../../../redux/actions/product/productAction';
 
@@ -14,6 +13,7 @@ import {API_URL} from 'react-native-dotenv';
 
 // const URL = 'http://192.168.6.139:8000/product';
 // http://192.168.6.139:8000/product
+
 
 class ProductCategory extends Component {
   state = {
@@ -25,13 +25,11 @@ class ProductCategory extends Component {
   };
 
   getDataFromApi = async () => {
-    console.log(this.props.navigation.getParam('id'), 'your-id-props');
-    const id = this.props.navigation.getParam('id');
-    const url = API_URL + '/product/?id_category=' + id;
-    console.log(url, 'your-url');
-    const product = await this.props.fetchProduct(url);
-    // console.log(product.value.data.data, 'great')
-    // console.log(this.props.product)
+    const url = API_URL + '/product';
+    console.log(url);
+    const product = await this.props.fetchProduct(url)
+    console.log(product.value.data.data, 'great')
+    console.log(this.props.product)
   };
 
   render() {
@@ -45,13 +43,14 @@ class ProductCategory extends Component {
       labelContainerParent,
     } = styles;
     const produk = {
-      label: this.props.navigation.getParam('name'),
+      label: 'suuk beureum',
     };
 
-    // console.log(this.props.navigation.getParam('name'), ' sudah gila ');
-    // console.log(this.props.product);
-    const productList = this.props.product.data.data;
-    console.log(productList, '8989898');
+    const productList = this.props.product.data.data
+
+
+    
+
 
     return (
       <View style={container}>
@@ -70,16 +69,11 @@ class ProductCategory extends Component {
                 name={item.name_product}
                 price={item.price}
                 unit={item.stock}
-                navigation={this.props.navigation}
               />
             </View>
           ))}
         </ScrollView>
         {/* <Footer /> */}
-
-
-  
-
       </View>
     );
   }

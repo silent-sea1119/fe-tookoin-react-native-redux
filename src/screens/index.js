@@ -15,6 +15,7 @@ import Cart from './buyer/cart/cart';
 import MyOrderSeller from './seller/my-order/my-order';
 import AddProduct from "./seller/product/product";
 import EditProfile from "./seller/profile/editprofile";
+import SuccessOrder from "./buyer/my-order/success-order";
 
 export {
   Home,
@@ -33,5 +34,6 @@ export {
   Etalase,
   MyOrderSeller,
   AddProduct,
-  EditProfile
+  EditProfile,
+  SuccessOrder
 };

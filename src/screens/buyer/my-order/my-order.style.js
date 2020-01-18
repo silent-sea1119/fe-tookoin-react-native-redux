@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 0.1,
     borderColor: 'gray',
-    height: 200,
+    height: 240,
     // width: 200,
     // flex: 1,
     flexDirection: 'column',
@@ -110,6 +110,12 @@ const styles = StyleSheet.create({
   },
   iconChild21: {
     color: 'gray',
+    fontSize: 22,
+    paddingHorizontal: 5,
+  },
+
+  iconChildActive: {
+    color: 'green',
     fontSize: 22,
     paddingHorizontal: 5,
   },

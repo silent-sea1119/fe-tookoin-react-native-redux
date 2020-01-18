@@ -258,5 +258,5 @@ const Router = createSwitchNavigator(
   },
 );
 
-// export default createAppContainer(Router);
-export default createAppContainer(RouteTab2);
+export default createAppContainer(Router);
+// export default createAppContainer(RouteTab2);

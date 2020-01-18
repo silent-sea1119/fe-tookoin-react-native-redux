@@ -123,7 +123,9 @@ const StackHomeSeller = createStackNavigator(
     EditProfile
   },
   {
-    initialRouteName: 'EditProfile',
+    // initialRouteName: 'MyOrderSeller',
+    // initialRouteName: 'EditProfile',
+    initialRouteName: "HomeSeller",
     // initialRouteName: 'HomeSeller',
     // initialRouteName: "AddProduct",
     // initialRouteName: 'ProfileSeller',
@@ -235,7 +237,7 @@ const RouteTab2 = createBottomTabNavigator(
     // },
 
     ProfileSeller: {
-      screen: HomeSeller,
+      screen: StackHomeSeller,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <Icon name="user" type="font-awesome" size={24} color={tintColor} />
@@ -256,13 +258,15 @@ const Router = createSwitchNavigator(
   {
     // StackAuth,
     // StackHome,
-    StackHomeSeller,
+    // StackHomeSeller,
     RouteTab,
     RouteTab2,
   },
   {
-    initialRouteName: 'StackHomeSeller',
+    // initialRouteName: 'StackHomeSeller',
     //initialRouteName: 'RouteTab2',
+    // initialRouteName: 'StackHomeSeller',
+    initialRouteName: 'RouteTab',
     headerMode: 'none',
   },
 );

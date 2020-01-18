@@ -9,7 +9,11 @@ import Card from '../../../components/card/card';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {fetchProduct} from '../../../redux/actions/product/productAction';
-import {SAPI_URL} from 'react-native-dotenv';
+
+import {API_URL} from 'react-native-dotenv';
+
+// const URL = 'http://192.168.6.139:8000/product';
+// http://192.168.6.139:8000/product
 
 class ProductCategory extends Component {
   state = {
@@ -21,16 +25,13 @@ class ProductCategory extends Component {
   };
 
   getDataFromApi = async () => {
-    const id_category = this.props.navigation.getParam('id');
-    const url = SAPI_URL + '/product/?id_category=' + id_category;
-    console.log(url);
-
-    const productStoreInit = await this.props.dispatch(fetchProduct(url));
-    const productStoreFinal = productStoreInit.value.data.data;
-
-    this.setState({
-      productLocalState: productStoreFinal,
-    });
+    console.log(this.props.navigation.getParam('id'), 'your-id-props');
+    const id = this.props.navigation.getParam('id');
+    const url = API_URL + '/product/?id_category=' + id;
+    console.log(url, 'your-url');
+    const product = await this.props.fetchProduct(url);
+    // console.log(product.value.data.data, 'great')
+    // console.log(this.props.product)
   };
 
   render() {
@@ -43,15 +44,19 @@ class ProductCategory extends Component {
       textStyle,
       labelContainerParent,
     } = styles;
-    const produk = {label: this.props.navigation.getParam('name')};
-    const productList = this.state.productLocalState;
+    const produk = {
+      label: this.props.navigation.getParam('name'),
+    };
+
+    // console.log(this.props.navigation.getParam('name'), ' sudah gila ');
+    // console.log(this.props.product);
+    const productList = this.props.product.data.data;
+    console.log(productList, '8989898');
+
     return (
       <View style={container}>
         <Search />
-        <Search />
-        <Search />
-        <Search />
-
+        {/* <ScrollView> */}
         <ScrollView contentContainerStyle={styles.containerScroll}>
           <View style={labelContainerParent}>
             <View style={labelContainer}>
@@ -70,6 +75,11 @@ class ProductCategory extends Component {
             </View>
           ))}
         </ScrollView>
+        {/* <Footer /> */}
+
+
+  
+
       </View>
     );
   }
@@ -77,8 +87,18 @@ class ProductCategory extends Component {
 
 const mapStateToProps = state => {
   return {
-    product: state.product,
+    product: state.productReducer.product,
   };
 };
 
-export default connect(mapStateToProps)(ProductCategory);
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      fetchProduct,
+    },
+    dispatch,
+  );
+};
+
+// export default ProductCategory;
+export default connect(mapStateToProps, mapDispatchToProps)(ProductCategory);

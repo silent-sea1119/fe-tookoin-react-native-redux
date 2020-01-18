@@ -12,7 +12,6 @@ import {
   DrawerLayoutAndroid,
   Alert,
 } from 'react-native';
-// import {registerAccount} from '../../redux/actions/auth/index';
 import {registerAccount} from '../../../redux/actions/auth/index';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -29,6 +28,7 @@ import {
 } from 'native-base';
 import {API_URL} from 'react-native-dotenv';
 import Axios from 'axios';
+import {showToast} from '../../../components/toast';
 // import {Input} from 'react-native-elements';
 
 const styles = StyleSheet.create({
@@ -117,18 +117,31 @@ class Register extends Component {
         })
         .catch(err => console.log(err.msg));
     } else if (!nameValidate && !emailValidate && !passwordValidate) {
-      Alert.alert('Form Input Error', 'Please Fill The Form Correctly');
+      // Alert.alert('Form Input Error', 'Please Fill The Form Correctly');
+      showToast(`Form Input Error, Please Fill The Form Correctly`, `warning`);
     } else if (!nameValidate) {
-      Alert.alert(
-        'Name Incorrect Format',
-        'Name First Letter Must Be Uppercase',
+      // Alert.alert(
+      //   'Name Incorrect Format',
+      //   'Name First Letter Must Be Uppercase',
+      // );
+      showToast(
+        `Name Incorrect Format, Name First Letter Must Be Uppercase`,
+        `warning`,
       );
     } else if (!emailValidate) {
-      Alert.alert('Email Incorrect Format', 'Email not in correct format');
+      // Alert.alert('Email Incorrect Format', 'Email not in correct format');
+      showToast(
+        `Email Incorrect Format', 'Email not in correct format`,
+        `warning`,
+      );
     } else if (!passwordValidate) {
-      Alert.alert(
-        'Password Incorrect Format',
-        'Password must be at least 8 characters and must consist minimal 1 Uppercase, 1 lowercase and 1 number',
+      // Alert.alert(
+      //   'Password Incorrect Format',
+      //   'Password must be at least 8 characters and must consist minimal 1 Uppercase, 1 lowercase and 1 number',
+      // );
+      showToast(
+        `Password must be at least 8 characters and must consist minimal 1 Uppercase, 1 lowercase and 1 number`,
+        `warning`,
       );
     }
   };

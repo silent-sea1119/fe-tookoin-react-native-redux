@@ -127,6 +127,7 @@ class Etalase extends Component {
             {this.state.etalase.length > 0 ? (
               this.state.etalase.map((value, index) => (
                 <CardEtalase
+                  
                   name={value.name_product}
                   price={value.price}
                   unit={value.unit}

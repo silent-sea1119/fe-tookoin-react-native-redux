@@ -10,8 +10,12 @@ class AddProduct extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      nama_produk: '',
       price: '',
       stock: '',
+      desc_produk: '',
+      unit: '',
+      label: '',
     };
   }
   render() {
@@ -27,7 +31,7 @@ class AddProduct extends Component {
             <Text style={styles.headerText}>
               {this.props.navigation.getParam('title')} Produk
             </Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => console.log(this.state)}>
               <IconMI style={styles.checkIcon} name="check" />
             </TouchableOpacity>
           </View>
@@ -38,11 +42,16 @@ class AddProduct extends Component {
               <Text style={styles.imagepickerText}>+ Tambah Foto/Video</Text>
             </TouchableOpacity>
             <View style={styles.hr} />
-            <TextInput style={styles.TextInput} placeholder="Nama Produk" />
+            <TextInput
+              style={styles.TextInput}
+              placeholder="Nama Produk"
+              defaultValue={this.props.navigation.getParam('nama_produk') || this.state.nama_produk}
+            />
             <View style={styles.hr} />
             <TextInput
               style={styles.TextInput}
               placeholder="Deskripsi Produk"
+              defaultValue={this.props.navigation.getParam('desc_produk') || this.state.desc_produk}
             />
           </View>
 
@@ -57,12 +66,12 @@ class AddProduct extends Component {
               <IconMI style={styles.body2Icon} name="attach-money" />
               <Text style={styles.body2Text}>Harga</Text>
               <NumericInput
-                value={this.state.price}
+                value={this.props.navigation.getParam('price')|| this.state.price}
                 onUpdate={value => {
                   this.setState({price: value});
                 }}
                 type="decimal"
-                decimalPlaces={3}
+                decimalPlaces={0}
                 style={styles.TextInput2}
                 placeholder="Atur Harga"
               />
@@ -72,7 +81,7 @@ class AddProduct extends Component {
               <IconMI style={styles.body2Icon} name="layers" />
               <Text style={styles.body2Text}>Stok</Text>
               <NumericInput
-                value={this.state.stock}
+                value={this.props.navigation.getParam('stock')|| this.state.stock}
                 onUpdate={value => {
                   this.setState({stock: value});
                 }}
@@ -85,13 +94,21 @@ class AddProduct extends Component {
             <View style={styles.body2Content}>
               <Icon style={styles.body2Icon} name="balance-scale" />
               <Text style={styles.body2Text}>Unit</Text>
-              <TextInput style={styles.TextInput2} placeholder="Atur Unit" />
+              <TextInput
+                style={styles.TextInput2}
+                placeholder="Atur Unit"
+                defaultValue={this.props.navigation.getParam('unit') || this.state.unit}
+              />
             </View>
             <View style={styles.hr} />
             <View style={styles.body2Content}>
               <Icon style={styles.body2Icon} name="tags" />
               <Text style={styles.body2Text}>Label</Text>
-              <TextInput style={styles.TextInput2} placeholder="Atur Label" />
+              <TextInput
+                style={styles.TextInput2}
+                placeholder="Atur Label"
+                defaultValue={this.props.navigation.getParam('label') || this.state.label}
+              />
             </View>
           </View>
         </ScrollView>

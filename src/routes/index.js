@@ -274,14 +274,11 @@ const RouteTab2 = createBottomTabNavigator(
 
 const Router = createSwitchNavigator(
   {
-<<<<<<< HEAD
-    StackSplashscreen,
-=======
     // StackAuth,
     // StackHome,
     // StackHomeBuyer,
     // StackHomeSeller,
->>>>>>> 12e650fab65d5861e7176c7d2d65964505ffb718
+    StackSplashscreen,
     RouteTab,
     RouteTab2,
 

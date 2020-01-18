@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Icon } from 'react-native-elements';
 import IconFA from 'react-native-vector-icons/FontAwesome';
 
-
 import {
   Home,
   HomeBuyer,
@@ -23,7 +22,8 @@ import {
   Etalase,
   MyOrderSeller,
   AddProduct,
-  EditProfile
+  EditProfile,
+  SuccessOrder
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -67,6 +67,7 @@ const StackHomeBuyer = createStackNavigator(
     Cart,
     DetailProdukBuyer,
     ProductCategory,
+    SuccessOrder
   },
   {
     initialRouteName: 'HomeBuyer',
@@ -75,6 +76,7 @@ const StackHomeBuyer = createStackNavigator(
     // initialRouteName: 'DetailProdukBuyer',
     // initialRouteName: 'DaftarAlamatBuyer',
     // initialRouteName: 'ProductCategory',
+    // initialRouteName: 'SuccessOrder',
     headerMode: 'none',
   },
 );
@@ -247,7 +249,7 @@ const RouteTab2 = createBottomTabNavigator(
     ProfileSeller: {
       screen: StackHomeSeller,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
+        tabBarIcon: ({ tintColor }) => (
           <Icon name="user" type="font-awesome" size={24} color={tintColor} />
         ),
         tabBarLabel: 'Profile',
@@ -266,15 +268,17 @@ const Router = createSwitchNavigator(
   {
     // StackAuth,
     // StackHome,
-    // StackHomeSeller,
+    StackHomeBuyer,
+    StackHomeSeller,
     RouteTab,
     RouteTab2,
   },
   {
     // initialRouteName: 'StackHomeSeller',
-    //initialRouteName: 'RouteTab2',
-    // initialRouteName: 'StackHomeSeller',
+    // initialRouteName: 'StackHomeBuyer',
+    // initialRouteName: 'RouteTab2',
     initialRouteName: 'RouteTab',
+    //initialRouteName: 'RouteTab2',
     headerMode: 'none',
   },
 );

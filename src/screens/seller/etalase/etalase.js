@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, ScrollView, Image} from 'react-native';
+import {View, Text, ScrollView, Image, ActivityIndicator} from 'react-native';
 import styles from './etalase.style';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import {Icon} from 'react-native-elements';
@@ -14,6 +14,7 @@ class Etalase extends Component {
     name_user: '',
     token: '',
     etalase: [],
+    message: '',
   };
 
   handleGetItem = async () => {
@@ -30,7 +31,10 @@ class Etalase extends Component {
     const dataEtalaseItem = await this.props.dispatch(
       fetchEtalase(url, config),
     );
-    this.setState({etalase: dataEtalaseItem.value.data.data});
+    this.setState({
+      etalase: dataEtalaseItem.value.data.data,
+      message: dataEtalaseItem.value.data.msg,
+    });
   };
 
   componentDidMount() {
@@ -120,18 +124,26 @@ class Etalase extends Component {
             </View>
           </View>
           <View style={etalase}>
-            {this.state.etalase.length > 0
-              ? this.state.etalase.map((value, index) => (
-                  <CardEtalase
-                    name={value.name_product}
-                    price={value.price}
-                    unit={value.unit}
-                    label={value.label}
-                    key={index}
-                    navigation={this.props.navigation}
-                  />
-                ))
-              : null}
+            {this.state.etalase.length > 0 ? (
+              this.state.etalase.map((value, index) => (
+                <CardEtalase
+                  name={value.name_product}
+                  price={value.price}
+                  unit={value.unit}
+                  label={value.label}
+                  key={index}
+                  navigation={this.props.navigation}
+                />
+              ))
+            ) : this.state.message === 'success' ? (
+              <View style={{padding: 160}}>
+                <Text style={{color: 'gray'}}> Empty </Text>
+              </View>
+            ) : (
+              <View style={{marginHorizontal: '50%', marginVertical: '50%'}}>
+                <ActivityIndicator size="large" color="gray" />
+              </View>
+            )}
           </View>
         </ScrollView>
       </View>

@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Text,
   DrawerLayoutAndroid,
+  Alert,
 } from 'react-native';
 // import {registerAccount} from '../../redux/actions/auth/index';
 import {registerAccount} from '../../../redux/actions/auth/index';
@@ -26,6 +27,8 @@ import {
   Input,
   Toast,
 } from 'native-base';
+import {API_URL} from 'react-native-dotenv';
+import Axios from 'axios';
 // import {Input} from 'react-native-elements';
 
 const styles = StyleSheet.create({
@@ -73,7 +76,7 @@ class Register extends Component {
   };
 
   onClickSubmit = async () => {
-    this.props.navigation.navigate('Login');
+    // this.props.navigation.navigate('Login');
     // console.log('register with: ',this.state.email, this.state.password, this.state.user_type)
 
     console.log('clicked submit');
@@ -81,28 +84,53 @@ class Register extends Component {
     console.log('password', this.state.password);
     console.log('role', this.state.role);
 
-    // await this.props.dispatch(
-    //     registerAccount({
-    //       name_user: this.state.name_user,
-    //       email: this.state.email,
-    //       password: this.state.password,
-    //       role: this.state.role,
-    //     }),
-    //   )
-    //   .then(res => {
-    //     if(res.value.data.status===200){
-    //     console.log('reseponse',res)
-    //     this.setState({registered: !this.state.registered});
-    //     this.showToast("Register Success", "success");
-    //     alert('success')
-    //   }
-    //   else{
-    //     alert('failed')
-    //   }
-    //     this.showToast("Register Success", "success");
-    //     this.props.navigation.navigate('Login');
-    //   })
-    //   .catch(err => this.showToast(`${err}`, "warning"));
+    let data = {
+      name_user: this.state.name_user,
+      email: this.state.email,
+      password: this.state.password,
+    };
+
+    let nameValidate = /[A-Z][a-zA-Z][^#&<>\"~;$^%{}?]{1,50}$/.test(
+      this.state.name_user,
+    );
+    let emailValidate = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+      this.state.email,
+    );
+    let passwordValidate = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(
+      this.state.password,
+    );
+
+    if (nameValidate && emailValidate && passwordValidate) {
+      let url = API_URL + '/register/' + this.state.role;
+      // console.log(url);
+      await Axios.post(url, data)
+        .then(res => {
+          if (res.data.msg === 'Email already exist') {
+            Alert.alert(res.data.msg);
+          } else {
+            Alert.alert(
+              'Register Success',
+              'Please Login with your registered Account',
+            );
+            this.props.navigation.navigate('Login');
+          }
+        })
+        .catch(err => console.log(err.msg));
+    } else if (!nameValidate && !emailValidate && !passwordValidate) {
+      Alert.alert('Form Input Error', 'Please Fill The Form Correctly');
+    } else if (!nameValidate) {
+      Alert.alert(
+        'Name Incorrect Format',
+        'Name First Letter Must Be Uppercase',
+      );
+    } else if (!emailValidate) {
+      Alert.alert('Email Incorrect Format', 'Email not in correct format');
+    } else if (!passwordValidate) {
+      Alert.alert(
+        'Password Incorrect Format',
+        'Password must be at least 8 characters and must consist minimal 1 Uppercase, 1 lowercase and 1 number',
+      );
+    }
   };
 
   showToast = (message, types) => {
@@ -204,6 +232,4 @@ class Register extends Component {
   }
 }
 
-const mapDispatchToProps = state => ({});
-
-export default connect(mapDispatchToProps)(Register);
+export default Register;

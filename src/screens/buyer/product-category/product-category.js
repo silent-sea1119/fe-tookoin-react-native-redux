@@ -62,10 +62,13 @@ class ProductCategory extends Component {
           {productList.map(item => (
             <View style={body}>
               <Card
-                name={item.name_product}
-                price={item.price}
-                unit={item.stock}
-                navigation={this.props.navigation}
+                 id_product={item.id_product}
+                 id_category={item.id_category}
+                 name={item.name_product}
+                 price={item.price}
+                 unit={item.unit}
+                 name_category={item.name_category}
+                 navigation={this.props.navigation}
               />
             </View>
           ))}

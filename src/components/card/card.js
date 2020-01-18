@@ -22,11 +22,14 @@ class Card extends Component {
 
     const goToDetail = () => {
       this.props.navigation.push('DetailProdukBuyer', {
+        id_product: this.props.id_product,
+        id_category: this.props.id_category,
         name: this.props.name,
         label: this.props.label,
         unit: this.props.unit,
         price: this.props.price,
         quantity: this.state.Quantity,
+        name_category: this.props.name_category,
       });
     };
     const handleAddQuantity = () => {

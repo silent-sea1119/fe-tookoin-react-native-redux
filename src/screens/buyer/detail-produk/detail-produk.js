@@ -18,7 +18,11 @@ import * as Animatable from 'react-native-animatable';
 import {BorderlessButton} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-//import
+//redux
+import {connect} from 'react-redux';
+import {fetchProduct} from '../../../redux/actions/product/productAction';
+import {SAPI_URL} from 'react-native-dotenv';
+
 // import tvShowContent from '../../../assets/tvShowContent';
 const imageUri = require('../../../assets/static-image/monster-egg.png');
 
@@ -31,15 +35,36 @@ const MAX_HEIGHT = 250;
 class DetailProdukBuyer extends Component {
   constructor() {
     super();
-    this.state = {showNavTitle: false, quantity: 0};
+    this.state = {showNavTitle: false, quantity: 0, detailProdukLocalState: []};
   }
 
   componentDidMount() {
     if (this.props.navigation.getParam('quantity') > 0) {
       this.setState({quantity: this.props.navigation.getParam('quantity')});
     }
+    this.getDataFromApi();
   }
+
+  getDataFromApi = async () => {
+    const url = SAPI_URL + '/product/?name_product=';
+
+    let nameParam = this.props.navigation.getParam('name');
+    nameParam = nameParam.replace(/ /g, '%20');
+    const id_categoryParam = this.props.navigation.getParam('id_category');
+
+    const finalURL = url + nameParam + '&id_category=' + id_categoryParam;
+    console.log(finalURL, 'your final URL');
+
+    const detailProdukInit = await this.props.dispatch(fetchProduct(finalURL));
+    const detailProdukInitFinal = detailProdukInit.value.data.data[0];
+
+    this.setState({
+      detailProdukLocalState: detailProdukInitFinal,
+    });
+  };
+
   render() {
+    const produk = this.state.detailProdukLocalState;
     const data = {
       title: this.props.navigation.getParam('name'),
       dose: `1 pcs (${this.props.navigation.getParam('unit')})`,
@@ -171,7 +196,8 @@ class DetailProdukBuyer extends Component {
             </View>
             <View style={styles.descriptionProductDesc}>
               <Text style={{color: 'gray', fontSize: 14}}>
-                {data.description}
+                {/* {data.description} */}
+                {produk.desc_product}
               </Text>
             </View>
           </View>
@@ -275,7 +301,13 @@ class DetailProdukBuyer extends Component {
   }
 }
 
-export default DetailProdukBuyer;
+const mapStateToProps = state => {
+  return {
+    product: state.product,
+  };
+};
+
+export default connect(mapStateToProps)(DetailProdukBuyer);
 
 const styles2 = StyleSheet.create({
   image: {

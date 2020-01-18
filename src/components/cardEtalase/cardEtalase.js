@@ -3,7 +3,7 @@ import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 import styles from './cardEtalase.style';
 import {Icon} from 'react-native-elements';
 
-class Card extends Component {
+class CardEtalase extends Component {
   constructor() {
     super();
     this.state = {Quantity: 0};
@@ -21,7 +21,7 @@ class Card extends Component {
     } = styles;
 
     const goToDetail = () => {
-        console.log('Edit Produk')
+        this.props.navigation.navigate('AddProduct', {title: 'Edit'})
     };
 
     return (
@@ -53,4 +53,4 @@ class Card extends Component {
   }
 }
 
-export default Card;
+export default CardEtalase;

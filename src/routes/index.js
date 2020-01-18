@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Icon } from 'react-native-elements';
 import IconFA from 'react-native-vector-icons/FontAwesome';
 
-
 import {
   Home,
   HomeBuyer,
@@ -71,13 +70,13 @@ const StackHomeBuyer = createStackNavigator(
     SuccessOrder
   },
   {
-    //initialRouteName: 'HomeBuyer',
+    initialRouteName: 'HomeBuyer',
     // initialRouteName: 'Profile',
     // initialRouteName: 'InboxBuyer',
     // initialRouteName: 'DetailProdukBuyer',
     // initialRouteName: 'DaftarAlamatBuyer',
     // initialRouteName: 'ProductCategory',
-    initialRouteName: 'SuccessOrder',
+    // initialRouteName: 'SuccessOrder',
     headerMode: 'none',
   },
 );
@@ -120,9 +119,7 @@ const StackHomeSeller = createStackNavigator(
     HomeSeller,
     InboxSeller,
     Home,
-    Etalase,
     MyOrderSeller,
-    AddProduct,
     EditProfile
   },
   {
@@ -140,6 +137,16 @@ const StackHomeSeller = createStackNavigator(
     headerMode: 'none',
   },
 );
+
+const StackEtalaseSeller = createStackNavigator(
+  {
+    Etalase,
+    AddProduct,
+  },
+  {initialRouteName:'Etalase',
+  headerMode: 'none'
+}
+)
 
 const RouteTab = createBottomTabNavigator(
   {
@@ -210,7 +217,7 @@ const RouteTab = createBottomTabNavigator(
 const RouteTab2 = createBottomTabNavigator(
   {
     HomeSeller: {
-      screen: Etalase,
+      screen: StackEtalaseSeller,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <IconFA name="shopping-bag" size={22} color={tintColor} />
@@ -269,8 +276,8 @@ const Router = createSwitchNavigator(
   {
     // initialRouteName: 'StackHomeSeller',
     // initialRouteName: 'StackHomeBuyer',
-    initialRouteName: 'RouteTab2',
-    // initialRouteName: 'RouteTab',
+    // initialRouteName: 'RouteTab2',
+    initialRouteName: 'RouteTab',
     //initialRouteName: 'RouteTab2',
     headerMode: 'none',
   },

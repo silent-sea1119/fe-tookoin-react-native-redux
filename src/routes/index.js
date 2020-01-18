@@ -123,7 +123,8 @@ const StackHomeSeller = createStackNavigator(
     EditProfile
   },
   {
-    initialRouteName: 'EditProfile',
+    initialRouteName: 'MyOrderSeller',
+    // initialRouteName: 'EditProfile',
     // initialRouteName: 'HomeSeller',
     // initialRouteName: "AddProduct",
     // initialRouteName: 'ProfileSeller',

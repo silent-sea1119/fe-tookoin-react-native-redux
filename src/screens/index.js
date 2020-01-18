@@ -12,6 +12,7 @@ import InboxSeller from '../screens/seller/inbox/inbox';
 import HomeSeller from './seller/home/home';
 import Etalase from './seller/etalase/etalase';
 import Cart from './buyer/cart/cart';
+import MyOrderSeller from './seller/my-order/my-order';
 
 export {
   Home,
@@ -28,4 +29,5 @@ export {
   InboxSeller,
   HomeSeller,
   Etalase,
+  MyOrderSeller
 };

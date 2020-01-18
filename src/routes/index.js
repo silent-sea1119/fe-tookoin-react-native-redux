@@ -20,6 +20,7 @@ import {
   InboxSeller,
   HomeSeller,
   Etalase,
+  MyOrderSeller,
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -114,6 +115,7 @@ const StackHomeSeller = createStackNavigator(
     InboxSeller,
     Home,
     Etalase,
+    MyOrderSeller,
   },
   {
     initialRouteName: 'HomeSeller',
@@ -203,8 +205,9 @@ const RouteTab2 = createBottomTabNavigator(
         tabBarLabel: 'My Store',
       },
     },
-    InboxSeller: {
-      screen: InboxSeller,
+
+    MyOrderSeller: {
+      screen: MyOrderSeller,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <Icon name="receipt" size={24} color={tintColor} />
@@ -212,6 +215,16 @@ const RouteTab2 = createBottomTabNavigator(
         tabBarLabel: 'Transaction',
       },
     },
+
+    // InboxSeller: {
+    //   screen: InboxSeller,
+    //   navigationOptions: {
+    //     tabBarIcon: ({tintColor}) => (
+    //       <Icon name="receipt" size={24} color={tintColor} />
+    //     ),
+    //     tabBarLabel: 'Transaction',
+    //   },
+    // },
     ProfileSeller: {
       screen: HomeSeller,
       navigationOptions: {

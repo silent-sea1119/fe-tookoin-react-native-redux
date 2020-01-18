@@ -264,9 +264,9 @@ const Router = createSwitchNavigator(
   },
   {
     // initialRouteName: 'StackHomeSeller',
-    //initialRouteName: 'RouteTab2',
+    initialRouteName: 'RouteTab2',
     // initialRouteName: 'StackHomeSeller',
-    initialRouteName: 'RouteTab',
+    // initialRouteName: 'RouteTab',
     headerMode: 'none',
   },
 );

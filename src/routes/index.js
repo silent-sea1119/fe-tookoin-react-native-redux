@@ -23,7 +23,8 @@ import {
   MyOrderSeller,
   AddProduct,
   EditProfile,
-  SuccessOrder
+  SuccessOrder,
+  Splashscreen
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -148,6 +149,13 @@ const StackEtalaseSeller = createStackNavigator(
 }
 )
 
+const StackSplashscreen = createStackNavigator({
+  Splashscreen
+}, {
+  headerMode: 'none',
+  initialRouteName: "Splashscreen",
+})
+
 const RouteTab = createBottomTabNavigator(
   {
     HomeBuyer: {
@@ -266,19 +274,23 @@ const RouteTab2 = createBottomTabNavigator(
 
 const Router = createSwitchNavigator(
   {
-    // StackAuth,
-    // StackHome,
-    StackHomeBuyer,
-    StackHomeSeller,
+    StackSplashscreen,
     RouteTab,
     RouteTab2,
+
+    // StackAuth,
+    // StackHome,
+    // StackHomeBuyer,
+    // StackHomeSeller,
+    // StackHomeSeller,
   },
   {
+    initialRouteName: 'StackSplashscreen',
+    //initialRouteName: 'StackHomeBuyer',
     // initialRouteName: 'StackHomeSeller',
-    // initialRouteName: 'StackHomeBuyer',
-    // initialRouteName: 'RouteTab2',
-    initialRouteName: 'RouteTab',
     //initialRouteName: 'RouteTab2',
+    // initialRouteName: 'StackHomeSeller',
+    //initialRouteName: 'RouteTab',
     headerMode: 'none',
   },
 );

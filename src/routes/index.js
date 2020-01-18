@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Icon } from 'react-native-elements';
 import IconFA from 'react-native-vector-icons/FontAwesome';
 
-
 import {
   Home,
   HomeBuyer,
@@ -71,13 +70,13 @@ const StackHomeBuyer = createStackNavigator(
     SuccessOrder
   },
   {
-    //initialRouteName: 'HomeBuyer',
+    initialRouteName: 'HomeBuyer',
     // initialRouteName: 'Profile',
     // initialRouteName: 'InboxBuyer',
     // initialRouteName: 'DetailProdukBuyer',
     // initialRouteName: 'DaftarAlamatBuyer',
     // initialRouteName: 'ProductCategory',
-    initialRouteName: 'SuccessOrder',
+    // initialRouteName: 'SuccessOrder',
     headerMode: 'none',
   },
 );
@@ -269,8 +268,8 @@ const Router = createSwitchNavigator(
   {
     // initialRouteName: 'StackHomeSeller',
     // initialRouteName: 'StackHomeBuyer',
-    initialRouteName: 'RouteTab2',
-    // initialRouteName: 'RouteTab',
+    // initialRouteName: 'RouteTab2',
+    initialRouteName: 'RouteTab',
     //initialRouteName: 'RouteTab2',
     headerMode: 'none',
   },

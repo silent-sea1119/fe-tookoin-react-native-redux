@@ -13,6 +13,8 @@ import HomeSeller from './seller/home/home';
 import Etalase from './seller/etalase/etalase';
 import Cart from './buyer/cart/cart';
 import MyOrderSeller from './seller/my-order/my-order';
+import AddProduct from "./seller/product/product";
+import EditProfile from "./seller/profile/editprofile";
 
 export {
   Home,
@@ -29,5 +31,7 @@ export {
   InboxSeller,
   HomeSeller,
   Etalase,
-  MyOrderSeller
+  MyOrderSeller,
+  AddProduct,
+  EditProfile
 };

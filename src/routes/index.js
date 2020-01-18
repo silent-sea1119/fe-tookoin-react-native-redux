@@ -22,7 +22,8 @@ import {
   HomeSeller,
   Etalase,
   MyOrderSeller,
-  AddProduct
+  AddProduct,
+  EditProfile
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -119,10 +120,12 @@ const StackHomeSeller = createStackNavigator(
     Etalase,
     MyOrderSeller,
     AddProduct,
+    EditProfile
   },
   {
-    initialRouteName: "AddProduct",
+    initialRouteName: 'EditProfile',
     // initialRouteName: 'HomeSeller',
+    // initialRouteName: "AddProduct",
     // initialRouteName: 'ProfileSeller',
     // initialRouteName: 'Profile',
     // initialRouteName: 'InboxBuyer',
@@ -258,7 +261,7 @@ const Router = createSwitchNavigator(
     RouteTab2,
   },
   {
-    // initialRouteName: 'StackHomeSeller',
+    initialRouteName: 'StackHomeSeller',
     //initialRouteName: 'RouteTab2',
     headerMode: 'none',
   },

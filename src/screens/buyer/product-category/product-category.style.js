@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 66,
     borderColor: 'gray',
-    borderTopWidth: 1/2,
-    borderBottomWidth: 1/2,
-    justifyContent: 'center'
+    borderTopWidth: 1 / 2,
+    borderBottomWidth: 1 / 2,
+    justifyContent: 'center',
   },
 
   labelContainer: {

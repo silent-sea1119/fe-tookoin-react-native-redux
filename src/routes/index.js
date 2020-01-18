@@ -10,6 +10,7 @@ import {
   Home,
   HomeBuyer,
   MyOrder,
+  Cart,
   Login,
   Register,
   Profile,
@@ -17,10 +18,11 @@ import {
   DetailProdukBuyer,
   DaftarAlamatBuyer,
   ProductCategory,
-  ProfileSeller,
   InboxSeller,
   HomeSeller,
-  AddProduct
+  AddProduct,
+  Etalase,
+  EditProfile
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -61,6 +63,7 @@ const StackHomeBuyer = createStackNavigator(
     HomeBuyer,
     InboxBuyer,
     MyOrder,
+    Cart,
     DetailProdukBuyer,
     ProductCategory,
   },
@@ -110,15 +113,22 @@ StackHomeBuyer.navigationOptions = ({ navigation }) => {
 
 const StackHomeSeller = createStackNavigator(
   {
-    ProfileSeller,
-    InboxSeller,
     HomeSeller,
     Home,
     AddProduct,
+    EditProfile,
   },
   {
-    initialRouteName: "AddProduct",
+    initialRouteName: "EditProfile",
+    //initialRouteName: "AddProduct",
     // initialRouteName: 'ProfileSeller',
+    InboxSeller,
+    Home,
+    Etalase,
+    headerMode: 'none',
+  },
+  {
+    initialRouteName: 'HomeSeller',
     // initialRouteName: 'Profile',
     // initialRouteName: 'InboxBuyer',
     // initialRouteName: 'DetailProdukBuyer',
@@ -126,7 +136,7 @@ const StackHomeSeller = createStackNavigator(
     // initialRouteName: 'ProductCategory',
     headerMode: 'none',
   },
-)
+);
 
 const RouteTab = createBottomTabNavigator(
   {
@@ -149,7 +159,7 @@ const RouteTab = createBottomTabNavigator(
       },
     },
     Cart: {
-      screen: MyOrder,
+      screen: Cart,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <Icon
@@ -197,12 +207,12 @@ const RouteTab = createBottomTabNavigator(
 const RouteTab2 = createBottomTabNavigator(
   {
     HomeSeller: {
-      screen: StackHomeSeller,
+      screen: Etalase,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <IconFA name="shopping-bag" size={22} color={tintColor} />
         ),
-        tabBarLabel: 'Shop',
+        tabBarLabel: 'My Store',
       },
     },
     InboxSeller: {
@@ -211,7 +221,16 @@ const RouteTab2 = createBottomTabNavigator(
         tabBarIcon: ({ tintColor }) => (
           <Icon name="receipt" size={24} color={tintColor} />
         ),
-        tabBarLabel: 'My Order',
+        tabBarLabel: 'Transaction',
+      },
+    },
+    ProfileSeller: {
+      screen: HomeSeller,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => (
+          <Icon name="user" type="font-awesome" size={24} color={tintColor} />
+        ),
+        tabBarLabel: 'Profile',
       },
     },
   },
@@ -237,6 +256,5 @@ const Router = createSwitchNavigator(
     headerMode: 'none',
   },
 );
-
 
 export default createAppContainer(Router);

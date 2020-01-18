@@ -1,11 +1,8 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'white',
+    flex: 1,
   },
   header: {
     backgroundColor: 'white',
@@ -20,11 +17,13 @@ const styles = StyleSheet.create({
   headerUsername: {
     flexDirection: 'row',
     alignItems: 'center',
+    // borderBottomColor: '#F5F5F6',
+    // borderBottomWidth: 8,
   },
   headerAvatar: {
-    borderColor:'gray',
-    borderWidth:2,
-    borderRadius:40,
+    borderColor: 'gray',
+    borderWidth: 2,
+    borderRadius: 40,
     height: 80,
     width: 80,
     marginLeft: 24,
@@ -33,14 +32,13 @@ const styles = StyleSheet.create({
   },
   headerCode: {
     flexDirection: 'row',
-    alignItems:'center',
+    justifyContent: 'center',
+    width: '100%',
   },
-  body: {
-    flex: 1,
-  },
-  footer: {
-    height: 40,
-    backgroundColor: 'purple',
+  etalase: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingVertical: 10,
   },
 });
 

@@ -8,24 +8,28 @@ import InboxBuyer from '../screens/buyer/inbox/inbox';
 import DetailProdukBuyer from '../screens/buyer/detail-produk/detail-produk';
 import DaftarAlamatBuyer from '../screens/buyer/daftar-alamat/daftar-alamat';
 import ProductCategory from '../screens/buyer/product-category/product-category';
-import ProfileSeller from '../screens/seller/profile/profile';
 import InboxSeller from '../screens/seller/inbox/inbox';
 import HomeSeller from "./seller/home/home";
 import AddProduct from "./seller/product/product"
+import Etalase from './seller/etalase/etalase';
+import Cart from './buyer/cart/cart';
+import EditProfile from "./seller/profile/editprofile";
 
 export {
   Home,
   HomeBuyer,
   Login,
   MyOrder,
+  Cart,
   Register,
   Profile,
   InboxBuyer,
   DetailProdukBuyer,
   DaftarAlamatBuyer,
   ProductCategory,
-  ProfileSeller,
   InboxSeller,
   HomeSeller,
-  AddProduct
+  AddProduct,
+  Etalase,
+  EditProfile
 };

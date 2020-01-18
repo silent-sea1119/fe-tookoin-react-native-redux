@@ -268,8 +268,8 @@ const Router = createSwitchNavigator(
   {
     // StackAuth,
     // StackHome,
-    StackHomeBuyer,
-    StackHomeSeller,
+    // StackHomeBuyer,
+    // StackHomeSeller,
     RouteTab,
     RouteTab2,
   },

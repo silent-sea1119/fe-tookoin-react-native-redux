@@ -11,6 +11,7 @@ import ProductCategory from '../screens/buyer/product-category/product-category'
 import ProfileSeller from '../screens/seller/profile/profile';
 import InboxSeller from '../screens/seller/inbox/inbox';
 import HomeSeller from "./seller/home/home";
+import AddProduct from "./seller/product/product"
 
 export {
   Home,
@@ -25,5 +26,6 @@ export {
   ProductCategory,
   ProfileSeller,
   InboxSeller,
-  HomeSeller
+  HomeSeller,
+  AddProduct
 };

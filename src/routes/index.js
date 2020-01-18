@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
-import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
-import {createBottomTabNavigator} from 'react-navigation-tabs';
-import {Icon} from 'react-native-elements';
+import React, { Component } from 'react';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { Icon } from 'react-native-elements';
 import IconFA from 'react-native-vector-icons/FontAwesome';
+
 
 import {
   Home,
@@ -19,6 +20,7 @@ import {
   ProfileSeller,
   InboxSeller,
   HomeSeller,
+  AddProduct
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -73,7 +75,7 @@ const StackHomeBuyer = createStackNavigator(
   },
 );
 
-StackHomeBuyer.navigationOptions = ({navigation}) => {
+StackHomeBuyer.navigationOptions = ({ navigation }) => {
   let tabBarVisible;
   if (navigation.state.routes.length > 1) {
     navigation.state.routes.map(route => {
@@ -111,10 +113,12 @@ const StackHomeSeller = createStackNavigator(
     ProfileSeller,
     InboxSeller,
     HomeSeller,
-    Home
+    Home,
+    AddProduct,
   },
   {
-    initialRouteName: 'ProfileSeller',
+    initialRouteName: "AddProduct",
+    // initialRouteName: 'ProfileSeller',
     // initialRouteName: 'Profile',
     // initialRouteName: 'InboxBuyer',
     // initialRouteName: 'DetailProdukBuyer',
@@ -129,7 +133,7 @@ const RouteTab = createBottomTabNavigator(
     HomeBuyer: {
       screen: StackHomeBuyer,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
+        tabBarIcon: ({ tintColor }) => (
           <IconFA name="shopping-bag" size={22} color={tintColor} />
         ),
         tabBarLabel: 'Shop',
@@ -138,7 +142,7 @@ const RouteTab = createBottomTabNavigator(
     MyOrder: {
       screen: MyOrder,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
+        tabBarIcon: ({ tintColor }) => (
           <Icon name="receipt" size={24} color={tintColor} />
         ),
         tabBarLabel: 'My Order',
@@ -147,7 +151,7 @@ const RouteTab = createBottomTabNavigator(
     Cart: {
       screen: MyOrder,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
+        tabBarIcon: ({ tintColor }) => (
           <Icon
             name="shopping-cart"
             type="font-awesome"
@@ -161,7 +165,7 @@ const RouteTab = createBottomTabNavigator(
     Notification: {
       screen: InboxBuyer,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
+        tabBarIcon: ({ tintColor }) => (
           <Icon
             name="notifications"
             type="material"
@@ -176,7 +180,7 @@ const RouteTab = createBottomTabNavigator(
     Profile: {
       screen: StackAuthAndProfile,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
+        tabBarIcon: ({ tintColor }) => (
           <Icon name="user" type="font-awesome" size={24} color={tintColor} />
         ),
       },
@@ -195,7 +199,7 @@ const RouteTab2 = createBottomTabNavigator(
     HomeSeller: {
       screen: StackHomeSeller,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
+        tabBarIcon: ({ tintColor }) => (
           <IconFA name="shopping-bag" size={22} color={tintColor} />
         ),
         tabBarLabel: 'Shop',
@@ -204,7 +208,7 @@ const RouteTab2 = createBottomTabNavigator(
     InboxSeller: {
       screen: InboxSeller,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
+        tabBarIcon: ({ tintColor }) => (
           <Icon name="receipt" size={24} color={tintColor} />
         ),
         tabBarLabel: 'My Order',
@@ -223,12 +227,13 @@ const Router = createSwitchNavigator(
   {
     // StackAuth,
     // StackHome,
+    StackHomeSeller,
     RouteTab,
     RouteTab2,
   },
   {
-    // initialRouteName: 'StackSeller',
-    initialRouteName: 'RouteTab',
+    initialRouteName: 'StackHomeSeller',
+    //initialRouteName: 'RouteTab2',
     headerMode: 'none',
   },
 );

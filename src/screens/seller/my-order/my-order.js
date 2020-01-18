@@ -164,7 +164,7 @@ export default class MyOrderSeller extends Component {
                             Transaction Date
                           </Text>
                           <Text style={styles.textChild12}>
-                            {order.transaction_date || `Wednesday, 15 Jan 2020`}
+                          {moment(order.transaction_date).format('dddd, DD-MM-YYYY') || `Wednesday, 15 Jan 2020`}
                           </Text>
                           <Text note style={styles.textNoteChild12}>
                             Billing Total
@@ -296,7 +296,7 @@ export default class MyOrderSeller extends Component {
                             Transaction Date
                           </Text>
                           <Text style={styles.textChild12}>
-                            {order.transaction_date || `Wednesday, 15 Jan 2020`}
+                          {moment(order.transaction_date).format('dddd, DD-MM-YYYY') || `Wednesday, 15 Jan 2020`}
                           </Text>
                           <Text note style={styles.textNoteChild12}>
                             Billing Total

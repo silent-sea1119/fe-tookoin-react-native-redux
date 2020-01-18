@@ -34,6 +34,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
+
 // import Tab1 from './tabOne';
 // import Tab2 from './tabTwo';
 
@@ -41,6 +42,7 @@ import {getTransactionStatusBuyer} from '../../../utils/axios/my-order-seller';
 import {storeData, retrieveData} from '../../../utils';
 
 import styles from './my-order.style';
+import moment from'moment';
 
 export default class MyOrder extends Component {
   state = {
@@ -164,7 +166,7 @@ export default class MyOrder extends Component {
                             Transaction Date
                           </Text>
                           <Text style={styles.textChild12}>
-                            {order.transaction_date || `Wednesday, 15 Jan 2020`}
+                            {moment(order.transaction_date).format('dddd, DD-MM-YYYY') || `Wednesday, 15 Jan 2020`}
                           </Text>
                           <Text note style={styles.textNoteChild12}>
                             Billing Total
@@ -296,7 +298,7 @@ export default class MyOrder extends Component {
                             Transaction Date
                           </Text>
                           <Text style={styles.textChild12}>
-                            {order.transaction_date || `Wednesday, 15 Jan 2020`}
+                          {moment(order.transaction_date).format('dddd, DD-MM-YYYY') || `Wednesday, 15 Jan 2020`}
                           </Text>
                           <Text note style={styles.textNoteChild12}>
                             Billing Total

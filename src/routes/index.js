@@ -225,6 +225,7 @@ const RouteTab2 = createBottomTabNavigator(
     //     tabBarLabel: 'Transaction',
     //   },
     // },
+
     ProfileSeller: {
       screen: HomeSeller,
       navigationOptions: {
@@ -257,4 +258,5 @@ const Router = createSwitchNavigator(
   },
 );
 
-export default createAppContainer(Router);
+// export default createAppContainer(Router);
+export default createAppContainer(RouteTab2);

@@ -1,5 +1,5 @@
 const initialState = {
-  loginState: false,
+  loginState: [],
   isPending: false,
   isRejected: false,
   isFulfilled: false,
@@ -25,7 +25,7 @@ const loginAccount = (prevState = initialState, action) => {
         ...prevState,
         isPending: false,
         isFulfilled: true,
-        loginState: true,
+        loginState: action.payload,
       };
     default:
       return prevState;

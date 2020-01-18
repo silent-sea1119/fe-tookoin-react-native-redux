@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, ScrollView, Image} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
 import styles from './product-category.style';
 import Footer from '../../../components/footer/footer';
 import Search from '../../../components/search/search';
@@ -14,6 +21,7 @@ import {SAPI_URL} from 'react-native-dotenv';
 class ProductCategory extends Component {
   state = {
     productLocalState: [],
+    message: '',
   };
 
   componentDidMount = () => {
@@ -22,13 +30,20 @@ class ProductCategory extends Component {
 
   getDataFromApi = async () => {
     const id_category = this.props.navigation.getParam('id');
-    const url = SAPI_URL + '/product/?id_category=' + id_category;
-    console.log(url);
+    let url;
+    if (id_category === 4) {
+      url = SAPI_URL + '/product/?date_created&order=asc';
+    } else {
+      url = SAPI_URL + '/product/?id_category=' + id_category;
+      console.log(url);
+    }
 
     const productStoreInit = await this.props.dispatch(fetchProduct(url));
     const productStoreFinal = productStoreInit.value.data.data;
+    const message = productStoreInit.value.data.msg;
 
     this.setState({
+      message: message,
       productLocalState: productStoreFinal,
     });
   };
@@ -45,11 +60,9 @@ class ProductCategory extends Component {
     } = styles;
     const produk = {label: this.props.navigation.getParam('name')};
     const productList = this.state.productLocalState;
+    console.log(productList);
     return (
       <View style={container}>
-        <Search />
-        <Search />
-        <Search />
         <Search />
 
         <ScrollView contentContainerStyle={styles.containerScroll}>
@@ -58,20 +71,27 @@ class ProductCategory extends Component {
               <Text style={textStyle}>{produk.label}</Text>
             </View>
           </View>
-
-          {productList.map(item => (
-            <View style={body}>
-              <Card
-                 id_product={item.id_product}
-                 id_category={item.id_category}
-                 name={item.name_product}
-                 price={item.price}
-                 unit={item.unit}
-                 name_category={item.name_category}
-                 navigation={this.props.navigation}
-              />
+          {productList.length > 0 ? (
+            productList.map(item => (
+              <View style={body}>
+                <Card
+                  key={item.id_product}
+                  name={item.name_product}
+                  price={item.price}
+                  unit={item.stock}
+                  navigation={this.props.navigation}
+                />
+              </View>
+            ))
+          ) : this.state.message === 'success' ? (
+            <View style={{padding: 160}}>
+              <Text style={{color: 'gray'}}> Empty </Text>
             </View>
-          ))}
+          ) : (
+            <View style={{marginHorizontal: '50%', marginVertical: '50%'}}>
+              <ActivityIndicator size="large" color="gray" />
+            </View>
+          )}
         </ScrollView>
       </View>
     );

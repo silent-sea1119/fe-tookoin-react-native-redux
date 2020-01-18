@@ -121,7 +121,7 @@ const StackHomeSeller = createStackNavigator(
     AddProduct,
   },
   {
-    initialRouteName: 'HomeSeller',
+    // initialRouteName: 'HomeSeller',
     initialRouteName: "AddProduct",
     // initialRouteName: 'ProfileSeller',
     // initialRouteName: 'Profile',

@@ -9,6 +9,7 @@ import {
   Home,
   HomeBuyer,
   MyOrder,
+  Cart,
   Login,
   Register,
   Profile,
@@ -16,7 +17,6 @@ import {
   DetailProdukBuyer,
   DaftarAlamatBuyer,
   ProductCategory,
-  ProfileSeller,
   InboxSeller,
   HomeSeller,
 } from '../screens/index';
@@ -59,6 +59,7 @@ const StackHomeBuyer = createStackNavigator(
     HomeBuyer,
     InboxBuyer,
     MyOrder,
+    Cart,
     DetailProdukBuyer,
     ProductCategory,
   },
@@ -108,13 +109,12 @@ StackHomeBuyer.navigationOptions = ({navigation}) => {
 
 const StackHomeSeller = createStackNavigator(
   {
-    ProfileSeller,
-    InboxSeller,
     HomeSeller,
-    Home
+    InboxSeller,
+    Home,
   },
   {
-    initialRouteName: 'ProfileSeller',
+    initialRouteName: 'HomeSeller',
     // initialRouteName: 'Profile',
     // initialRouteName: 'InboxBuyer',
     // initialRouteName: 'DetailProdukBuyer',
@@ -145,7 +145,7 @@ const RouteTab = createBottomTabNavigator(
       },
     },
     Cart: {
-      screen: MyOrder,
+      screen: Cart,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <Icon
@@ -193,12 +193,12 @@ const RouteTab = createBottomTabNavigator(
 const RouteTab2 = createBottomTabNavigator(
   {
     HomeSeller: {
-      screen: StackHomeSeller,
+      screen: HomeSeller,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <IconFA name="shopping-bag" size={22} color={tintColor} />
         ),
-        tabBarLabel: 'Shop',
+        tabBarLabel: 'My Store',
       },
     },
     InboxSeller: {
@@ -207,7 +207,16 @@ const RouteTab2 = createBottomTabNavigator(
         tabBarIcon: ({tintColor}) => (
           <Icon name="receipt" size={24} color={tintColor} />
         ),
-        tabBarLabel: 'My Order',
+        tabBarLabel: 'Transaction',
+      },
+    },
+    ProfileSeller: {
+      screen: HomeSeller,
+      navigationOptions: {
+        tabBarIcon: ({tintColor}) => (
+          <Icon name="user" type="font-awesome" size={24} color={tintColor} />
+        ),
+        tabBarLabel: 'Profile',
       },
     },
   },

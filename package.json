@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-native-community/async-storage": "^1.7.1",
     "@react-native-community/masked-view": "^0.1.6",
+    "@wwdrew/react-native-numeric-textinput": "^1.1.0",
     "axios": "^0.19.1",
     "native-base": "^2.13.8",
     "react": "16.9.0",

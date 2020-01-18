@@ -59,7 +59,7 @@ class HomeSeller extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity style={styles.body2}>
+          <TouchableOpacity style={styles.body2} onPress={()=> this.props.navigation.navigate('AddProduct')}>
             <IconMI style={styles.addIcon} name="add-circle-outline" />
             <Text style={styles.addText}>Tambah Produk Baru</Text>
             <IconMI style={styles.detailAdd} name="navigate-next" />

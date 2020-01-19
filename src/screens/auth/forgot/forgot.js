@@ -29,8 +29,8 @@ class Forgot extends Component {
             }
             Axios.post("http://3.80.150.111:8000/password/forget", data).then(response => {
                 if (response.data.status == "success") {
-                    // Alert.alert(response.data.status.toUpperCase(), response.data.msg)
-                    showToast(response.data.msg, `success`, 'bottom')
+                    Alert.alert(response.data.status.toUpperCase(), response.data.msg)
+                    // showToast(response.data.msg, `success`, 'bottom')
                     setTimeout(() => {
                         this.props.navigation.navigate('InputToken')
                     }, 500);
@@ -53,8 +53,8 @@ class Forgot extends Component {
             }
             Axios.post("http://3.80.150.111:8000/password/otp", data).then(response => {
                 if (response.data.status == "success") {
-                    // Alert.alert(response.data.status.toUpperCase(), response.data.msg)
-                    showToast(response.data.msg, `success`, 'bottom')
+                    Alert.alert(response.data.status.toUpperCase(), response.data.msg)
+                    // showToast(response.data.msg, `success`, 'bottom')
                     setTimeout(() => {
                         this.props.navigation.navigate('InputToken')
                     }, 500);

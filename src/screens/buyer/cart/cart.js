@@ -1,26 +1,27 @@
-import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, ScrollView, Image} from 'react-native';
+import React, { Component } from 'react';
+import { Text, View, TouchableOpacity, ScrollView, Image, Alert } from 'react-native';
 import styles from './cart.style';
 import Product from '../../../components/cartProduct/cartProduct';
 import Footer from '../../../components/footer/footer';
+import Axios from 'axios';
 
 //redux
-import {connect} from 'react-redux';
-import {fetchCart} from '../../../redux/actions/cart/cartAction';
-import {SAPI_URL} from 'react-native-dotenv';
+import { connect } from 'react-redux';
+import { fetchCart } from '../../../redux/actions/cart/cartAction';
+import { SAPI_URL } from 'react-native-dotenv';
 import AsyncStorage from '@react-native-community/async-storage';
 
 // class InboxBuyer extends Component {
 class Cart extends Component {
   state = {
-    data: [1000, 5000, 2000, 5000, 1000, 5000],
+    data: [],
     // data: [],
     result: 0,
   };
 
   componentDidMount() {
-    let result = this.state.data.reduce((value, element) => value + element);
-    this.setState({result: result});
+    // let result = this.state.data.reduce((value, element) => value + element);
+    // this.setState({result: result});
     this.getDataCart();
   }
 
@@ -31,18 +32,33 @@ class Cart extends Component {
     let token = await AsyncStorage.getItem('token');
     console.log('ini token 555', token);
     let config = {
-      headers: {Authorization: 'Bearer ' + token},
+      headers: { Authorization: 'Bearer ' + token },
     };
 
     const dataCart = await this.props.dispatch(fetchCart(url, config));
-    console.log('your data999', dataCart);
-    console.log('your data1111', dataCart.value.data.data[0].price);
+    const arrayTotal = [];
+    for (let i = 0; i < dataCart.value.data.data.length; i++) {
+      arrayTotal.push(dataCart.value.data.data[i].subtotal)
+    }
+    let total = arrayTotal.reduce((a, b) => a + b, 0)
     this.setState({
       data: dataCart.value.data.data,
+      result: total
     });
-
-    console.log('your data', this.state.data[0]);
   };
+
+  handleCheckout = async () => {
+    let token = await AsyncStorage.getItem('token');
+    let config = {
+      headers: { Authorization: 'Bearer ' + token },
+    };
+
+
+    Axios.post('http://3.80.150.111:8000/cart/checkout/store/' + this.state.data[0].id_seller, null, config).then(response => {
+      this.props.navigation.navigate('Checkout', { item: response.data.data.insertId })
+    }).catch(err => console.log(err))
+  }
+
 
   render() {
     const {
@@ -56,54 +72,54 @@ class Cart extends Component {
     return (
       <View style={container}>
         <View style={header}>
-          <Text style={{fontSize: 14, color: 'black', fontWeight: 'bold'}}>
-            Cart asemsgilaxxx
+          <Text style={{ fontSize: 14, color: 'black', fontWeight: 'bold' }}>
+            Cart
           </Text>
         </View>
         <ScrollView>
           <View style={body}>
             {this.state.data.length > 0 ? (
               this.state.data.map((value, index) => (
-                <>
+                <View key={index}>
                   {/* <Product price={this.state.data[0].price} /> */}
                   <Product key={index}
-                  price={value.price} 
-                  name={value.name_product}
-                  quantity={value.qty}
+                    price={value.price}
+                    name={value.name_product}
+                    quantity={value.qty}
                   />
-                </>
+                </View>
               ))
             ) : (
-              <>
-                <Image
-                  style={{width: '60%', resizeMode: 'contain'}}
-                  source={require('../../../assets/images/Inbox.png')}
-                />
-                <Text
-                  style={{
-                    fontSize: 16,
-                    color: 'black',
-                    fontWeight: 'bold',
-                    marginTop: -50,
-                    color: 'gray',
-                  }}>
-                  Cart is Empty
+                <>
+                  <Image
+                    style={{ width: '60%', resizeMode: 'contain' }}
+                    source={require('../../../assets/images/Inbox.png')}
+                  />
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: 'black',
+                      fontWeight: 'bold',
+                      marginTop: -50,
+                      color: 'gray',
+                    }}>
+                    Cart is Empty
                 </Text>
-              </>
-            )}
+                </>
+              )}
           </View>
         </ScrollView>
         <View style={totalProduct}>
           <View style={totalPrice}>
-            <Text style={{fontWeight: 'bold'}}>Total Price</Text>
-            <Text style={{fontWeight: 'bold', color: '#00B444', fontSize: 18}}>
+            <Text style={{ fontWeight: 'bold' }}>Total Price</Text>
+            <Text style={{ fontWeight: 'bold', color: '#00B444', fontSize: 18 }}>
               Rp {this.state.result}
             </Text>
           </View>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Checkout')}>
+            onPress={this.handleCheckout}>
             <View style={buttonCheckout}>
-              <Text style={{color: 'white', fontWeight: 'bold'}}>Checkout</Text>
+              <Text style={{ color: 'white', fontWeight: 'bold' }}>Checkout</Text>
             </View>
           </TouchableOpacity>
         </View>

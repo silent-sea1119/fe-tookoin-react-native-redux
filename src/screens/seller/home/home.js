@@ -5,6 +5,8 @@ import IconMI from 'react-native-vector-icons/MaterialIcons';
 import styles from './home.style';
 import AsyncStorage from '@react-native-community/async-storage';
 import avatar from '../../../assets/images/Avatar.png';
+import {showToast} from '../../../components/toast';
+
 
 class HomeSeller extends Component {
   state = {
@@ -16,13 +18,18 @@ class HomeSeller extends Component {
     this.setState({name_user: name_user});
   };
 
-  handleClick = () => {
-    this.props.navigation.navigate('Login');
+  handleClick = async (props) => {
+    showToast(`Anda berhasil Logout`, `success`);
+    await AsyncStorage.clear().then(() => {
+      props.navigation.navigate('Login')
+    });
+    
   };
   componentDidMount() {
     this.handleGetItem();
   }
   render() {
+
     return (
       <View style={styles.container}>
         <View style={styles.header} key="header">
@@ -130,7 +137,7 @@ class HomeSeller extends Component {
             <View style={styles.hr2} />
             <TouchableOpacity
               style={styles.body3Content}
-              onPress={() => this.handleClick()}>
+              onPress={() => this.handleClick(this.props)}>
               <IconMI
                 style={styles.body3Icon}
                 color="#314fe8"

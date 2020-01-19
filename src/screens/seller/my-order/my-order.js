@@ -38,21 +38,37 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Octicons from 'react-native-vector-icons/Octicons';
 import {getTransactionStatusSeller} from '../../../utils/axios/my-order-seller';
 import {storeData, retrieveData} from '../../../utils';
+import {withNavigationFocus} from 'react-navigation';
 
 // import Tab1 from './tabOne';
 // import Tab2 from './tabTwo';
 
 import styles from './my-order.style';
 
-export default class MyOrderSeller extends Component {
+class MyOrderSeller extends Component {
   state = {
     status: true,
-    token:
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjo0MSwiZW1haWwiOiJTZWxsZXI3N0BnbWFpbC5jb20iLCJyb2xlIjoiMiIsImlhdCI6MTU3OTMyMzMzNn0.ptufpHBcGFny30j69HSvG4xrxcNiBL5sY3kpofb7maI',
+    token: '',
     listOrderSeller: [1, 2, 3],
     incompletedOrder: [],
     completedOrder: [],
   };
+
+  componentDidUpdate = async prevProps => {
+    if (prevProps.isFocused !== this.props.isFocused) {
+      if (await this.props.isFocused) {
+        if (await retrieveData('token')) {
+          console.log('get newdata');
+          this.setState({loggedIn: true});
+          this.getOrder();
+        }
+        else{
+          this.setState({loggedIn: false});
+        }
+      }
+    }
+  };
+
 
   componentDidMount = async () => {
 
@@ -67,6 +83,8 @@ export default class MyOrderSeller extends Component {
     }
 
     getTransactionStatusSeller(this.state.token).then(res => {
+
+      console.log('responseOrder',res)
       // Filtering status order
       const incompletedOrder = res.data.filter(function(order) {
         return order.status < 4;
@@ -135,20 +153,14 @@ export default class MyOrderSeller extends Component {
                             { `Rp${order.price} x ${order.qty}`}
                           </Text>
 
-                          <Text note style={styles.textNoteChild11}>
-                            Last Status
+                          <Text note style={styles.textNoteChild12}>
+                            Billing Total
                           </Text>
-                          <Text style={styles.textChild11a}>
-                            {order.status === 1
-                              ? `Waiting payment from buyer`
-                              : order.status === 2
-                              ? `Processing payment`
-                              : order.status === 3
-                              ? `In Packaging`
-                              : order.status === 4
-                              ? `Product sent by Seller`
-                              : `Waiting payment from buyer`}
+                          <Text style={styles.textChild12a}>
+                            {`Rp ${order.subtotal}`|| `Rp 4000`}
                           </Text>
+
+
                         </View>
 
                         <View style={styles.child12}>
@@ -166,12 +178,22 @@ export default class MyOrderSeller extends Component {
                           <Text style={styles.textChild12}>
                           {moment(order.transaction_date).format('dddd, DD-MM-YYYY') || `Wednesday, 15 Jan 2020`}
                           </Text>
-                          <Text note style={styles.textNoteChild12}>
-                            Billing Total
+
+                          <Text note style={styles.textNoteChild11}>
+                            Last Status
                           </Text>
-                          <Text style={styles.textChild12a}>
-                            {order.subtotal || `Rp 4000`}
+                          <Text style={styles.textChild11a}>
+                            {order.status === 1
+                              ? `Waiting payment from buyer`
+                              : order.status === 2
+                              ? `Processing payment`
+                              : order.status === 3
+                              ? `In Packaging`
+                              : order.status === 4
+                              ? `Product sent by Seller`
+                              : `Waiting payment from buyer`}
                           </Text>
+
 
 
                         </View>
@@ -271,7 +293,37 @@ export default class MyOrderSeller extends Component {
                     <View style={styles.cardParent} key={index}>
                       <View style={styles.child1}>
                         <View style={styles.child11}>
+
+                        <Text note style={styles.textNoteChild11}>
+                            Buyer
+                          </Text>
+                          <Text style={styles.textChild11}>
+                            {order.name_user || `#SR23555HJF8`}
+                          </Text>
+
                           <Text note style={styles.textNoteChild11}>
+                            Item Purchased
+                          </Text>
+                          <Text style={styles.textChild11}>
+                            { `${order.name_product}` || `Sayur Bayam`}
+                          </Text>
+
+                          <Text style={styles.textChild11}>
+                            { `Rp${order.price} x ${order.qty}`}
+                          </Text>
+                          <Text note style={styles.textNoteChild12}>
+                            Billing Total
+                          </Text>
+                          <Text style={styles.textChild12a}>
+                          {`Rp ${order.subtotal}`|| `Rp 4000`}
+                          </Text>
+
+                          
+                        </View>
+
+                        <View style={styles.child12}>
+
+                        <Text note style={styles.textNoteChild11}>
                             Order Number
                           </Text>
                           <Text style={styles.textChild11}>
@@ -289,21 +341,14 @@ export default class MyOrderSeller extends Component {
                               ? `Canceled Order`
                               : `Product received by Buyer`}
                           </Text>
-                        </View>
 
-                        <View style={styles.child12}>
                           <Text note style={styles.textNoteChild12}>
                             Transaction Date
                           </Text>
                           <Text style={styles.textChild12}>
                           {moment(order.transaction_date).format('dddd, DD-MM-YYYY') || `Wednesday, 15 Jan 2020`}
                           </Text>
-                          <Text note style={styles.textNoteChild12}>
-                            Billing Total
-                          </Text>
-                          <Text style={styles.textChild12a}>
-                            {order.subtotal || `Rp 4000`}
-                          </Text>
+
                         </View>
                       </View>
                       <View style={styles.child2}>
@@ -380,3 +425,5 @@ export default class MyOrderSeller extends Component {
     );
   }
 }
+
+export default withNavigationFocus(MyOrderSeller);

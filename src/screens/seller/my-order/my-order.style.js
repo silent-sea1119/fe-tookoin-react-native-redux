@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     width: '50%',
   },
   textNoteChild11: {
+    
     fontSize: 12,
   },
   textChild11: {
@@ -73,6 +74,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   textChild11a: {
+    paddingBottom: 10,
     fontSize: 14,
   },
   child12: {

@@ -8,7 +8,20 @@ import Border from '../../../components/border/border';
 import Card from '../../../components/card/card';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import {storeData, retrieveData} from '../../../utils';
+
 class HomeBuyer extends Component {
+
+  componentDidMount = async () => {
+    if (await retrieveData('token')) {
+      if ((await retrieveData('role')) == 1) {
+        this.props.navigation.navigate('Profile');
+      } else if ((await retrieveData('role')) == 2) {
+        this.props.navigation.navigate('HomeSeller');
+      }
+    }
+  };
+
   render() {
     const {
       container,

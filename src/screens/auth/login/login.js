@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -13,13 +13,14 @@ import {
   DrawerLayoutAndroid,
   Alert,
 } from 'react-native';
-import { Input, ThemeConsumer } from 'react-native-elements';
+import {Input, ThemeConsumer} from 'react-native-elements';
 import styles from './login.style';
 import Footer from '../../../components/footer/footer';
-import { loginAccount } from '../../../redux/actions/auth/index';
-import { SAPI_URL } from 'react-native-dotenv';
+import {loginAccount} from '../../../redux/actions/auth/index';
+import {SAPI_URL} from 'react-native-dotenv';
 import AsyncStorage from '@react-native-community/async-storage';
 import Axios from 'axios';
+import {storeData, retrieveData} from '../../../utils';
 
 class Login extends Component {
   constructor() {
@@ -30,6 +31,19 @@ class Login extends Component {
       role: 0,
     };
   }
+
+  // componentDidMount = async () => {
+  //   console.log('masuk didmount login')
+  //   if (await retrieveData('token')) {
+  //     console.log('ada token')
+  //     if ((await retrieveData('role')) == 1) {
+  //       this.props.navigation.navigate('Profile');
+  //     } else if ((await retrieveData('role')) == 2) {
+  //       this.props.navigation.navigate('HomeSeller');
+  //     }
+  //   }
+  // };
+
   handleMasuk = async () => {
     let data = {
       email: this.state.email,
@@ -37,26 +51,28 @@ class Login extends Component {
     };
     let url = SAPI_URL + '/login';
     await Axios.post(url, data)
-      .then(({ data }) => {
+      .then(({data}) => {
         if (data.msg === 'SUCCESS') {
           console.log(data.data[0]);
           AsyncStorage.setItem('email', this.state.email);
           AsyncStorage.setItem('name_user', data.data[0].name_user);
           AsyncStorage.setItem('token', data.data[0].token);
-          AsyncStorage.setItem('id_user', data.data[0].id_user.toString())
+          AsyncStorage.setItem('id_user', data.data[0].id_user.toString());
+          AsyncStorage.setItem('role', data.data[0].role);
           if (data.data[0].role === 1) {
             this.props.navigation.navigate('Profile');
           } else if (data.data[0].role === 2) {
             this.props.navigation.navigate('HomeSeller');
           }
         } else {
-          console.log('error login')
-          console.log(data.data)
+          console.log('error login');
+          console.log(data.data);
           Alert.alert('Info Error', 'Email / Password Salah');
         }
       })
       .catch(err => console.log(err));
   };
+
   render() {
     const {
       container,
@@ -70,7 +86,7 @@ class Login extends Component {
     return (
       <View style={container}>
         <View style={header}>
-          <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Login</Text>
+          <Text style={{fontWeight: 'bold', fontSize: 16}}>Login</Text>
         </View>
         <ScrollView>
           <View style={body}>
@@ -101,41 +117,41 @@ class Login extends Component {
             </View>
             <View style={formLogin}>
               <Input
-                inputContainerStyle={{ marginLeft: -10, height: 35 }}
+                inputContainerStyle={{marginLeft: -10, height: 35}}
                 labelStyle={{
                   marginHorizontal: -10,
                   fontSize: 12,
                 }}
-                inputStyle={{ fontSize: 12 }}
+                inputStyle={{fontSize: 12}}
                 placeholder="Input Email"
                 label="Email"
                 onChange={e => {
-                  this.setState({ email: e.nativeEvent.text });
+                  this.setState({email: e.nativeEvent.text});
                   console.log(e.nativeEvent.text);
                 }}
               />
-              <View style={{ paddingRight: 10 }}>
+              <View style={{paddingRight: 10}}>
                 {/* <Text style={{fontSize: 12, color: 'red'}}>Invalid Email</Text> */}
-                <Text style={{ fontSize: 12, color: 'red' }}> </Text>
+                <Text style={{fontSize: 12, color: 'red'}}> </Text>
               </View>
               <Input
-                inputContainerStyle={{ marginLeft: -10, height: 35 }}
+                inputContainerStyle={{marginLeft: -10, height: 35}}
                 labelStyle={{
                   marginHorizontal: -10,
                   fontSize: 12,
                 }}
                 secureTextEntry={true}
-                inputStyle={{ fontSize: 12 }}
+                inputStyle={{fontSize: 12}}
                 placeholder="Input Password"
                 label="Password"
                 onChange={e => {
-                  this.setState({ password: e.nativeEvent.text });
+                  this.setState({password: e.nativeEvent.text});
                   console.log(e.nativeEvent.text);
                 }}
               />
-              <View style={{ paddingRight: 10 }}>
+              <View style={{paddingRight: 10}}>
                 {/* <Text style={{fontSize: 12, color: 'red'}}>Invalid Email</Text> */}
-                <Text style={{ fontSize: 12, color: 'red' }}> </Text>
+                <Text style={{fontSize: 12, color: 'red'}}> </Text>
               </View>
             </View>
             <TouchableOpacity onPress={() => this.handleMasuk()}>
@@ -150,7 +166,7 @@ class Login extends Component {
                 </Text>
               </View>
             </TouchableOpacity>
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
               <Text
                 style={{
                   fontSize: 12,
@@ -159,7 +175,8 @@ class Login extends Component {
                 Lupa Password ?
               </Text>
               <Text> </Text>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('Forgot')}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Forgot')}>
                 <Text
                   style={{
                     color: '#62BA67',
@@ -178,13 +195,13 @@ class Login extends Component {
                 paddingHorizontal: 20,
                 marginVertical: 10,
               }}>
-              <Text style={{ fontSize: 12, color: 'gray' }}>
+              <Text style={{fontSize: 12, color: 'gray'}}>
                 Belum punya akun ?
               </Text>
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('Register')}>
                 <View style={buttonRegister}>
-                  <Text style={{ color: '#62BA67', fontWeight: 'bold' }}>
+                  <Text style={{color: '#62BA67', fontWeight: 'bold'}}>
                     Daftar
                   </Text>
                 </View>

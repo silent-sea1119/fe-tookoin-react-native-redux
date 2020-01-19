@@ -3,17 +3,16 @@ import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './accountOption.style';
 import AsyncStorage from '@react-native-community/async-storage';
+import {showToast} from '../toast/';
 
 const AccountOption = props => {
   const {container} = styles;
   const handleClick = async () => {
     if (props.title === 'Keluar'){
-      // props.navigation.navigate('Login')
-
+      showToast(`Anda berhasil Logout`, `success`);
       await AsyncStorage.clear().then(() => {
         props.navigation.navigate('Login')
       });
-
     }
     else if (props.title === 'Alamat Saya'){
       props.navigation.navigate('DaftarAlamatBuyer')

@@ -48,14 +48,24 @@ class DetailProdukBuyer extends Component {
 
   getDataFromApi = async () => {
     await this.props.dispatch(nyokot());
-
+    console.log(this.props.navigation.getParam('name'), '777');
+    // console.log(this.props.navigation.getParam('id_product'), '888');
     const id_productGet = this.props.navigation.getParam('id_product');
-    const arrProductGet = this.props.productDetail.product.data.data;
-    const productGet = arrProductGet.find(x => x.id_product == id_productGet);
+    console.log(id_productGet, '889');
+    // console.log(this.props.productDetail.product.data.data, '999');
+    const arrProductGet = this.props.productDetail.product.data.data
+    console.log(arrProductGet, '1010')
+    const productGet = arrProductGet.find(x => x.id_product == id_productGet)
+    console.log(productGet, '1111');
 
     this.setState({
-      detailProdukLocalState: productGet,
-    });
+      detailProdukLocalState: productGet
+    })
+
+    console.log(this.state.detailProdukLocalState, '1212')
+
+
+    // console.log(this.props.productDetail.product.data.data.filter(p => p.id_product == 28), '898098098jlkjlkj');
   };
 
   render() {
@@ -113,7 +123,8 @@ class DetailProdukBuyer extends Component {
           )}
           renderForeground={() => (
             <View style={styles.titleContainer}>
-              <Text style={styles.imageTitle}></Text>
+              <Text style={styles.imageTitle}>
+              </Text>
             </View>
           )}>
           <TriggeringView

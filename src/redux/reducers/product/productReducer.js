@@ -28,6 +28,11 @@ const productReducer = (prevState = initialState, action) => {
         isFulfilled: true,
         product: action.payload ,
       };
+
+      case 'NYOKOT_PRODUCT_FULFILLED':
+      return {
+        ...prevState,
+      };
       
     default:
       return prevState;

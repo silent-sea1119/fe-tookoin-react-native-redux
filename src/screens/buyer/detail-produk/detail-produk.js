@@ -61,7 +61,7 @@ class DetailProdukBuyer extends Component {
   render() {
     // const produk = this.state.detailProdukLocalState;
     // console.log(this.props.productDetail, 'ioppoipoipoip');
-    console.log('RENDER', this.state)
+    // console.log('RENDER', this.state.detailProdukLocalState.desc_product)
     const data = {
       title: this.props.navigation.getParam('name'),
       dose: `1 pcs (${this.props.navigation.getParam('unit')})`,
@@ -195,7 +195,7 @@ class DetailProdukBuyer extends Component {
                 {/* {this.state.detailProdukLocalState.desc_product.length > 0
                   ? this.state.detailProdukLocalState.desc_product
                   : 'Empty'} */}
-                  {this.state.detailProdukLocalState.desc_product || this.props.navigation.getParam('desc_product')}
+                  {this.props.navigation.getParam('desc_product')}
               </Text>
             </View>
           </View>

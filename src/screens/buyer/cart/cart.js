@@ -22,7 +22,7 @@ import {withNavigationFocus} from 'react-navigation';
 // class InboxBuyer extends Component {
 class Cart extends Component {
   state = {
-    data: [0],
+    data: [],
     // data: [],
     result: 0,
   };

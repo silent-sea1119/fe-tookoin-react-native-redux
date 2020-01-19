@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { TextInput, ScrollView } from 'react-native-gesture-handler';
 import Axios from "axios";
+import {showToast} from '../../../components/toast';
 
 class InputToken extends Component {
     constructor(props) {
@@ -17,7 +18,8 @@ class InputToken extends Component {
         const { newPassword, reType, code } = this.state;
 
         if (newPassword != reType) {
-            Alert.alert("error".toUpperCase(), "Password is not same");
+            // Alert.alert("error".toUpperCase(), "Password is not same");
+            showToast(`Password did not match`, `warning`, 'bottom');
         } else {
             const data = {
                 password: newPassword,
@@ -26,9 +28,11 @@ class InputToken extends Component {
             }
             Axios.post('http://3.80.150.111:8000/password/reset', data).then(response => {
                 if (response.data.status != 200) {
-                    Alert.alert("Failed", response.data.msg)
+                    // Alert.alert("Failed", response.data.msg)
+                    showToast(response.data.msg, `warning`, 'bottom');
                 } else {
-                    Alert.alert("Success", response.data.msg)
+                    showToast(response.data.msg, `success`, 'bottom');
+                    // Alert.alert("Success", response.data.msg)
                     setTimeout(() => {
                         this.props.navigation.navigate('Login')
                     }, 500);

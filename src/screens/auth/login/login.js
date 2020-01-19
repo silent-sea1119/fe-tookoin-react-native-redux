@@ -21,7 +21,7 @@ import {SAPI_URL} from 'react-native-dotenv';
 import AsyncStorage from '@react-native-community/async-storage';
 import Axios from 'axios';
 import {storeData, retrieveData} from '../../../utils';
-
+import {showToast} from '../../../components/toast';
 import {withNavigationFocus} from 'react-navigation';
 
 class Login extends Component {
@@ -33,18 +33,6 @@ class Login extends Component {
       role: 0,
     };
   }
-
-  // componentDidMount = async () => {
-  //   console.log('masuk didmount login')
-  //   if (await retrieveData('token')) {
-  //     console.log('ada token')
-  //     if ((await retrieveData('role')) == 1) {
-  //       this.props.navigation.navigate('Profile');
-  //     } else if ((await retrieveData('role')) == 2) {
-  //       this.props.navigation.navigate('HomeSeller');
-  //     }
-  //   }
-  // };
 
   handleMasuk = async () => {
     let data = {
@@ -63,18 +51,17 @@ class Login extends Component {
           AsyncStorage.setItem('address', data.data[0].address || '');
           AsyncStorage.setItem('phone', data.data[0].phone || '');
           AsyncStorage.setItem('id_user', data.data[0].id_user.toString())
+          showToast(`Selamat datang ${data.data[0].name_user}, selamat berbelanja`, `success`);
           if (data.data[0].role === 1) {
             this.props.navigation.navigate('Profile');
           } else if (data.data[0].role === 2) {
             this.props.navigation.navigate('HomeSeller');
           }
         } else {
-          console.log('error login');
-          console.log(data.data);
-          Alert.alert('Info Error', 'Email / Password Salah');
+          showToast(`Email atau Password salah`, `warning`);
         }
       })
-      .catch(err => console.log(err));
+      .catch(showToast(`Koneksi error, silahkan coba lagi`, `warning`));
   };
 
   render() {
@@ -135,7 +122,6 @@ class Login extends Component {
                 }}
               />
               <View style={{paddingRight: 10}}>
-                {/* <Text style={{fontSize: 12, color: 'red'}}>Invalid Email</Text> */}
                 <Text style={{fontSize: 12, color: 'red'}}> </Text>
               </View>
               <Input
@@ -154,7 +140,6 @@ class Login extends Component {
                 }}
               />
               <View style={{paddingRight: 10}}>
-                {/* <Text style={{fontSize: 12, color: 'red'}}>Invalid Email</Text> */}
                 <Text style={{fontSize: 12, color: 'red'}}> </Text>
               </View>
             </View>

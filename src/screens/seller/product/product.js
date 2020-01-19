@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   ScrollView,
   Picker,
-  Alert,
   BackHandler,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -17,6 +16,7 @@ import NumericInput from '@wwdrew/react-native-numeric-textinput';
 import Axios from 'axios';
 import {SAPI_URL} from 'react-native-dotenv';
 import AsyncStorage from '@react-native-community/async-storage';
+import {showToast} from '../../../components/toast';
 
 class AddProduct extends Component {
   constructor(props) {
@@ -67,12 +67,11 @@ class AddProduct extends Component {
           if (data.msg === 'success') {
             this.props.navigation.navigate('Etalase');
           } else {
-            Alert.alert('Error', 'Something Went Wrong');
+            showToast(`Network error, please try again`, `failed`);
           }
         })
         .catch(err => {
-          console.log(err);
-          Alert.alert('Error', 'Something Went Wrong');
+          showToast(`Network error, please try again`, `failed`);
         });
     } else if (editOrAdd === 'Edit') {
       console.log('Edit');
@@ -84,12 +83,12 @@ class AddProduct extends Component {
           if (data.msg === 'success') {
             this.props.navigation.navigate('Etalase');
           } else {
-            Alert.alert('Error', 'Something Went Wrong');
+            showToast(`Network error, please try again`, `failed`);
           }
         })
         .catch(err => {
           console.log(err);
-          Alert.alert('Error', 'Something Went Wrong');
+          showToast(`Network error, please try again`, `failed`);
         });
     }
   };
@@ -102,7 +101,7 @@ class AddProduct extends Component {
             isVisible={this.state.toggleModal}
             onModalHide={() => {
               if (this.state.id_category) {
-                Alert.alert('Status', 'Category Selected');
+                showToast(`Category Selected`, `success`);
               }
             }}
             onBackdropPress={() => this.handleToggleModal(false)}

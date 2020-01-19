@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
-  Alert,
 } from 'react-native';
 import styles from './cart.style';
 import Product from '../../../components/cartProduct/cartProduct';

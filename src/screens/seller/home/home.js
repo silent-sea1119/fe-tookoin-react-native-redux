@@ -1,12 +1,19 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, ScrollView, Image} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  BackHandler,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconMI from 'react-native-vector-icons/MaterialIcons';
 import styles from './home.style';
 import AsyncStorage from '@react-native-community/async-storage';
 import avatar from '../../../assets/images/Avatar.png';
 import {showToast} from '../../../components/toast';
-
+import {withNavigationFocus} from 'react-navigation';
 
 class HomeSeller extends Component {
   state = {
@@ -28,6 +35,18 @@ class HomeSeller extends Component {
   componentDidMount() {
     this.handleGetItem();
   }
+
+
+  componentDidUpdate = async prevProps => {
+    if (prevProps.isFocused !== this.props.isFocused) {
+      if (await this.props.isFocused) {
+        this.handleGetItem()
+        console.log('Get Name')
+      }
+      // Call any action
+    }
+  };
+
   render() {
 
     return (
@@ -37,7 +56,8 @@ class HomeSeller extends Component {
             <TouchableOpacity style={styles.touchBackIcon}>
               <IconMI style={styles.backIcon} name="arrow-back" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=> this.props.navigation.navigate('EditProfile')}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('EditProfile')}>
               <Icon style={styles.gearIcon} name="cog" />
             </TouchableOpacity>
             <TouchableOpacity>
@@ -81,7 +101,9 @@ class HomeSeller extends Component {
           </View>
           <TouchableOpacity
             style={styles.body2}
-            onPress={() => this.props.navigation.navigate('AddProduct',{title: 'Add'})}>
+            onPress={() =>
+              this.props.navigation.navigate('AddProduct', {title: 'Add'})
+            }>
             <IconMI style={styles.addIcon} name="add-circle-outline" />
             <Text style={styles.addText}>Tambah Produk Baru</Text>
             <IconMI style={styles.detailAdd} name="navigate-next" />
@@ -168,4 +190,4 @@ class HomeSeller extends Component {
   }
 }
 
-export default HomeSeller;
+export default withNavigationFocus(HomeSeller);

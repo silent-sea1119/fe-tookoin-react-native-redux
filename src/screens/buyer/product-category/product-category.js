@@ -32,7 +32,7 @@ class ProductCategory extends Component {
     const id_category = this.props.navigation.getParam('id');
     let url;
     if (id_category === 4) {
-      url = SAPI_URL + '/product/?date_created&order=asc';
+      url = SAPI_URL + '/product/?order=desc&sort=date_created';
     } else {
       url = SAPI_URL + '/product/?id_category=' + id_category;
       // console.log(url);

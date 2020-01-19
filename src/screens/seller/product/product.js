@@ -6,6 +6,7 @@ import {
   ScrollView,
   Picker,
   Alert,
+  BackHandler,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconMI from 'react-native-vector-icons/MaterialIcons';
@@ -28,7 +29,7 @@ class AddProduct extends Component {
       unit: this.props.navigation.getParam('unit') || '',
       label: this.props.navigation.getParam('label') || '',
       toggleModal: false,
-      id_category: '',
+      id_category: this.props.navigation.getParam('id_category') || '',
     };
   }
 
@@ -36,9 +37,11 @@ class AddProduct extends Component {
     this.setState({toggleModal: stat});
   };
   handleSubmitProduct = async () => {
+    let editOrAdd = this.props.navigation.getParam('title');
+
     let token = await AsyncStorage.getItem('token');
     let id_seller = await AsyncStorage.getItem('id_user');
-    console.log(token);
+
     let config = {
       headers: {
         Authorization: 'Bearer ' + token,
@@ -56,20 +59,41 @@ class AddProduct extends Component {
       label: this.state.label,
     };
 
-    let url = SAPI_URL + '/product/';
-    Axios.post(url, data, config)
-      .then(({data}) => {
-        if (data.msg === 'success') {
-          this.props.navigation.push('Etalase');
-        } else {
+    if (editOrAdd === 'Add') {
+      console.log('Add');
+      let url = SAPI_URL + '/product/';
+      Axios.post(url, data, config)
+        .then(({data}) => {
+          if (data.msg === 'success') {
+            this.props.navigation.navigate('Etalase');
+          } else {
+            Alert.alert('Error', 'Something Went Wrong');
+          }
+        })
+        .catch(err => {
+          console.log(err);
           Alert.alert('Error', 'Something Went Wrong');
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        Alert.alert('Error', 'Something Went Wrong');
-      });
+        });
+    } else if (editOrAdd === 'Edit') {
+      console.log('Edit');
+      let url =
+        SAPI_URL + '/product/' + this.props.navigation.getParam('id_product');
+      console.log(url);
+      Axios.patch(url, data, config)
+        .then(({data}) => {
+          if (data.msg === 'success') {
+            this.props.navigation.navigate('Etalase');
+          } else {
+            Alert.alert('Error', 'Something Went Wrong');
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          Alert.alert('Error', 'Something Went Wrong');
+        });
+    }
   };
+
   render() {
     return (
       <View style={styles.container}>
@@ -111,7 +135,7 @@ class AddProduct extends Component {
                     borderRadius: 10,
                   }}>
                   <Picker
-                    selectedValue={this.state.id_category}
+                    selectedValue={this.state.id_category.toString()}
                     style={{
                       height: '100%',
                       width: '100%',

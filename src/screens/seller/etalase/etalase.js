@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {View, Text, ScrollView, Image, ActivityIndicator} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  ActivityIndicator,
+  BackHandler,
+} from 'react-native';
 import styles from './etalase.style';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import {Icon} from 'react-native-elements';
@@ -9,6 +16,7 @@ import CardEtalase from '../../../components/cardEtalase/cardEtalase';
 import {fetchEtalase} from '../../../redux/actions/etalase/etalase';
 import {SAPI_URL} from 'react-native-dotenv';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {withNavigationFocus} from 'react-navigation';
 
 class Etalase extends Component {
   state = {
@@ -32,6 +40,7 @@ class Etalase extends Component {
     const dataEtalaseItem = await this.props.dispatch(
       fetchEtalase(url, config),
     );
+    console.log(dataEtalaseItem.value.data.data);
     this.setState({
       etalase: dataEtalaseItem.value.data.data,
       message: dataEtalaseItem.value.data.msg,
@@ -42,6 +51,17 @@ class Etalase extends Component {
     this.handleGetItem();
     this.handleGetEtalaseItem();
   }
+
+  componentDidUpdate = async prevProps => {
+    if (prevProps.isFocused !== this.props.isFocused) {
+      if (await this.props.isFocused) {
+        this.handleGetItem()
+        this.handleGetEtalaseItem()
+      }
+      // Call any action
+    }
+  };
+
   render() {
     const {
       container,
@@ -85,7 +105,7 @@ class Etalase extends Component {
                 <View style={{marginHorizontal: 5}}>
                   <Text style={{fontSize: 12}}>Total Product</Text>
                   <Text style={{fontWeight: 'bold', color: '#62BA67'}}>
-                    7 Products
+                    {this.state.etalase.length} Products
                   </Text>
                 </View>
               </View>
@@ -128,12 +148,16 @@ class Etalase extends Component {
             {this.state.etalase.length > 0 ? (
               this.state.etalase.map((value, index) => (
                 <CardEtalase
+                  id_product={value.id_product}
                   name={value.name_product}
+                  desc_product={value.desc_product}
                   price={value.price}
                   unit={value.unit}
                   label={value.label}
                   key={index}
                   navigation={this.props.navigation}
+                  id_category={value.id_category}
+                  stock={value.stock}
                 />
               ))
             ) : this.state.message === 'success' ? (
@@ -158,4 +182,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Etalase);
+export default withNavigationFocus(connect(
+  mapStateToProps, 
+)(Etalase))
+// export default connect(mapStateToProps)(Etalase);

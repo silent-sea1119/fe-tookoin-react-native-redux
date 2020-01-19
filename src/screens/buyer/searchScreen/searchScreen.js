@@ -50,9 +50,11 @@ class SearchScreen extends Component {
                   <Card
                     key={item.id_product}
                     id_product={item.id_product}
+                    label={item.label}
                     name={item.name_product}
                     price={item.price}
-                    unit={item.stock}
+                    unit={item.unit}
+                    stock={item.stock}
                     navigation={this.props.navigation}
                   />
                 </View>

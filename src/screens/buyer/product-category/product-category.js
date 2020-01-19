@@ -82,7 +82,8 @@ class ProductCategory extends Component {
                   id_product={item.id_product}
                   name={item.name_product}
                   price={item.price}
-                  unit={item.stock}
+                  unit={item.unit}
+                  stock={item.stock}
                   navigation={this.props.navigation}
                 />
               </View>

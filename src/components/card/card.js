@@ -17,84 +17,81 @@ class Card extends Component {
     this.state = {Quantity: 0, localArray: []};
   }
 
-
-    // console.log('DESCRIPTION : ', this.props.name, ' = ', this.props.desc_product);
-   goToDetail = () => {
-      console.log(
-        'DESCRIPTION : ',
-        this.props.name,
-        ' = ',
-        this.props.desc_product,
-      );
-      this.props.navigation.push('DetailProdukBuyer', {
-        id_product: this.props.id_product,
-        desc_product: this.props.desc_product,
-        id_category: this.props.id_category,
-		id_seller: this.props.id_seller,
-        name: this.props.name,
-        label: this.props.label,
-        unit: this.props.unit,
-        price: this.props.price,
-        quantity: this.state.Quantity,
-        name_category: this.props.name_category,
-      });
+  // console.log('DESCRIPTION : ', this.props.name, ' = ', this.props.desc_product);
+  goToDetail = () => {
+    console.log(
+      'DESCRIPTION : ',
+      this.props.name,
+      ' = ',
+      this.props.desc_product,
+    );
+    this.props.navigation.push('DetailProdukBuyer', {
+      id_product: this.props.id_product,
+      desc_product: this.props.desc_product,
+      id_category: this.props.id_category,
+      id_seller: this.props.id_seller,
+      name: this.props.name,
+      label: this.props.label,
+      unit: this.props.unit,
+      price: this.props.price,
+      quantity: this.state.Quantity,
+      name_category: this.props.name_category,
+    });
+  };
+  postToCart = async statusQuantity => {
+    let id_productPost = this.props.id_product;
+    let id_sellerPost = this.props.id_seller;
+    console.log('ID PRODUK ', id_productPost);
+    console.log('ID SELLER ', id_sellerPost);
+    let quantityPost = 1;
+    if (statusQuantity == 1) {
+      quantityPost = 1;
+    } else {
+      quantityPost = -1;
+    }
+    let data = {
+      id_product: id_productPost,
+      id_seller: id_sellerPost,
+      qty: quantityPost,
     };
-
-	postToCart = async statusQuantity => {	
-      let id_productPost = this.props.id_product;	
-      let id_sellerPost = this.props.id_seller;	
-      let quantityPost = 1;	
-      if (statusQuantity == 1) {	
-        quantityPost = 1;	
-      } else {	
-        quantityPost = -1;	
-      }	
-      let data = {	
-        id_product: id_productPost,	
-        id_seller: id_sellerPost,	
-        qty: quantityPost,	
-      };	
-      let url = SAPI_URL + '/cart';	
-      let token = await AsyncStorage.getItem('token');	
-      let config = {	
-        headers: {Authorization: 'Bearer ' + token},	
-      };	
-      await axios.post(url, data, config);	
+    let url = SAPI_URL + '/cart';
+    let token = await AsyncStorage.getItem('token');
+    let config = {
+      headers: {Authorization: 'Bearer ' + token},
     };
+    await axios.post(url, data, config);
+  };
 
-   handleAddQuantity = () => {
+  handleAddQuantity = () => {
+    this.setState({Quantity: this.state.Quantity + 1});
+    this.postToCart(1);
+  };
+
+  handleQuantity = bool => {
+    let statusQuantity = 0;
+    if (bool) {
       this.setState({Quantity: this.state.Quantity + 1});
-	    this.postToCart(1);
-    };
-
-   handleQuantity = bool => {
-		  let statusQuantity = 0;
-      if (bool) {
-        this.setState({Quantity: this.state.Quantity + 1});
-		 statusQuantity = 1;
-      } else if (!bool) {
-        this.setState({Quantity: this.state.Quantity - 1});
-		statusQuantity = 0;
-      }
-	       this.postToCart(statusQuantity);
-    };
-
+      statusQuantity = 1;
+    } else if (!bool) {
+      this.setState({Quantity: this.state.Quantity - 1});
+      statusQuantity = 0;
+    }
+    this.postToCart(statusQuantity);
+  };
 
   componentDidUpdate = async prevProps => {
     if (prevProps.isFocused !== this.props.isFocused) {
       if (await this.props.isFocused) {
-        console.log('focused')
-      }
-      else{
-        console.log('infocused')
-        this.setState({Quantity:0})
+        console.log('focused');
+      } else {
+        console.log('infocused');
+        this.setState({Quantity: 0});
       }
       // Call any action
     }
   };
 
   render() {
-
     const {
       container,
       name,
@@ -169,10 +166,9 @@ class Card extends Component {
   }
 }
 
-	
-const mapStateToProps = state => {	
-  return {	
-    cardState: state.cartReducer,	
-  };	
+const mapStateToProps = state => {
+  return {
+    cardState: state.cartReducer,
+  };
 };
 export default withNavigationFocus(connect(mapStateToProps)(Card));

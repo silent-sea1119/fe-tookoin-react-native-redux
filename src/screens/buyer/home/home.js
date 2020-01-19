@@ -204,6 +204,7 @@ class HomeBuyer extends Component {
                   this.state.productLocalState1.map(item => (
                     <Card
                       key={item.id_product}
+                      id_seller={item.id_seller}
                       id_product={item.id_product}
                       desc_product={item.desc_product}
                       id_category={item.id_category}
@@ -263,10 +264,11 @@ class HomeBuyer extends Component {
                     this.state.productLocalState2.map(item => (
                       <Card
                         key={item.id_product}
+                        id_seller={item.id_seller}
                         id_product={item.id_product}
+                        desc_product={item.desc_product}
                         id_category={item.id_category}
                         name_category={item.name_category}
-                        desc_product={item.desc_product}
                         name={item.name_product}
                         label={item.label}
                         price={item.price}

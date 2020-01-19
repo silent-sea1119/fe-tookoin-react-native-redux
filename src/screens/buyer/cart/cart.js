@@ -43,7 +43,7 @@ class Cart extends Component {
 
     const dataCart = await this.props.dispatch(fetchCart(url, config));
     const arrayTotal = [];
-    console.log('your data1111', dataCart.value.data.data[0].price);
+    // console.log('your data1111', dataCart.value.data.data[0].price);
     for (let i = 0; i < dataCart.value.data.data.length; i++) {
       arrayTotal.push(dataCart.value.data.data[i].subtotal);
     }

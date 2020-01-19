@@ -8,18 +8,19 @@ import {showToast} from '../toast/';
 const AccountOption = props => {
   const {container} = styles;
   const handleClick = async () => {
-    if (props.title === 'Keluar'){
+    if (props.title === 'Keluar') {
       showToast(`Anda berhasil Logout`, `success`);
       await AsyncStorage.clear().then(() => {
-        props.navigation.navigate('Login')
+        props.navigation.navigate('Login');
       });
+    } else if (props.title === 'Alamat Saya') {
+      props.navigation.navigate('DaftarAlamatBuyer');
+    } else if (props.title === 'Edit Profile') {
+      props.navigation.navigate('EditProfileBuyer');
     }
-    else if (props.title === 'Alamat Saya'){
-      props.navigation.navigate('DaftarAlamatBuyer')
-    }
-  } 
+  };
   return (
-    <TouchableOpacity onPress={()=> handleClick()}>
+    <TouchableOpacity onPress={() => handleClick()}>
       <View style={container}>
         <Text style={{color: props.color}}>{props.title}</Text>
         <Icon name="chevron-right" size={14} color="#62BA67" />

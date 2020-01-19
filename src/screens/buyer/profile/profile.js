@@ -6,6 +6,7 @@ import Border from '../../../components/border/border';
 import AccountOption from '../../../components/accountOption/accountOption';
 import Footer from '../../../components/footer/footer';
 import AsyncStorage from '@react-native-community/async-storage';
+import {withNavigationFocus} from 'react-navigation';
 
 class ProfileBuyer extends Component {
   state = {name_user: ''};
@@ -17,7 +18,14 @@ class ProfileBuyer extends Component {
   componentDidMount() {
     this.handleGetData();
   }
-
+  componentDidUpdate = async prevProps => {
+    if (prevProps.isFocused !== this.props.isFocused) {
+      if (await this.props.isFocused) {
+        this.handleGetData();
+      }
+    } else {
+    }
+  };
   render() {
     const {
       container,
@@ -88,7 +96,10 @@ class ProfileBuyer extends Component {
         <Border />
         <View style={body}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <AccountOption title="Masukkan Code Referral" />
+            <AccountOption
+              title="Edit Profile"
+              navigation={this.props.navigation}
+            />
             <AccountOption title="Voucher Saya" />
             <AccountOption
               title="Alamat Saya"
@@ -117,4 +128,4 @@ class ProfileBuyer extends Component {
   }
 }
 
-export default ProfileBuyer;
+export default withNavigationFocus(ProfileBuyer);

@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import CardEtalase from '../../../components/cardEtalase/cardEtalase';
 import {fetchEtalase} from '../../../redux/actions/etalase/etalase';
 import {SAPI_URL} from 'react-native-dotenv';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 class Etalase extends Component {
   state = {
@@ -136,7 +137,7 @@ class Etalase extends Component {
                 />
               ))
             ) : this.state.message === 'success' ? (
-              <View style={{padding: 160}}>
+              <View>
                 <Text style={{color: 'gray'}}> Empty </Text>
               </View>
             ) : (

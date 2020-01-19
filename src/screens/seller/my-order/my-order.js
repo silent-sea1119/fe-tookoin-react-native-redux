@@ -29,13 +29,12 @@ import {
   Right,
   Item,
 } from 'native-base';
+import moment from'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import CardEtalase from '../../../components/cardEtalase/cardEtalase';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import {getTransactionStatusSeller} from '../../../utils/axios/my-order-seller';
 import {storeData, retrieveData} from '../../../utils';
@@ -119,7 +118,7 @@ export default class MyOrderSeller extends Component {
                         <View style={styles.child11}>
 
                         <Text note style={styles.textNoteChild11}>
-                            Nama Pembeli
+                            Buyer
                           </Text>
                           <Text style={styles.textChild11}>
                             {order.name_user || `#SR23555HJF8`}
@@ -141,14 +140,14 @@ export default class MyOrderSeller extends Component {
                           </Text>
                           <Text style={styles.textChild11a}>
                             {order.status === 1
-                              ? `Waiting payment from user`
+                              ? `Waiting payment from buyer`
                               : order.status === 2
                               ? `Processing payment`
                               : order.status === 3
                               ? `In Packaging`
                               : order.status === 4
                               ? `Product sent by Seller`
-                              : `Waiting payment from user`}
+                              : `Waiting payment from buyer`}
                           </Text>
                         </View>
 
@@ -165,7 +164,7 @@ export default class MyOrderSeller extends Component {
                             Transaction Date
                           </Text>
                           <Text style={styles.textChild12}>
-                            {order.transaction_date || `Wednesday, 15 Jan 2020`}
+                          {moment(order.transaction_date).format('dddd, DD-MM-YYYY') || `Wednesday, 15 Jan 2020`}
                           </Text>
                           <Text note style={styles.textNoteChild12}>
                             Billing Total
@@ -297,7 +296,7 @@ export default class MyOrderSeller extends Component {
                             Transaction Date
                           </Text>
                           <Text style={styles.textChild12}>
-                            {order.transaction_date || `Wednesday, 15 Jan 2020`}
+                          {moment(order.transaction_date).format('dddd, DD-MM-YYYY') || `Wednesday, 15 Jan 2020`}
                           </Text>
                           <Text note style={styles.textNoteChild12}>
                             Billing Total

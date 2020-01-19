@@ -279,6 +279,10 @@ const RouteTab2 = createBottomTabNavigator(
 
 const Router = createSwitchNavigator(
   {
+    // StackAuth,
+    // StackHome,
+    // StackHomeBuyer,
+    // StackHomeSeller,
     StackSplashscreen,
     RouteTab,
     RouteTab2,

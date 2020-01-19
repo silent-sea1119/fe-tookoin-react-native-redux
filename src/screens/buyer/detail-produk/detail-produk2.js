@@ -36,7 +36,13 @@ const MAX_HEIGHT = 250;
 class DetailProdukBuyer extends Component {
   constructor() {
     super();
-    this.state = {showNavTitle: false, quantity: 0, detailProdukLocalState: ''};
+    this.state = {showNavTitle: false, quantity: 0, detailProdukLocalState: []};
+
+    store.subscribe(() => {
+      this.setState({
+        detailProdukLocalState: store.getState().product,
+      });
+    });
   }
 
   componentDidMount() {
@@ -47,20 +53,36 @@ class DetailProdukBuyer extends Component {
   }
 
   getDataFromApi = async () => {
+    const url = SAPI_URL + '/product/?name_product=';
+    // console.log('asem', url)
+    // console.log(this.props.navigation.state, 'state')
+
+    // let nameParam = this.props.navigation.getParam('name');
+    // nameParam = nameParam.replace(/ /g, '%20');
+    // const id_categoryParam = this.props.navigation.getParam('id_category');
+
+    // const finalURL = url + nameParam + '&id_category=' + id_categoryParam;
+    // console.log(finalURL, 'your final URL');
+
     await this.props.dispatch(nyokot());
+    // await this.props.dispatch(this.props.nyokot());
+    // console.log('alskjd', this.props.product)
+    // console.log(mapStateToProps.product);
+    console.log(this.props.productDetail.product.data.data.filter(p => p.id_product == 28), '898098098jlkjlkj');
+    // let array = this.props.productDetail.product.data.data
+    // console.log(this.props.dispatch)
+    // const detailProdukInitFinal = detailProdukInit.value.data.data[0];
 
-    const id_productGet = this.props.navigation.getParam('id_product');
-    const arrProductGet = this.props.productDetail.product.data.data;
-    const productGet = arrProductGet.find(x => x.id_product == id_productGet);
-
-    this.setState({
-      detailProdukLocalState: productGet,
-    });
+    // this.setState({
+    //   detailProdukLocalState: detailProdukInitFinal,
+    // });
   };
 
   render() {
     const produk = this.state.detailProdukLocalState;
-    // console.log(this.props.productDetail, 'ioppoipoipoip');
+    // console.log(this.props.productDetail)
+
+    console.log(this.props.productDetail, 'ioppoipoipoip');
 
     const data = {
       title: this.props.navigation.getParam('name'),
@@ -113,7 +135,9 @@ class DetailProdukBuyer extends Component {
           )}
           renderForeground={() => (
             <View style={styles.titleContainer}>
-              <Text style={styles.imageTitle}></Text>
+              <Text style={styles.imageTitle}>
+                {/* {tvShowContent.title} */}
+              </Text>
             </View>
           )}>
           <TriggeringView
@@ -122,6 +146,7 @@ class DetailProdukBuyer extends Component {
             onDisplay={() => this.navTitleView.fadeOut(100)}>
             <Text style={styles.title}>{data.title}</Text>
             <Text style={{fontSize: 14}}>{data.dose}</Text>
+            {/* ({tvShowContent.year}) */}
           </TriggeringView>
 
           <View style={styles.priceAndButton}>
@@ -191,7 +216,7 @@ class DetailProdukBuyer extends Component {
             <View style={styles.descriptionProductDesc}>
               <Text style={{color: 'gray', fontSize: 14}}>
                 {/* {data.description} */}
-                {produk.desc_product}
+                {/* {produk.desc_product} */}
               </Text>
             </View>
           </View>

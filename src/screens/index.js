@@ -37,5 +37,5 @@ export {
   AddProduct,
   EditProfile,
   SuccessOrder,
-  Splashscreen
+  Splashscreen,
 };

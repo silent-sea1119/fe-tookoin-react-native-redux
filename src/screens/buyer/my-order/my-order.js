@@ -34,6 +34,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
+import {withNavigationFocus} from 'react-navigation';
 
 // import Tab1 from './tabOne';
 // import Tab2 from './tabTwo';
@@ -44,7 +45,17 @@ import {storeData, retrieveData} from '../../../utils';
 import styles from './my-order.style';
 import moment from 'moment';
 
-export default class MyOrder extends Component {
+class MyOrder extends Component {
+  constructor(props) {
+    super(props);
+    // this.navigationWillFocusListener = props.navigation.addListener(
+    //   'willFocus',
+    //   () => {
+    //     // do something like this.setState() to update your view
+    //   },
+    // );
+  }
+
   state = {
     status: true,
     token: '',
@@ -54,31 +65,53 @@ export default class MyOrder extends Component {
     loggedIn: false,
   };
 
+  componentDidUpdate = async prevProps => {
+    if (prevProps.isFocused !== this.props.isFocused) {
+      if (await this.props.isFocused) {
+        if (await retrieveData('token')) {
+          console.log('get newdata');
+          this.setState({loggedIn: true});
+          this.getOrder();
+        }
+        else{
+          this.setState({loggedIn: false});
+        }
+      }
+    }
+  };
+
   componentDidMount = async () => {
     if (!(await retrieveData('token'))) {
       // Check logged in or not
+      console.log('token tidak ada');
       this.setState({loggedIn: false});
     } else {
+      console.log('token ada');
       this.setState({token: await retrieveData('token')});
       this.setState({loggedIn: true});
     }
+    this.getOrder();
+  };
 
-    getTransactionStatusBuyer(this.state.token).then(res => {
-      // Filtering status order
-      const incompletedOrder = res.data.filter(function(order) {
-        return order.status < 4;
-      });
-      this.setState({incompletedOrder: incompletedOrder});
-      const completedOrder = res.data.filter(function(order) {
-        return order.status > 4;
-      });
+  getOrder = () => {
+    getTransactionStatusBuyer(this.state.token)
+      .then(res => {
+        // Filtering status order
+        const incompletedOrder = res.data.filter(function(order) {
+          return order.status < 4;
+        });
+        this.setState({incompletedOrder: incompletedOrder});
+        const completedOrder = res.data.filter(function(order) {
+          return order.status > 4;
+        });
 
-      this.setState({completedOrder: completedOrder});
-      this.setState({listOrderSeller: res.data});
+        this.setState({completedOrder: completedOrder});
+        this.setState({listOrderSeller: res.data});
 
-      // console.log('incompledted',this.state.incompletedOrder)
-      // console.log('incompledted',this.state.completedOrder)
-    });
+        // console.log('incompledted',this.state.incompletedOrder)
+        // console.log('incompledted',this.state.completedOrder)
+      })
+      .catch(err => console.log(error));
   };
 
   render() {
@@ -86,7 +119,8 @@ export default class MyOrder extends Component {
     const imageUri = require('../../../assets/static-image/monster-egg.png');
     const trolli = require('../../../assets/images/trolli.png');
 
-    console.log('render this order', this.state.loggedIn)
+    // console.log('render this order', this.state.loggedIn)
+    // console.log(this.props.isFocused);
 
     return (
       <View style={styles.parent}>
@@ -421,3 +455,5 @@ export default class MyOrder extends Component {
     );
   }
 }
+
+export default withNavigationFocus(MyOrder);

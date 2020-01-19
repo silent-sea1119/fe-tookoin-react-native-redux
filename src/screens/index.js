@@ -19,6 +19,7 @@ import SuccessOrder from "./buyer/my-order/success-order";
 import Splashscreen from "./splashscreen";
 import Forgot from "./auth/forgot/forgot";
 import InputToken from "./auth/forgot/inputtoken";
+import Checkout from './buyer/transaction/checkout';
 
 export {
   Home,
@@ -42,4 +43,5 @@ export {
   Splashscreen,
   Forgot,
   InputToken,
+  Checkout,
 };

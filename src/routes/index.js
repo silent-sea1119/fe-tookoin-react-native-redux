@@ -26,7 +26,8 @@ import {
   SuccessOrder,
   Splashscreen,
   Forgot,
-  InputToken
+  InputToken,
+  Checkout
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -72,7 +73,8 @@ const StackHomeBuyer = createStackNavigator(
     Cart,
     DetailProdukBuyer,
     ProductCategory,
-    SuccessOrder
+    SuccessOrder,
+    Checkout
   },
   {
     initialRouteName: 'HomeBuyer',

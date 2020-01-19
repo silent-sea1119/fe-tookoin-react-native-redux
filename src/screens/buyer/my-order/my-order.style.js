@@ -13,6 +13,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FEFEFE',
     justifyContent: 'center',
     alignItems: 'center',
+    borderBottomColor: '#ddd',
+    borderBottomWidth: 3,
   },
   tabUnderLine: {
     // height: '10%',
@@ -47,7 +49,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 0.1,
     borderColor: 'gray',
-    height: 200,
+    height: 240,
     // width: 200,
     // flex: 1,
     flexDirection: 'column',
@@ -114,6 +116,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
 
+  iconChildActive: {
+    color: 'green',
+    fontSize: 22,
+    paddingHorizontal: 5,
+  },
+
   child22: {
     // backgroundColor: 'yellow',
     width: '40%',
@@ -124,6 +132,7 @@ const styles = StyleSheet.create({
   },
 
   buttonChild22: {
+    borderRadius: 10,
     borderColor: 'gray',
     color: 'gray',
   },

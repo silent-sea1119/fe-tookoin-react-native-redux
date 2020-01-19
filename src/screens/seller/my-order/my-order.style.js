@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 0.1,
     borderColor: 'gray',
-    height: 200,
+    // height: '100%',
+    height: 240,
     // width: 200,
     // flex: 1,
     flexDirection: 'column',
@@ -65,6 +66,7 @@ const styles = StyleSheet.create({
     width: '50%',
   },
   textNoteChild11: {
+    
     fontSize: 12,
   },
   textChild11: {
@@ -72,6 +74,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   textChild11a: {
+    paddingBottom: 10,
     fontSize: 14,
   },
   child12: {
@@ -114,6 +117,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
 
+  iconChildActive: {
+    color: 'green',
+    fontSize: 22,
+    paddingHorizontal: 5,
+  },
+
   child22: {
     // backgroundColor: 'yellow',
     width: '40%',
@@ -124,6 +133,7 @@ const styles = StyleSheet.create({
   },
 
   buttonChild22: {
+    borderRadius: 10,
     borderColor: 'gray',
     color: 'gray',
   },

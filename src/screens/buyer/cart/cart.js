@@ -4,15 +4,46 @@ import styles from './cart.style';
 import Product from '../../../components/cartProduct/cartProduct';
 import Footer from '../../../components/footer/footer';
 
-class InboxBuyer extends Component {
+//redux
+import {connect} from 'react-redux';
+import {fetchCart} from '../../../redux/actions/cart/cartAction';
+import {SAPI_URL} from 'react-native-dotenv';
+import AsyncStorage from '@react-native-community/async-storage';
+
+// class InboxBuyer extends Component {
+class Cart extends Component {
   state = {
     data: [1000, 5000, 2000, 5000, 1000, 5000],
+    // data: [],
     result: 0,
   };
+
   componentDidMount() {
     let result = this.state.data.reduce((value, element) => value + element);
     this.setState({result: result});
+    this.getDataCart();
   }
+
+  getDataCart = async () => {
+    let url = SAPI_URL + '/cart';
+    // console.log('ini url', url)
+
+    let token = await AsyncStorage.getItem('token');
+    console.log('ini token 555', token);
+    let config = {
+      headers: {Authorization: 'Bearer ' + token},
+    };
+
+    const dataCart = await this.props.dispatch(fetchCart(url, config));
+    console.log('your data999', dataCart);
+    console.log('your data1111', dataCart.value.data.data[0].price);
+    this.setState({
+      data: dataCart.value.data.data,
+    });
+
+    console.log('your data', this.state.data[0]);
+  };
+
   render() {
     const {
       container,
@@ -26,20 +57,22 @@ class InboxBuyer extends Component {
       <View style={container}>
         <View style={header}>
           <Text style={{fontSize: 14, color: 'black', fontWeight: 'bold'}}>
-            Cart
+            Cart asemsgilaxxx
           </Text>
         </View>
         <ScrollView>
           <View style={body}>
             {this.state.data.length > 0 ? (
-              <>
-                <Product price={this.state.data[0]} />
-                <Product price={this.state.data[1]} />
-                <Product price={this.state.data[2]} />
-                <Product price={this.state.data[3]} />
-                <Product price={this.state.data[4]} />
-                <Product price={this.state.data[5]} />
-              </>
+              this.state.data.map((value, index) => (
+                <>
+                  {/* <Product price={this.state.data[0].price} /> */}
+                  <Product key={index}
+                  price={value.price} 
+                  name={value.name_product}
+                  quantity={value.qty}
+                  />
+                </>
+              ))
             ) : (
               <>
                 <Image
@@ -67,13 +100,23 @@ class InboxBuyer extends Component {
               Rp {this.state.result}
             </Text>
           </View>
-          <View style={buttonCheckout}>
-            <Text style={{color: 'white', fontWeight: 'bold'}}>Checkout</Text>
-          </View>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Checkout')}>
+            <View style={buttonCheckout}>
+              <Text style={{color: 'white', fontWeight: 'bold'}}>Checkout</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     );
   }
 }
 
-export default InboxBuyer;
+const mapStateToProps = state => {
+  return {
+    cart: state.cartReducer,
+  };
+};
+
+export default connect(mapStateToProps)(Cart);
+// export default Cart;

@@ -90,6 +90,7 @@ class ProfileBuyer extends Component {
             <AccountOption
               color="red"
               title="Keluar"
+              
               navigation={this.props.navigation}
             />
             <View

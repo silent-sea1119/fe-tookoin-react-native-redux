@@ -15,6 +15,11 @@ import Cart from './buyer/cart/cart';
 import MyOrderSeller from './seller/my-order/my-order';
 import AddProduct from "./seller/product/product";
 import EditProfile from "./seller/profile/editprofile";
+import SuccessOrder from "./buyer/my-order/success-order";
+import Splashscreen from "./splashscreen";
+import Forgot from "./auth/forgot/forgot";
+import InputToken from "./auth/forgot/inputtoken";
+import Checkout from './buyer/transaction/checkout';
 
 export {
   Home,
@@ -33,5 +38,10 @@ export {
   Etalase,
   MyOrderSeller,
   AddProduct,
-  EditProfile
+  EditProfile,
+  SuccessOrder,
+  Splashscreen,
+  Forgot,
+  InputToken,
+  Checkout,
 };

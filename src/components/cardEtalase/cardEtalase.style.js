@@ -5,9 +5,8 @@ const styles = StyleSheet.create({
     borderColor: '#F5F5F6',
     borderWidth: 1,
     alignItems: 'flex-start',
-    width: '100%',
+    width: 160,
     padding: 10,
-    marginHorizontal: 12,
     backgroundColor: 'white',
     // justifyContent: 'strecth'
   },

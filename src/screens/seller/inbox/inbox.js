@@ -1,9 +1,25 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, ScrollView, Image} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  BackHandler,
+} from 'react-native';
 import styles from './inbox.style';
 import Footer from '../../../components/footer/footer';
+import {withNavigationFocus} from 'react-navigation';
 
 class InboxBuyer extends Component {
+  componentDidUpdate = async prevProps => {
+    if (prevProps.isFocused !== this.props.isFocused) {
+      if (await this.props.isFocused) {
+        console.log('Update Data')
+      }
+      // Call any action
+    }
+  };
   render() {
     const {container, header, body} = styles;
     return (
@@ -36,4 +52,4 @@ class InboxBuyer extends Component {
   }
 }
 
-export default InboxBuyer;
+export default withNavigationFocus(InboxBuyer);

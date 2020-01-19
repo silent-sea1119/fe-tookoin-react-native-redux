@@ -16,31 +16,67 @@ import {
 import {Input, ThemeConsumer} from 'react-native-elements';
 import styles from './login.style';
 import Footer from '../../../components/footer/footer';
+import {loginAccount} from '../../../redux/actions/auth/index';
+import {SAPI_URL} from 'react-native-dotenv';
+import AsyncStorage from '@react-native-community/async-storage';
+import Axios from 'axios';
+import {storeData, retrieveData} from '../../../utils';
 
-export default class Login extends Component {
+import {withNavigationFocus} from 'react-navigation';
+
+class Login extends Component {
   constructor() {
     super();
     this.state = {
       email: '',
       password: '',
-      role: '',
+      role: 0,
     };
   }
-  handleMasuk = () => {
-    if (this.state.email === 'Seller') {
-      this.setState({role: '0'});
-    } else if (this.state.email === 'Buyer') {
-      this.setState({role: '1'});
-    }
-    if (this.state.role === '0') {
-      this.props.navigation.navigate('ProfileSeller');
-      console.log('MASOK');
-    } else if (this.state.role === '1') {
-      this.props.navigation.navigate('Profile');
-    } else {
-      Alert.alert('Info', 'ERROR');
-    }
+
+  // componentDidMount = async () => {
+  //   console.log('masuk didmount login')
+  //   if (await retrieveData('token')) {
+  //     console.log('ada token')
+  //     if ((await retrieveData('role')) == 1) {
+  //       this.props.navigation.navigate('Profile');
+  //     } else if ((await retrieveData('role')) == 2) {
+  //       this.props.navigation.navigate('HomeSeller');
+  //     }
+  //   }
+  // };
+
+  handleMasuk = async () => {
+    let data = {
+      email: this.state.email,
+      password: this.state.password,
+    };
+    let url = SAPI_URL + '/login';
+    await Axios.post(url, data)
+      .then(({data}) => {
+        if (data.msg === 'SUCCESS') {
+          console.log(data.data[0]);
+          AsyncStorage.setItem('name_user', data.data[0].name_user);
+          AsyncStorage.setItem('token', data.data[0].token);
+          AsyncStorage.setItem('role', data.data[0].role);
+          AsyncStorage.setItem('email', data.data[0].email);
+          AsyncStorage.setItem('address', data.data[0].address);
+          AsyncStorage.setItem('phone', data.data[0].phone);
+          AsyncStorage.setItem('id_user', data.data[0].id_user.toString())
+          if (data.data[0].role === 1) {
+            this.props.navigation.navigate('Profile');
+          } else if (data.data[0].role === 2) {
+            this.props.navigation.navigate('HomeSeller');
+          }
+        } else {
+          console.log('error login');
+          console.log(data.data);
+          Alert.alert('Info Error', 'Email / Password Salah');
+        }
+      })
+      .catch(err => console.log(err));
   };
+
   render() {
     const {
       container,
@@ -143,7 +179,8 @@ export default class Login extends Component {
                 Lupa Password ?
               </Text>
               <Text> </Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Forgot')}>
                 <Text
                   style={{
                     color: '#62BA67',
@@ -180,3 +217,5 @@ export default class Login extends Component {
     );
   }
 }
+
+export default withNavigationFocus(Login);

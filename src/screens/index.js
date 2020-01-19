@@ -21,6 +21,7 @@ import Forgot from './auth/forgot/forgot';
 import InputToken from './auth/forgot/inputtoken';
 import Checkout from './buyer/transaction/checkout';
 import searchScreen from './buyer/searchScreen/searchScreen';
+import EditProfileBuyer from './buyer/editProfile/editprofile';
 
 export {
   Home,
@@ -46,4 +47,5 @@ export {
   InputToken,
   Checkout,
   searchScreen,
+  EditProfileBuyer,
 };

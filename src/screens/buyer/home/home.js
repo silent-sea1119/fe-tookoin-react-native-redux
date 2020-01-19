@@ -28,6 +28,17 @@ class HomeBuyer extends Component {
     this.getDataFromApi(1);
     this.getDataFromApi(2);
   };
+  goToDetail = (lihat_semua_id, lihat_semua_category) => {
+    // if (props.id == 1) {
+    //   console.log(props.name);
+    // } else {
+    //   console.log(props.name);
+    // }
+    this.props.navigation.navigate('ProductCategory', {
+      id: lihat_semua_id,
+      name: lihat_semua_category,
+    });
+  };
   getDataFromApi = async id_category => {
     let url =
       SAPI_URL + `/product/?order=asc&id_category=${id_category}&limit=10`;
@@ -168,7 +179,8 @@ class HomeBuyer extends Component {
                 style={{
                   paddingLeft: 10,
                   justifyContent: 'center',
-                }}>
+                }}
+                onPress={() => this.goToDetail(1, 'Sayuran Segar')}>
                 <View
                   style={{
                     alignItems: 'center',
@@ -223,6 +235,7 @@ class HomeBuyer extends Component {
                   <Text style={{fontSize: 12}}>Kumpulan Buah Segar</Text>
                 </View>
                 <TouchableOpacity
+                  onPress={() => this.goToDetail(2, 'Buah  Segar')}
                   style={{
                     paddingLeft: 10,
                     justifyContent: 'center',

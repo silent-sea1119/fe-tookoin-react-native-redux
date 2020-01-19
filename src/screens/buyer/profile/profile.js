@@ -5,9 +5,19 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Border from '../../../components/border/border';
 import AccountOption from '../../../components/accountOption/accountOption';
 import Footer from '../../../components/footer/footer';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class ProfileBuyer extends Component {
-  state = {name: 'Larklane 7'};
+  state = {name_user: ''};
+
+  handleGetData = async () => {
+    let name_user = await AsyncStorage.getItem('name_user');
+    this.setState({name_user: name_user});
+  };
+  componentDidMount() {
+    this.handleGetData();
+  }
+
   render() {
     const {
       container,
@@ -32,7 +42,7 @@ class ProfileBuyer extends Component {
               source={require('../../../assets/images/Avatar.png')}
             />
             <Text style={{fontWeight: 'bold', fontSize: 18}}>
-              {this.state.name}
+              {this.state.name_user || ''}
             </Text>
           </View>
           <View style={headerCode}>
@@ -90,7 +100,6 @@ class ProfileBuyer extends Component {
             <AccountOption
               color="red"
               title="Keluar"
-              
               navigation={this.props.navigation}
             />
             <View

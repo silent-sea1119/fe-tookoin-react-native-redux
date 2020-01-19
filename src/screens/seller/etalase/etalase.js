@@ -32,7 +32,6 @@ class Etalase extends Component {
     this.setState({name_user: name_user});
   };
 
-  
   handleGetEtalaseItem = async () => {
     let url = SAPI_URL + '/product/etalase';
     let token = await AsyncStorage.getItem('token');
@@ -57,8 +56,8 @@ class Etalase extends Component {
   componentDidUpdate = async prevProps => {
     if (prevProps.isFocused !== this.props.isFocused) {
       if (await this.props.isFocused) {
-        this.handleGetItem()
-        this.handleGetEtalaseItem()
+        this.handleGetItem();
+        this.handleGetEtalaseItem();
       }
       // Call any action
     }
@@ -184,7 +183,5 @@ const mapStateToProps = state => {
   };
 };
 
-export default withNavigationFocus(connect(
-  mapStateToProps, 
-)(Etalase))
+export default withNavigationFocus(connect(mapStateToProps)(Etalase));
 // export default connect(mapStateToProps)(Etalase);

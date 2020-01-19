@@ -16,14 +16,14 @@ import {registerAccount} from '../../../redux/actions/auth/index';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {ButtonGroup} from 'react-native-elements';
+import {ButtonGroup, Input} from 'react-native-elements';
 import {
   Container,
   Header,
   Content,
   Button,
   Item,
-  Input,
+  // Input,
   Toast,
 } from 'native-base';
 import {API_URL} from 'react-native-dotenv';
@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 10,
-    borderBottomColor: '#F5F5F6',
-    borderBottomWidth: 4,
+    // borderBottomColor: '#F5F5F6',
+    // borderBottomWidth: 4,
   },
 
   backIconNavbar: {
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   textNavbar: {fontWeight: 'bold', fontSize: 16, color: '#555'},
   dummyIcon: {color: '#FFF'},
 
-  mainForm: {backgroundColor: '#F6F6F6', padding: 20},
+  mainForm: {flex: 1, backgroundColor: '#FFF', padding: 20},
   // textIntro: {paddingVertical: 10, color: '#444'},
   textIntro: {marginBottom: 15, color: '#444'},
 
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   textEmailContainer: {marginBottom: 15},
   textEmail: {paddingLeft: 15, backgroundColor: '#FFF', borderRadius: 10},
 
-  textButtonSubmit: {color: 'white', fontWeight: 'bold', fontSize: 15},
+  textButtonSubmit: {color: 'white', fontWeight: 'bold'},
   textButtonSubmitContainer: {borderRadius: 5, backgroundColor: '#00B444'},
 });
 
@@ -177,17 +177,35 @@ class Register extends Component {
           </Text>
 
           {/* Main Form */}
-          <Item style={styles.textEmailContainer}>
+          {/* <Item style={styles.textEmailContainer}>
             <Input
+              labelStyle={{
+                marginHorizontal: -10,
+                fontSize: 12,
+              }}
               style={styles.textEmail}
               placeholder="Nama Lengkap"
+              inputStyle={{fontSize: 12}}
               value={this.state.name_user}
               onChangeText={name_user => this.setState({name_user})}
             />
-          </Item>
+          </Item> */}
+
+          <Input
+            inputContainerStyle={{marginLeft: -10, height: 35, marginBottom:15}}
+            labelStyle={{
+              marginHorizontal: -10,
+              fontSize: 12,
+            }}
+            inputStyle={{fontSize: 12}}
+            placeholder="Nama Lengkap"
+            label="Name"
+            value={this.state.name_user}
+            onChangeText={name_user => this.setState({name_user})}
+          />
 
           {/* Main Form */}
-          <Item style={styles.textEmailContainer}>
+          {/* <Item style={styles.textEmailContainer}>
             <Input
               type="email"
               style={styles.textEmail}
@@ -195,9 +213,39 @@ class Register extends Component {
               value={this.state.email}
               onChangeText={email => this.setState({email})}
             />
-          </Item>
+          </Item> */}
 
-          <Item style={styles.textPasswordContainer}>
+          <Input
+            inputContainerStyle={{marginLeft: -10, height: 35, marginBottom:15}}
+            labelStyle={{
+              marginHorizontal: -10,
+              fontSize: 12,
+            }}
+            inputStyle={{fontSize: 12}}
+            placeholder="Input Email"
+            label="Email"
+            value={this.state.email}
+            onChangeText={email => this.setState({email})}
+          />
+
+
+          <Input
+            inputContainerStyle={{marginLeft: -10, height: 35, marginBottom:15}}
+            labelStyle={{
+              marginHorizontal: -10,
+              fontSize: 12,
+            }}
+            secureTextEntry={true}
+            inputStyle={{fontSize: 12}}
+            placeholder="Input Password"
+            value={this.state.password}
+            label="Password"
+            onChangeText={password => this.setState({password})
+            
+          }
+          />
+
+          {/* <Item style={styles.textPasswordContainer}>
             <Input
               style={styles.textPassword}
               placeholder="Password"
@@ -205,7 +253,7 @@ class Register extends Component {
               value={this.state.password}
               onChangeText={password => this.setState({password})}
             />
-          </Item>
+          </Item> */}
 
           <ButtonGroup
             onPress={selectedIndex => {
@@ -223,6 +271,7 @@ class Register extends Component {
             selectedButtonStyle={{backgroundColor: '#00B444'}}
             buttons={role}
             containerStyle={{
+              marginTop:20,
               borderRadius: 10,
               marginBottom: 20,
               marginLeft: 0,
@@ -239,6 +288,39 @@ class Register extends Component {
             }}>
             <Text style={styles.textButtonSubmit}>Daftar Sekarang</Text>
           </Button>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate('Login');
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                paddingTop: 20,
+              }}>
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: 'gray',
+                }}>
+                Sudah punya akun?
+              </Text>
+              <Text> </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.navigation.navigate('Login');
+                }}>
+                <Text
+                  style={{
+                    color: '#62BA67',
+                    fontSize: 12,
+                    textDecorationLine: 'underline',
+                  }}>
+                  Sign In disini
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
         </View>
       </>
     );

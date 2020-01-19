@@ -35,10 +35,13 @@ class ProductCategory extends Component {
       url = SAPI_URL + '/product/?date_created&order=asc';
     } else {
       url = SAPI_URL + '/product/?id_category=' + id_category;
-      console.log(url);
+      // console.log(url);
     }
 
+    console.log(url, 'aslkjdkasjdkljsd')
+
     const productStoreInit = await this.props.dispatch(fetchProduct(url));
+    console.log(productStoreInit, 'init')
     const productStoreFinal = productStoreInit.value.data.data;
     const message = productStoreInit.value.data.msg;
 
@@ -60,7 +63,7 @@ class ProductCategory extends Component {
     } = styles;
     const produk = {label: this.props.navigation.getParam('name')};
     const productList = this.state.productLocalState;
-    console.log(productList);
+    // console.log(productList);
     return (
       <View style={container}>
         <Search />
@@ -73,9 +76,10 @@ class ProductCategory extends Component {
           </View>
           {productList.length > 0 ? (
             productList.map(item => (
-              <View style={body}>
+              <View style={body} key={item.id_product}>
                 <Card
                   key={item.id_product}
+                  id_product={item.id_product}
                   name={item.name_product}
                   price={item.price}
                   unit={item.stock}
@@ -100,7 +104,7 @@ class ProductCategory extends Component {
 
 const mapStateToProps = state => {
   return {
-    product: state.product,
+    product: state.productReducer,
   };
 };
 

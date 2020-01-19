@@ -8,3 +8,10 @@ export const fetchProduct = (URL) => {
   };
 };
 
+
+export const nyokot = () => {
+  return {
+    type: 'NYOKOT_PRODUCT'
+  };
+};
+

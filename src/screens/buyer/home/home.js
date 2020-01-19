@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, ScrollView} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 import Search from '../../../components/search/search.js';
 import Footer from '../../../components/footer/footer.js';
 import styles from './home.style';
@@ -7,20 +13,54 @@ import Category from '../../../components/category/category.js';
 import Border from '../../../components/border/border';
 import Card from '../../../components/card/card';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-import {storeData, retrieveData} from '../../../utils';
+import {connect} from 'react-redux';
+import {fetchProduct} from '../../../redux/actions/product/productAction';
+import {SAPI_URL} from 'react-native-dotenv';
 
 class HomeBuyer extends Component {
-  // componentDidMount = async () => {
-  //   if (await retrieveData('token')) {
-  //     if ((await retrieveData('role')) == 1) {
-  //       this.props.navigation.navigate('Profile');
-  //     } else if ((await retrieveData('role')) == 2) {
-  //       this.props.navigation.navigate('HomeSeller');
-  //     }
-  //   }
-  // };
+  state = {
+    productLocalState1: [],
+    productLocalState2: [],
+    message: '',
+  };
 
+  componentDidMount = () => {
+    this.getDataFromApi(1);
+    this.getDataFromApi(2);
+  };
+  goToDetail = (lihat_semua_id, lihat_semua_category) => {
+    // if (props.id == 1) {
+    //   console.log(props.name);
+    // } else {
+    //   console.log(props.name);
+    // }
+    this.props.navigation.navigate('ProductCategory', {
+      id: lihat_semua_id,
+      name: lihat_semua_category,
+    });
+  };
+  getDataFromApi = async id_category => {
+    let url =
+      SAPI_URL + `/product/?order=asc&id_category=${id_category}&limit=10`;
+
+    const productStoreInit = await this.props.dispatch(fetchProduct(url));
+    const productStoreFinal = productStoreInit.value.data.data;
+    const message = productStoreInit.value.data.msg;
+
+    if (id_category === 1) {
+      console.log('Productstre final 1 ', productStoreFinal);
+      this.setState({
+        message: message,
+        productLocalState1: productStoreFinal,
+      });
+    } else if (id_category === 2) {
+      console.log('Productstre final 2 ', productStoreFinal);
+      this.setState({
+        message: message,
+        productLocalState2: productStoreFinal,
+      });
+    }
+  };
   render() {
     const {
       container,
@@ -139,7 +179,8 @@ class HomeBuyer extends Component {
                 style={{
                   paddingLeft: 10,
                   justifyContent: 'center',
-                }}>
+                }}
+                onPress={() => this.goToDetail(1, 'Sayuran Segar')}>
                 <View
                   style={{
                     alignItems: 'center',
@@ -159,34 +200,29 @@ class HomeBuyer extends Component {
             </View>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <View style={categoryContainerBot}>
-                <Card
-                  name="Bayam Hijau"
-                  label="Conventional"
-                  price="4.300"
-                  unit="250 gram"
-                  navigation={this.props.navigation}
-                />
-                <Card
-                  name="Labu Siam"
-                  label="Conventional"
-                  price="4.600"
-                  unit="500 gram"
-                  navigation={this.props.navigation}
-                />
-                <Card
-                  name="Paprika Kuning"
-                  label="Organik"
-                  price="20.000"
-                  unit="1 pcs"
-                  navigation={this.props.navigation}
-                />
-                <Card
-                  name="Wortel Organik"
-                  label="Organik"
-                  price="3.000"
-                  unit="500 gram"
-                  navigation={this.props.navigation}
-                />
+                {this.state.productLocalState1.length > 0 ? (
+                  this.state.productLocalState1.map(item => (
+                    <Card
+                      key={item.id_product}
+                      id_product={item.id_product}
+                      desc_product={item.desc_product}
+                      id_category={item.id_category}
+                      name_category={item.name_category}
+                      name={item.name_product}
+                      label={item.label}
+                      price={item.price}
+                      unit={item.unit}
+                      stock={item.stock}
+                      navigation={this.props.navigation}
+                    />
+                  ))
+                ) : this.state.message === 'success' ? (
+                  <View style={{padding: 160}}>
+                    <Text style={{color: 'gray'}}> Empty </Text>
+                  </View>
+                ) : (
+                  <ActivityIndicator size="large" color="gray" />
+                )}
               </View>
             </ScrollView>
             <Border />
@@ -199,6 +235,7 @@ class HomeBuyer extends Component {
                   <Text style={{fontSize: 12}}>Kumpulan Buah Segar</Text>
                 </View>
                 <TouchableOpacity
+                  onPress={() => this.goToDetail(2, 'Buah  Segar')}
                   style={{
                     paddingLeft: 10,
                     justifyContent: 'center',
@@ -222,34 +259,29 @@ class HomeBuyer extends Component {
               </View>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 <View style={categoryContainerBot}>
-                  <Card
-                    name="Alpukat Mentega"
-                    label="Conventional"
-                    price="999"
-                    unit="1 kg"
-                    navigation={this.props.navigation}
-                  />
-                  <Card
-                    name="Pisang Raja"
-                    label="Conventional"
-                    price="29.800"
-                    unit="1 sisir"
-                    navigation={this.props.navigation}
-                  />
-                  <Card
-                    name="Pisang Uli"
-                    label="Organik"
-                    price="12.300"
-                    unit="1 sisir"
-                    navigation={this.props.navigation}
-                  />
-                  <Card
-                    name="Salak"
-                    label="Organik"
-                    price="4.990"
-                    unit="500 gram"
-                    navigation={this.props.navigation}
-                  />
+                  {this.state.productLocalState2.length > 0 ? (
+                    this.state.productLocalState2.map(item => (
+                      <Card
+                        key={item.id_product}
+                        id_product={item.id_product}
+                        id_category={item.id_category}
+                        name_category={item.name_category}
+                        desc_product={item.desc_product}
+                        name={item.name_product}
+                        label={item.label}
+                        price={item.price}
+                        unit={item.unit}
+                        stock={item.stock}
+                        navigation={this.props.navigation}
+                      />
+                    ))
+                  ) : this.state.message === 'success' ? (
+                    <View style={{padding: 160}}>
+                      <Text style={{color: 'gray'}}> Empty </Text>
+                    </View>
+                  ) : (
+                    <ActivityIndicator size="large" color="gray" />
+                  )}
                 </View>
               </ScrollView>
               <Border />
@@ -261,4 +293,11 @@ class HomeBuyer extends Component {
   }
 }
 
-export default HomeBuyer;
+const mapStateToProps = state => {
+  return {
+    product: state.productReducer,
+  };
+};
+
+export default connect(mapStateToProps)(HomeBuyer);
+// export default HomeBuyer

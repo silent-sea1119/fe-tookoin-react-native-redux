@@ -22,6 +22,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Axios from 'axios';
 import {storeData, retrieveData} from '../../../utils';
 
+import {withNavigationFocus} from 'react-navigation';
+
 class Login extends Component {
   constructor() {
     super();
@@ -214,4 +216,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withNavigationFocus(Login);

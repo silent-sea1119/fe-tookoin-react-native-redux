@@ -16,7 +16,9 @@ import MyOrderSeller from './seller/my-order/my-order';
 import AddProduct from "./seller/product/product";
 import EditProfile from "./seller/profile/editprofile";
 import SuccessOrder from "./buyer/my-order/success-order";
-import Splashscreen from "./splashscreen"
+import Splashscreen from "./splashscreen";
+import Forgot from "./auth/forgot/forgot";
+import InputToken from "./auth/forgot/inputtoken";
 
 export {
   Home,
@@ -37,5 +39,7 @@ export {
   AddProduct,
   EditProfile,
   SuccessOrder,
-  Splashscreen
+  Splashscreen,
+  Forgot,
+  InputToken,
 };

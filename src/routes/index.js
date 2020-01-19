@@ -29,6 +29,7 @@ import {
   InputToken,
   Checkout,
   searchScreen,
+  EditProfileBuyer,
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -48,6 +49,7 @@ const StackProfile = createStackNavigator(
   {
     Profile,
     DaftarAlamatBuyer,
+    EditProfileBuyer,
   },
   {
     initialRouteName: 'Profile',

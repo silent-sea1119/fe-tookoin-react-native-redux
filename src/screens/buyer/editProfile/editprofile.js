@@ -15,7 +15,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {SAPI_URL} from 'react-native-dotenv';
 import Axios from 'axios';
 
-class EditProfile extends Component {
+class EditProfileBuyer extends Component {
   state = {
     email: '',
     name_user: '',
@@ -37,18 +37,16 @@ class EditProfile extends Component {
     };
     Axios.patch(url, data, config)
       .then(res => {
-        if(res.data.msg === "SUCCESS"){
-          this.props.navigation.navigate('HomeSeller')
+        if (res.data.msg === 'SUCCESS') {
+          this.props.navigation.navigate('Profile');
           AsyncStorage.setItem('name_user', this.state.name_user);
           AsyncStorage.setItem('token', this.state.token);
           AsyncStorage.setItem('email', this.state.email);
           AsyncStorage.setItem('address', this.state.address);
           AsyncStorage.setItem('phone', this.state.phone);
-
+        } else {
+          Alert.alert('ERROR', 'Something Went Wrong');
         }
-        else {
-          Alert.alert('ERROR', 'Something Went Wrong')
-        };
       })
       .catch(err => console.log(err));
   };
@@ -58,7 +56,7 @@ class EditProfile extends Component {
     let name_user = await AsyncStorage.getItem('name_user');
     let token = await AsyncStorage.getItem('token');
     let address = await AsyncStorage.getItem('address');
-    let phone = await AsyncStorage.getItem('phone') || '+62';
+    let phone = (await AsyncStorage.getItem('phone')) || '+62';
     let id_user = await AsyncStorage.getItem('id_user');
     console.log('pake', token);
     this.setState({
@@ -148,4 +146,4 @@ class EditProfile extends Component {
   }
 }
 
-export default EditProfile;
+export default EditProfileBuyer;

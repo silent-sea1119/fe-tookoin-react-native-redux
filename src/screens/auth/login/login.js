@@ -50,7 +50,8 @@ class Login extends Component {
             this.props.navigation.navigate('HomeSeller');
           }
         } else {
-          console.log(res.data)
+          console.log('error login')
+          console.log(data.data)
           Alert.alert('Info Error', 'Email / Password Salah');
         }
       })

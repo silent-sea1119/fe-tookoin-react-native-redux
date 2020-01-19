@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {View, Text, ScrollView, Image, ActivityIndicator} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  ActivityIndicator,
+  BackHandler,
+} from 'react-native';
 import styles from './etalase.style';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import {Icon} from 'react-native-elements';
@@ -32,6 +39,7 @@ class Etalase extends Component {
     const dataEtalaseItem = await this.props.dispatch(
       fetchEtalase(url, config),
     );
+    console.log(dataEtalaseItem.value.data.data);
     this.setState({
       etalase: dataEtalaseItem.value.data.data,
       message: dataEtalaseItem.value.data.msg,
@@ -41,7 +49,27 @@ class Etalase extends Component {
   componentDidMount() {
     this.handleGetItem();
     this.handleGetEtalaseItem();
+    //Buat mengecek tombol back fisik ditekan
+    this.backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      this.handleBackPress,
+    );
   }
+  //Buat mengecek tombol back fisik ditekan
+
+  componentWillUnmount() {
+    this.backHandler.remove();
+  }
+
+    //Buat mengecek tombol back fisik ditekan
+  handleBackPress = () => {
+    let {routeName, key} = this.props.navigation.state;
+    if (routeName !== 'Etalase'){
+      console.log('Bukan')
+    }
+    return true;
+  };
+
   render() {
     const {
       container,
@@ -85,7 +113,7 @@ class Etalase extends Component {
                 <View style={{marginHorizontal: 5}}>
                   <Text style={{fontSize: 12}}>Total Product</Text>
                   <Text style={{fontWeight: 'bold', color: '#62BA67'}}>
-                    7 Products
+                    {this.state.etalase.length} Products
                   </Text>
                 </View>
               </View>
@@ -128,12 +156,16 @@ class Etalase extends Component {
             {this.state.etalase.length > 0 ? (
               this.state.etalase.map((value, index) => (
                 <CardEtalase
+                  id_product={value.id_product}
                   name={value.name_product}
+                  desc_product={value.desc_product}
                   price={value.price}
                   unit={value.unit}
                   label={value.label}
                   key={index}
                   navigation={this.props.navigation}
+                  id_category={value.id_category}
+                  stock={value.stock}
                 />
               ))
             ) : this.state.message === 'success' ? (

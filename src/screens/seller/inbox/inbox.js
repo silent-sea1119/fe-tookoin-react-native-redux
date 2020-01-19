@@ -1,9 +1,28 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, ScrollView, Image} from 'react-native';
+import {Text, View, TouchableOpacity, ScrollView, Image, BackHandler} from 'react-native';
 import styles from './inbox.style';
 import Footer from '../../../components/footer/footer';
 
 class InboxBuyer extends Component {
+  componentDidMount() {
+    //Buat mengecek tombol back fisik ditekan
+    this.backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      this.handleBackPress,
+    );
+  }
+  //Buat mengecek tombol back fisik ditekan
+
+  componentWillUnmount() {
+    this.backHandler.remove();
+  }
+
+    //Buat mengecek tombol back fisik ditekan
+  handleBackPress = () => {
+    let {routeName, key} = this.props.navigation.state;
+    this.props.navigation.goBack()
+    return true;
+  };
   render() {
     const {container, header, body} = styles;
     return (

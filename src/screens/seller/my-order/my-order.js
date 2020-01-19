@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   DrawerLayoutAndroid,
   Dimensions,
+  BackHandler,
 } from 'react-native';
 import {
   Container,
@@ -29,7 +30,7 @@ import {
   Right,
   Item,
 } from 'native-base';
-import moment from'moment';
+import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -55,15 +56,12 @@ export default class MyOrderSeller extends Component {
   };
 
   componentDidMount = async () => {
-
     if (!(await retrieveData('token'))) {
-      console.log('tidak ada token')
+      console.log('tidak ada token');
       // this.props.navigation.navigate('Login');
       // Ke login, sementara set token temporari untuk debug
-    }
-    else{
-      this.setState(
-        {token: await retrieveData('token')})
+    } else {
+      this.setState({token: await retrieveData('token')});
     }
 
     getTransactionStatusSeller(this.state.token).then(res => {
@@ -82,6 +80,22 @@ export default class MyOrderSeller extends Component {
       // console.log('incompledted',this.state.incompletedOrder)
       // console.log('incompledted',this.state.completedOrder)
     });
+    //Buat mengecek tombol back fisik ditekan
+    this.backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      this.handleBackPress,
+    );
+  };
+
+  componentWillUnmount() {
+    this.backHandler.remove();
+  }
+
+  //Buat mengecek tombol back fisik ditekan
+  handleBackPress = () => {
+    let {routeName, key} = this.props.navigation.state;
+    this.props.navigation.goBack();
+    return true;
   };
 
   render() {
@@ -116,8 +130,7 @@ export default class MyOrderSeller extends Component {
                     <View style={styles.cardParent} key={index}>
                       <View style={styles.child1}>
                         <View style={styles.child11}>
-
-                        <Text note style={styles.textNoteChild11}>
+                          <Text note style={styles.textNoteChild11}>
                             Buyer
                           </Text>
                           <Text style={styles.textChild11}>
@@ -128,11 +141,11 @@ export default class MyOrderSeller extends Component {
                             Item Purchased
                           </Text>
                           <Text style={styles.textChild11}>
-                            { `${order.name_product}` || `Sayur Bayam`}
+                            {`${order.name_product}` || `Sayur Bayam`}
                           </Text>
 
                           <Text style={styles.textChild11}>
-                            { `Rp${order.price} x ${order.qty}`}
+                            {`Rp${order.price} x ${order.qty}`}
                           </Text>
 
                           <Text note style={styles.textNoteChild11}>
@@ -152,8 +165,7 @@ export default class MyOrderSeller extends Component {
                         </View>
 
                         <View style={styles.child12}>
-
-                        <Text note style={styles.textNoteChild12}>
+                          <Text note style={styles.textNoteChild12}>
                             Order Number
                           </Text>
                           <Text style={styles.textChild11}>
@@ -164,7 +176,9 @@ export default class MyOrderSeller extends Component {
                             Transaction Date
                           </Text>
                           <Text style={styles.textChild12}>
-                          {moment(order.transaction_date).format('dddd, DD-MM-YYYY') || `Wednesday, 15 Jan 2020`}
+                            {moment(order.transaction_date).format(
+                              'dddd, DD-MM-YYYY',
+                            ) || `Wednesday, 15 Jan 2020`}
                           </Text>
                           <Text note style={styles.textNoteChild12}>
                             Billing Total
@@ -172,8 +186,6 @@ export default class MyOrderSeller extends Component {
                           <Text style={styles.textChild12a}>
                             {order.subtotal || `Rp 4000`}
                           </Text>
-
-
                         </View>
                       </View>
                       <View style={styles.child2}>
@@ -296,7 +308,9 @@ export default class MyOrderSeller extends Component {
                             Transaction Date
                           </Text>
                           <Text style={styles.textChild12}>
-                          {moment(order.transaction_date).format('dddd, DD-MM-YYYY') || `Wednesday, 15 Jan 2020`}
+                            {moment(order.transaction_date).format(
+                              'dddd, DD-MM-YYYY',
+                            ) || `Wednesday, 15 Jan 2020`}
                           </Text>
                           <Text note style={styles.textNoteChild12}>
                             Billing Total

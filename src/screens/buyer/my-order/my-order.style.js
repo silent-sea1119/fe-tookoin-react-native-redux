@@ -13,6 +13,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FEFEFE',
     justifyContent: 'center',
     alignItems: 'center',
+    borderBottomColor: '#ddd',
+    borderBottomWidth: 3,
   },
   tabUnderLine: {
     // height: '10%',

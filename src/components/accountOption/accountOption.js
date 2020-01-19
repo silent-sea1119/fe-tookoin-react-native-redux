@@ -2,12 +2,18 @@ import React from 'react';
 import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './accountOption.style';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const AccountOption = props => {
   const {container} = styles;
-  const handleClick = () => {
+  const handleClick = async () => {
     if (props.title === 'Keluar'){
-      props.navigation.navigate('Login')
+      // props.navigation.navigate('Login')
+
+      await AsyncStorage.clear().then(() => {
+        props.navigation.navigate('Login')
+      });
+
     }
     else if (props.title === 'Alamat Saya'){
       props.navigation.navigate('DaftarAlamatBuyer')

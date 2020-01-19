@@ -29,12 +29,12 @@ import {
   Right,
   Item,
 } from 'native-base';
+import moment from'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import {getTransactionStatusSeller} from '../../../utils/axios/my-order-seller';
 import {storeData, retrieveData} from '../../../utils';

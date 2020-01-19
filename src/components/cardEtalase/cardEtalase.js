@@ -21,7 +21,15 @@ class CardEtalase extends Component {
     } = styles;
 
     const goToDetail = () => {
-        this.props.navigation.navigate('AddProduct', {title: 'Edit'})
+      this.props.navigation.navigate('AddProduct', {
+        title: 'Edit',
+        nama_produk: this.props.name,
+        price: this.props.price,
+        unit: this.props.unit,
+        label: this.props.label,
+        desc_produk: this.props.desc_produk,
+        stock: this.props.stock,
+      });
     };
 
     return (
@@ -40,9 +48,7 @@ class CardEtalase extends Component {
             </Text>
           </View>
           <Text style={name}>{this.props.name}</Text>
-          <Text style={{color: 'gray', fontSize: 12}}>
-            Imperfect: ukuran buah
-          </Text>
+          <Text style={{color: 'gray', fontSize: 12}}>{this.props.label}</Text>
           <View style={price}>
             <Text style={priceText}>Rp {this.props.price}</Text>
             <Text style={unit}> / {this.props.unit}</Text>

@@ -49,9 +49,13 @@ class SearchScreen extends Component {
                 <View style={body} key={item.id_product}>
                   <Card
                     key={item.id_product}
+                    id_seller={item.id_seller}
                     id_product={item.id_product}
-                    label={item.label}
+                    desc_product={item.desc_product}
+                    id_category={item.id_category}
+                    name_category={item.name_category}
                     name={item.name_product}
+                    label={item.label}
                     price={item.price}
                     unit={item.unit}
                     stock={item.stock}

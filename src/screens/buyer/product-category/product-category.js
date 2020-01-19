@@ -38,10 +38,10 @@ class ProductCategory extends Component {
       // console.log(url);
     }
 
-    console.log(url, 'aslkjdkasjdkljsd')
+    console.log(url, 'aslkjdkasjdkljsd');
 
     const productStoreInit = await this.props.dispatch(fetchProduct(url));
-    console.log(productStoreInit, 'init')
+    console.log(productStoreInit, 'init');
     const productStoreFinal = productStoreInit.value.data.data;
     const message = productStoreInit.value.data.msg;
 
@@ -66,7 +66,7 @@ class ProductCategory extends Component {
     // console.log(productList);
     return (
       <View style={container}>
-        <Search />
+        <Search navigation={this.props.navigation}/>
 
         <ScrollView contentContainerStyle={styles.containerScroll}>
           <View style={labelContainerParent}>
@@ -79,12 +79,16 @@ class ProductCategory extends Component {
               <View style={body} key={item.id_product}>
                 <Card
                   key={item.id_product}
+                  id_seller={item.id_seller}
                   id_product={item.id_product}
+                  desc_product={item.desc_product}
+                  id_category={item.id_category}
+                  name_category={item.name_category}
                   name={item.name_product}
+                  label={item.label}
                   price={item.price}
                   unit={item.unit}
                   stock={item.stock}
-				  id_seller={item.id_seller}
                   navigation={this.props.navigation}
                 />
               </View>

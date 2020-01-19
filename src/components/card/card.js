@@ -38,7 +38,7 @@ class Card extends Component {
         id_product: this.props.id_product,
         desc_product: this.props.desc_product,
         id_category: this.props.id_category,
-		id_seller: this.props.id_seller,
+        id_seller: this.props.id_seller,
         name: this.props.name,
         label: this.props.label,
         unit: this.props.unit,
@@ -47,41 +47,43 @@ class Card extends Component {
         name_category: this.props.name_category,
       });
     };
-	 const postToCart = async statusQuantity => {	
-      let id_productPost = this.props.id_product;	
-      let id_sellerPost = this.props.id_seller;	
-      let quantityPost = 1;	
-      if (statusQuantity == 1) {	
-        quantityPost = 1;	
-      } else {	
-        quantityPost = -1;	
-      }	
-      let data = {	
-        id_product: id_productPost,	
-        id_seller: id_sellerPost,	
-        qty: quantityPost,	
-      };	
-      let url = SAPI_URL + '/cart';	
-      let token = await AsyncStorage.getItem('token');	
-      let config = {	
-        headers: {Authorization: 'Bearer ' + token},	
-      };	
-      await axios.post(url, data, config);	
+    const postToCart = async statusQuantity => {
+      let id_productPost = this.props.id_product;
+      let id_sellerPost = this.props.id_seller;
+      console.log('ID PRODUK ', id_productPost);
+      console.log('ID SELLER ', id_sellerPost);
+      let quantityPost = 1;
+      if (statusQuantity == 1) {
+        quantityPost = 1;
+      } else {
+        quantityPost = -1;
+      }
+      let data = {
+        id_product: id_productPost,
+        id_seller: id_sellerPost,
+        qty: quantityPost,
+      };
+      let url = SAPI_URL + '/cart';
+      let token = await AsyncStorage.getItem('token');
+      let config = {
+        headers: {Authorization: 'Bearer ' + token},
+      };
+      await axios.post(url, data, config);
     };
     const handleAddQuantity = () => {
       this.setState({Quantity: this.state.Quantity + 1});
-	    postToCart(1);
+      postToCart(1);
     };
     const handleQuantity = bool => {
-		  let statusQuantity = 0;
+      let statusQuantity = 0;
       if (bool) {
         this.setState({Quantity: this.state.Quantity + 1});
-		 statusQuantity = 1;
+        statusQuantity = 1;
       } else if (!bool) {
         this.setState({Quantity: this.state.Quantity - 1});
-		statusQuantity = 0;
+        statusQuantity = 0;
       }
-	       postToCart(statusQuantity);
+      postToCart(statusQuantity);
     };
     return (
       <TouchableOpacity onPress={() => goToDetail()}>
@@ -146,11 +148,10 @@ class Card extends Component {
   }
 }
 
-	
-const mapStateToProps = state => {	
-  return {	
-    cardState: state.cartReducer,	
-  };	
-};	
-export default connect(mapStateToProps)(Card);	
+const mapStateToProps = state => {
+  return {
+    cardState: state.cartReducer,
+  };
+};
+export default connect(mapStateToProps)(Card);
 //export default Card;

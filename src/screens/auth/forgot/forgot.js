@@ -36,11 +36,11 @@ class Forgot extends Component {
                     }, 500);
                 } else {
                     // Alert.alert(response.data.status.toUpperCase(), response.data.msg)
-                    showToast(response.data.msg, `warning`, 'bottom')
+                    showToast(response.data.msg, `warning`)
                 }
-            }).catch(showToast(`Network error please try again later`, `warning`, 'bottom'))
+            }).catch(showToast(`Network error please try again later`, `warning`))
         } else {
-            showToast(`Please input a valid email address`, `warning`, 'bottom');
+            showToast(`Please input a valid email address`, `warning`);
         }
     }
 
@@ -60,12 +60,12 @@ class Forgot extends Component {
                     }, 500);
                 } else {
                     // Alert.alert(response.data.status.toUpperCase(), response.data.msg)
-                    showToast(response.data.msg, `warning`, 'bottom')
+                    showToast(response.data.msg, `warning`)
                 }
             }).catch(err => console.log(err))
         } else {
             // Alert.alert("failed".toUpperCase(), "This is not a phone number!");
-            showToast(`Please input a valid email address`, `warning`, 'bottom')
+            showToast(`Please input a valid email address`, `warning`)
         }
 
     }

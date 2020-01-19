@@ -61,7 +61,7 @@ class Login extends Component {
           showToast(`Email atau Password salah`, `warning`);
         }
       })
-      .catch(showToast(`Koneksi error, silahkan coba lagi`, `warning`));
+      .catch( () => showToast(`Koneksi error, silahkan coba lagi`, `warning`));
   };
 
   render() {

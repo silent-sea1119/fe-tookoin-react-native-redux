@@ -11,6 +11,9 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 10,
   },
+  iconText: {
+    marginHorizontal: 5,
+  },
 });
 
 export default styles;

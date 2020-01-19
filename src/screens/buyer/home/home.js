@@ -11,7 +11,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {storeData, retrieveData} from '../../../utils';
 
 class HomeBuyer extends Component {
-
   // componentDidMount = async () => {
   //   if (await retrieveData('token')) {
   //     if ((await retrieveData('role')) == 1) {
@@ -38,7 +37,7 @@ class HomeBuyer extends Component {
     } = styles;
     return (
       <View style={container}>
-        <Search />
+        <Search navigation={this.props.navigation} />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={imageSlider}>
             <View style={bottomImageSlider}>

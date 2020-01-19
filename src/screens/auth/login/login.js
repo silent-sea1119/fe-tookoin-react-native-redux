@@ -58,10 +58,10 @@ class Login extends Component {
           console.log(data.data[0]);
           AsyncStorage.setItem('name_user', data.data[0].name_user);
           AsyncStorage.setItem('token', data.data[0].token);
-          AsyncStorage.setItem('role', data.data[0].role);
+          AsyncStorage.setItem('role', data.data[0].role.toString());
           AsyncStorage.setItem('email', data.data[0].email);
-          AsyncStorage.setItem('address', data.data[0].address);
-          AsyncStorage.setItem('phone', data.data[0].phone);
+          AsyncStorage.setItem('address', data.data[0].address || '');
+          AsyncStorage.setItem('phone', data.data[0].phone || '');
           AsyncStorage.setItem('id_user', data.data[0].id_user.toString())
           if (data.data[0].role === 1) {
             this.props.navigation.navigate('Profile');

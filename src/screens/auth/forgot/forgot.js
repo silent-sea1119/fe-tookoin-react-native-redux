@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { TextInput, ScrollView } from 'react-native-gesture-handler';
 import Axios from "axios";
-
+import {showToast} from '../../../components/toast';
 
 class Forgot extends Component {
     constructor(props) {
@@ -29,16 +29,18 @@ class Forgot extends Component {
             }
             Axios.post("http://3.80.150.111:8000/password/forget", data).then(response => {
                 if (response.data.status == "success") {
-                    Alert.alert(response.data.status.toUpperCase(), response.data.msg)
+                    // Alert.alert(response.data.status.toUpperCase(), response.data.msg)
+                    showToast(response.data.msg, `success`, 'bottom')
                     setTimeout(() => {
                         this.props.navigation.navigate('InputToken')
                     }, 500);
                 } else {
-                    Alert.alert(response.data.status.toUpperCase(), response.data.msg)
+                    // Alert.alert(response.data.status.toUpperCase(), response.data.msg)
+                    showToast(response.data.msg, `warning`, 'bottom')
                 }
-            }).catch(err => console.log(err))
+            }).catch(showToast(`Network error please try again later`, `warning`, 'bottom'))
         } else {
-            Alert.alert("failed".toUpperCase(), "This is not an email!");
+            showToast(`Please input a valid email address`, `warning`, 'bottom');
         }
     }
 
@@ -51,16 +53,19 @@ class Forgot extends Component {
             }
             Axios.post("http://3.80.150.111:8000/password/otp", data).then(response => {
                 if (response.data.status == "success") {
-                    Alert.alert(response.data.status.toUpperCase(), response.data.msg)
+                    // Alert.alert(response.data.status.toUpperCase(), response.data.msg)
+                    showToast(response.data.msg, `success`, 'bottom')
                     setTimeout(() => {
                         this.props.navigation.navigate('InputToken')
                     }, 500);
                 } else {
-                    Alert.alert(response.data.status.toUpperCase(), response.data.msg)
+                    // Alert.alert(response.data.status.toUpperCase(), response.data.msg)
+                    showToast(response.data.msg, `warning`, 'bottom')
                 }
             }).catch(err => console.log(err))
         } else {
-            Alert.alert("failed".toUpperCase(), "This is not a phone number!");
+            // Alert.alert("failed".toUpperCase(), "This is not a phone number!");
+            showToast(`Please input a valid email address`, `warning`, 'bottom')
         }
 
     }

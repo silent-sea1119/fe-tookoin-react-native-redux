@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
   Text,
   DrawerLayoutAndroid,
-  Alert,
 } from 'react-native';
 import {registerAccount} from '../../../redux/actions/auth/index';
 import {connect} from 'react-redux';
@@ -106,39 +105,26 @@ class Register extends Component {
       await Axios.post(url, data)
         .then(res => {
           if (res.data.msg === 'Email already exist') {
-            Alert.alert(res.data.msg);
+            showToast(`Email already Exist`, `warning`);
           } else {
-            Alert.alert(
-              'Register Success',
-              'Please Login with your registered Account',
-            );
+            showToast(`Register Success, please Login `, `Success`);
             this.props.navigation.navigate('Login');
           }
         })
         .catch(err => console.log(err.msg));
     } else if (!nameValidate && !emailValidate && !passwordValidate) {
-      // Alert.alert('Form Input Error', 'Please Fill The Form Correctly');
       showToast(`Form Input Error, Please Fill The Form Correctly`, `warning`);
     } else if (!nameValidate) {
-      // Alert.alert(
-      //   'Name Incorrect Format',
-      //   'Name First Letter Must Be Uppercase',
-      // );
       showToast(
         `Name Incorrect Format, Name First Letter Must Be Uppercase`,
         `warning`,
       );
     } else if (!emailValidate) {
-      // Alert.alert('Email Incorrect Format', 'Email not in correct format');
       showToast(
         `Email Incorrect Format', 'Email not in correct format`,
         `warning`,
       );
     } else if (!passwordValidate) {
-      // Alert.alert(
-      //   'Password Incorrect Format',
-      //   'Password must be at least 8 characters and must consist minimal 1 Uppercase, 1 lowercase and 1 number',
-      // );
       showToast(
         `Password must be at least 8 characters and must consist minimal 1 Uppercase, 1 lowercase and 1 number`,
         `warning`,
@@ -176,21 +162,6 @@ class Register extends Component {
             Anda
           </Text>
 
-          {/* Main Form */}
-          {/* <Item style={styles.textEmailContainer}>
-            <Input
-              labelStyle={{
-                marginHorizontal: -10,
-                fontSize: 12,
-              }}
-              style={styles.textEmail}
-              placeholder="Nama Lengkap"
-              inputStyle={{fontSize: 12}}
-              value={this.state.name_user}
-              onChangeText={name_user => this.setState({name_user})}
-            />
-          </Item> */}
-
           <Input
             inputContainerStyle={{marginLeft: -10, height: 35, marginBottom:15}}
             labelStyle={{
@@ -203,17 +174,6 @@ class Register extends Component {
             value={this.state.name_user}
             onChangeText={name_user => this.setState({name_user})}
           />
-
-          {/* Main Form */}
-          {/* <Item style={styles.textEmailContainer}>
-            <Input
-              type="email"
-              style={styles.textEmail}
-              placeholder="Email"
-              value={this.state.email}
-              onChangeText={email => this.setState({email})}
-            />
-          </Item> */}
 
           <Input
             inputContainerStyle={{marginLeft: -10, height: 35, marginBottom:15}}
@@ -241,20 +201,8 @@ class Register extends Component {
             value={this.state.password}
             label="Password"
             onChangeText={password => this.setState({password})
-            
           }
           />
-
-          {/* <Item style={styles.textPasswordContainer}>
-            <Input
-              style={styles.textPassword}
-              placeholder="Password"
-              secureTextEntry={true}
-              value={this.state.password}
-              onChangeText={password => this.setState({password})}
-            />
-          </Item> */}
-
           <ButtonGroup
             onPress={selectedIndex => {
               this.setState({selectedIndex});

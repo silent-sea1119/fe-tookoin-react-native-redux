@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   ScrollView,
   BackHandler,
-  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconMI from 'react-native-vector-icons/MaterialIcons';
@@ -14,6 +13,7 @@ import {TextInput} from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 import {SAPI_URL} from 'react-native-dotenv';
 import Axios from 'axios';
+import {showToast} from '../../../components/toast';
 
 class EditProfileBuyer extends Component {
   state = {
@@ -44,8 +44,9 @@ class EditProfileBuyer extends Component {
           AsyncStorage.setItem('email', this.state.email);
           AsyncStorage.setItem('address', this.state.address);
           AsyncStorage.setItem('phone', this.state.phone);
+          showToast(`Success updating profile`, `success`);
         } else {
-          Alert.alert('ERROR', 'Something Went Wrong');
+          showToast(`Failed updating profile, please try again`, `failed`);
         }
       })
       .catch(err => console.log(err));

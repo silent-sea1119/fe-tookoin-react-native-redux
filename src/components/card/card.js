@@ -9,25 +9,17 @@ import {postToCartAction} from '../../redux/actions/cart/cartAction';
 import {SAPI_URL} from 'react-native-dotenv';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import {withNavigationFocus} from 'react-navigation';
 
 class Card extends Component {
   constructor() {
     super();
     this.state = {Quantity: 0, localArray: []};
   }
-  render() {
-    const {
-      container,
-      name,
-      image,
-      price,
-      priceText,
-      unit,
-      beli,
-      kuantity,
-    } = styles;
+
+
     // console.log('DESCRIPTION : ', this.props.name, ' = ', this.props.desc_product);
-    const goToDetail = () => {
+   goToDetail = () => {
       console.log(
         'DESCRIPTION : ',
         this.props.name,
@@ -47,7 +39,8 @@ class Card extends Component {
         name_category: this.props.name_category,
       });
     };
-	 const postToCart = async statusQuantity => {	
+
+	postToCart = async statusQuantity => {	
       let id_productPost = this.props.id_product;	
       let id_sellerPost = this.props.id_seller;	
       let quantityPost = 1;	
@@ -68,11 +61,13 @@ class Card extends Component {
       };	
       await axios.post(url, data, config);	
     };
-    const handleAddQuantity = () => {
+
+   handleAddQuantity = () => {
       this.setState({Quantity: this.state.Quantity + 1});
-	    postToCart(1);
+	    this.postToCart(1);
     };
-    const handleQuantity = bool => {
+
+   handleQuantity = bool => {
 		  let statusQuantity = 0;
       if (bool) {
         this.setState({Quantity: this.state.Quantity + 1});
@@ -81,10 +76,38 @@ class Card extends Component {
         this.setState({Quantity: this.state.Quantity - 1});
 		statusQuantity = 0;
       }
-	       postToCart(statusQuantity);
+	       this.postToCart(statusQuantity);
     };
+
+
+  componentDidUpdate = async prevProps => {
+    if (prevProps.isFocused !== this.props.isFocused) {
+      if (await this.props.isFocused) {
+        console.log('focused')
+      }
+      else{
+        console.log('infocused')
+        this.setState({Quantity:0})
+      }
+      // Call any action
+    }
+  };
+
+  render() {
+
+    const {
+      container,
+      name,
+      image,
+      price,
+      priceText,
+      unit,
+      beli,
+      kuantity,
+    } = styles;
+
     return (
-      <TouchableOpacity onPress={() => goToDetail()}>
+      <TouchableOpacity onPress={() => this.goToDetail()}>
         <View style={container}>
           <View style={image}>
             <Text
@@ -108,7 +131,7 @@ class Card extends Component {
           </View>
           {this.state.Quantity > 0 ? (
             <View style={kuantity}>
-              <TouchableOpacity onPress={() => handleQuantity(false)}>
+              <TouchableOpacity onPress={() => this.handleQuantity(false)}>
                 <Icon
                   name="minus-circle"
                   type="font-awesome"
@@ -124,7 +147,7 @@ class Card extends Component {
                 }}>
                 {this.state.Quantity}
               </Text>
-              <TouchableOpacity onPress={() => handleQuantity(true)}>
+              <TouchableOpacity onPress={() => this.handleQuantity(true)}>
                 <Icon
                   name="plus-circle"
                   type="font-awesome"
@@ -134,7 +157,7 @@ class Card extends Component {
               </TouchableOpacity>
             </View>
           ) : (
-            <TouchableOpacity onPress={() => handleAddQuantity()}>
+            <TouchableOpacity onPress={() => this.handleAddQuantity()}>
               <View style={beli}>
                 <Text style={{fontWeight: 'bold', color: 'white'}}>Beli</Text>
               </View>
@@ -151,6 +174,5 @@ const mapStateToProps = state => {
   return {	
     cardState: state.cartReducer,	
   };	
-};	
-export default connect(mapStateToProps)(Card);	
-//export default Card;
+};
+export default withNavigationFocus(connect(mapStateToProps)(Card));

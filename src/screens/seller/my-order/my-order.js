@@ -39,13 +39,14 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Octicons from 'react-native-vector-icons/Octicons';
 import {getTransactionStatusSeller} from '../../../utils/axios/my-order-seller';
 import {storeData, retrieveData} from '../../../utils';
+import {withNavigationFocus} from 'react-navigation';
 
 // import Tab1 from './tabOne';
 // import Tab2 from './tabTwo';
 
 import styles from './my-order.style';
 
-export default class MyOrderSeller extends Component {
+class MyOrderSeller extends Component {
   state = {
     status: true,
     token:
@@ -80,22 +81,16 @@ export default class MyOrderSeller extends Component {
       // console.log('incompledted',this.state.incompletedOrder)
       // console.log('incompledted',this.state.completedOrder)
     });
-    //Buat mengecek tombol back fisik ditekan
-    this.backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      this.handleBackPress,
-    );
   };
 
-  componentWillUnmount() {
-    this.backHandler.remove();
-  }
 
-  //Buat mengecek tombol back fisik ditekan
-  handleBackPress = () => {
-    let {routeName, key} = this.props.navigation.state;
-    this.props.navigation.goBack();
-    return true;
+  componentDidUpdate = async prevProps => {
+    if (prevProps.isFocused !== this.props.isFocused) {
+      if (await this.props.isFocused) {
+        console.log('Get new data my-order')
+      }
+      // Call any action
+    }
   };
 
   render() {
@@ -394,3 +389,5 @@ export default class MyOrderSeller extends Component {
     );
   }
 }
+
+export default withNavigationFocus(MyOrderSeller);

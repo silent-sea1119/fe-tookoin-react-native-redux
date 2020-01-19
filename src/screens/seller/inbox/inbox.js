@@ -1,27 +1,24 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, ScrollView, Image, BackHandler} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  BackHandler,
+} from 'react-native';
 import styles from './inbox.style';
 import Footer from '../../../components/footer/footer';
+import {withNavigationFocus} from 'react-navigation';
 
 class InboxBuyer extends Component {
-  componentDidMount() {
-    //Buat mengecek tombol back fisik ditekan
-    this.backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      this.handleBackPress,
-    );
-  }
-  //Buat mengecek tombol back fisik ditekan
-
-  componentWillUnmount() {
-    this.backHandler.remove();
-  }
-
-    //Buat mengecek tombol back fisik ditekan
-  handleBackPress = () => {
-    let {routeName, key} = this.props.navigation.state;
-    this.props.navigation.goBack()
-    return true;
+  componentDidUpdate = async prevProps => {
+    if (prevProps.isFocused !== this.props.isFocused) {
+      if (await this.props.isFocused) {
+        console.log('Update Data')
+      }
+      // Call any action
+    }
   };
   render() {
     const {container, header, body} = styles;
@@ -55,4 +52,4 @@ class InboxBuyer extends Component {
   }
 }
 
-export default InboxBuyer;
+export default withNavigationFocus(InboxBuyer);

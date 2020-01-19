@@ -12,6 +12,7 @@ import IconMI from 'react-native-vector-icons/MaterialIcons';
 import styles from './home.style';
 import AsyncStorage from '@react-native-community/async-storage';
 import avatar from '../../../assets/images/Avatar.png';
+import {withNavigationFocus} from 'react-navigation';
 
 class HomeSeller extends Component {
   state = {
@@ -28,23 +29,19 @@ class HomeSeller extends Component {
   };
   componentDidMount() {
     this.handleGetItem();
-    this.backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      this.handleBackPress,
-    );
-  }
-  //Buat mengecek tombol back fisik ditekan
-
-  componentWillUnmount() {
-    this.backHandler.remove();
   }
 
-  //Buat mengecek tombol back fisik ditekan
-  handleBackPress = () => {
-    let {routeName, key} = this.props.navigation.state;
-    this.props.navigation.goBack();
-    return true;
+
+  componentDidUpdate = async prevProps => {
+    if (prevProps.isFocused !== this.props.isFocused) {
+      if (await this.props.isFocused) {
+        this.handleGetItem()
+        console.log('Get Name')
+      }
+      // Call any action
+    }
   };
+
   render() {
     return (
       <View style={styles.container}>
@@ -187,4 +184,4 @@ class HomeSeller extends Component {
   }
 }
 
-export default HomeSeller;
+export default withNavigationFocus(HomeSeller);

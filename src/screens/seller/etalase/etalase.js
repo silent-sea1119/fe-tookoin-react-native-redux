@@ -16,6 +16,7 @@ import CardEtalase from '../../../components/cardEtalase/cardEtalase';
 import {fetchEtalase} from '../../../redux/actions/etalase/etalase';
 import {SAPI_URL} from 'react-native-dotenv';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {withNavigationFocus} from 'react-navigation';
 
 class Etalase extends Component {
   state = {
@@ -49,25 +50,16 @@ class Etalase extends Component {
   componentDidMount() {
     this.handleGetItem();
     this.handleGetEtalaseItem();
-    //Buat mengecek tombol back fisik ditekan
-    this.backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      this.handleBackPress,
-    );
-  }
-  //Buat mengecek tombol back fisik ditekan
-
-  componentWillUnmount() {
-    this.backHandler.remove();
   }
 
-    //Buat mengecek tombol back fisik ditekan
-  handleBackPress = () => {
-    let {routeName, key} = this.props.navigation.state;
-    if (routeName !== 'Etalase'){
-      console.log('Bukan')
+  componentDidUpdate = async prevProps => {
+    if (prevProps.isFocused !== this.props.isFocused) {
+      if (await this.props.isFocused) {
+        this.handleGetItem()
+        this.handleGetEtalaseItem()
+      }
+      // Call any action
     }
-    return true;
   };
 
   render() {
@@ -190,4 +182,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Etalase);
+export default withNavigationFocus(connect(
+  mapStateToProps, 
+)(Etalase))
+// export default connect(mapStateToProps)(Etalase);

@@ -65,7 +65,7 @@ class AddProduct extends Component {
       Axios.post(url, data, config)
         .then(({data}) => {
           if (data.msg === 'success') {
-            this.props.navigation.push('Etalase');
+            this.props.navigation.navigate('Etalase');
           } else {
             Alert.alert('Error', 'Something Went Wrong');
           }
@@ -82,7 +82,7 @@ class AddProduct extends Component {
       Axios.patch(url, data, config)
         .then(({data}) => {
           if (data.msg === 'success') {
-            this.props.navigation.push('Etalase');
+            this.props.navigation.navigate('Etalase');
           } else {
             Alert.alert('Error', 'Something Went Wrong');
           }
@@ -92,25 +92,6 @@ class AddProduct extends Component {
           Alert.alert('Error', 'Something Went Wrong');
         });
     }
-  };
-  componentDidMount() {
-    //Buat mengecek tombol back fisik ditekan
-    this.backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      this.handleBackPress,
-    );
-  }
-  //Buat mengecek tombol back fisik ditekan
-
-  componentWillUnmount() {
-    this.backHandler.remove();
-  }
-
-    //Buat mengecek tombol back fisik ditekan
-  handleBackPress = () => {
-    let {routeName, key} = this.props.navigation.state;
-    this.props.navigation.goBack()
-    return true;
   };
 
   render() {

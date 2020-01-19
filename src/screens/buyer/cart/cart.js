@@ -29,8 +29,7 @@ class Cart extends Component {
     // console.log('ini url', url)
 
     let token = await AsyncStorage.getItem('token');
-    // console.log('ini token 555', token);
-
+    console.log('ini token 555', token);
     let config = {
       headers: {Authorization: 'Bearer ' + token},
     };
@@ -41,7 +40,8 @@ class Cart extends Component {
     this.setState({
       data: dataCart.value.data.data,
     });
-    console.log('your ata 1212', this.state.data[0].price);
+
+    console.log('your data', this.state.data[0]);
   };
 
   render() {

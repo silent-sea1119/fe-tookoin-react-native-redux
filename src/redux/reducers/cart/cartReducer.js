@@ -29,6 +29,14 @@ const cartReducer = (prevState = initialState, action) => {
         cart: action.payload,
       };
 
+    case 'POST_CART_FULFILLED':
+      return {
+        ...prevState,
+        isPending: false,
+        isFulfilled: false,
+        cart: action.payload,
+      };
+
     default:
       return prevState;
   }

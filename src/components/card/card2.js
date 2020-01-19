@@ -26,19 +26,12 @@ class Card extends Component {
       beli,
       kuantity,
     } = styles;
-    // console.log('DESCRIPTION : ', this.props.name, ' = ', this.props.desc_product);
+
     const goToDetail = () => {
-      console.log(
-        'DESCRIPTION : ',
-        this.props.name,
-        ' = ',
-        this.props.desc_product,
-      );
       this.props.navigation.push('DetailProdukBuyer', {
         id_product: this.props.id_product,
-        desc_product: this.props.desc_product,
         id_category: this.props.id_category,
-		id_seller: this.props.id_seller,
+        id_seller: this.props.id_seller,
         name: this.props.name,
         label: this.props.label,
         unit: this.props.unit,
@@ -47,41 +40,79 @@ class Card extends Component {
         name_category: this.props.name_category,
       });
     };
-	 const postToCart = async statusQuantity => {	
-      let id_productPost = this.props.id_product;	
-      let id_sellerPost = this.props.id_seller;	
-      let quantityPost = 1;	
-      if (statusQuantity == 1) {	
-        quantityPost = 1;	
-      } else {	
-        quantityPost = -1;	
-      }	
-      let data = {	
-        id_product: id_productPost,	
-        id_seller: id_sellerPost,	
-        qty: quantityPost,	
-      };	
-      let url = SAPI_URL + '/cart';	
-      let token = await AsyncStorage.getItem('token');	
-      let config = {	
-        headers: {Authorization: 'Bearer ' + token},	
-      };	
-      await axios.post(url, data, config);	
+
+    const postToCart = async statusQuantity => {
+      console.log('you are crazy');
+      let id_productPost = this.props.id_product;
+      let id_sellerPost = this.props.id_seller;
+      let quantityPost = 1;
+      if (statusQuantity == 1) {
+        quantityPost = 1;
+      } else {
+        quantityPost = -1;
+      }
+
+      // console.log('your id productx = ', id_productPost)
+      // console.log('your id sellerx = ', id_sellerPost)
+      // console.log('your quantityx = ', quantityPost)
+      let data = {
+        id_product: id_productPost,
+        id_seller: id_sellerPost,
+        qty: quantityPost,
+      };
+      let url = SAPI_URL + '/cart';
+
+      let token = await AsyncStorage.getItem('token');
+      let config = {
+        headers: {Authorization: 'Bearer ' + token},
+      };
+
+      console.log('your URLxxxxx =', url);
+      console.log('your configxxx = ', config);
+      console.log('your dataxxxx = ', data);
+      console.log('status ququququq =', quantityPost);
+
+      // let kuantitas = this.state.Quantity;
+      // console.log('kuantitias kamu', kuantitas);
+      
+      await axios.post(url, data, config);
+      // if (kuantitas > 0) {
+      //   axios.post(url, data, config);
+      // } else {
+      //   console.log('delete axios');
+
+      //   await axios.get(url, config).then(res => {
+      //     console.log(res.data.data);
+      //     this.setState({
+      //       localArray: res.data.data,
+      //     });
+      //   });
+
+      //   console.log(this.state.localArray, 'aamminn');
+      //   let delArray = this.state.localArray.find(x => x.qty == 0)
+
+      //   console.log(delArray, 'nih delete');
+      //   console.log(delArray.id_cart, 'detele yang ke ')
+
+      //   await axios.delete(url+'/'+delArray.id_cart)
+
+      // }
     };
+
     const handleAddQuantity = () => {
       this.setState({Quantity: this.state.Quantity + 1});
-	    postToCart(1);
+      postToCart(1);
     };
     const handleQuantity = bool => {
-		  let statusQuantity = 0;
+      let statusQuantity = 0;
       if (bool) {
         this.setState({Quantity: this.state.Quantity + 1});
-		 statusQuantity = 1;
+        statusQuantity = 1;
       } else if (!bool) {
         this.setState({Quantity: this.state.Quantity - 1});
-		statusQuantity = 0;
+        statusQuantity = 0;
       }
-	       postToCart(statusQuantity);
+      postToCart(statusQuantity);
     };
     return (
       <TouchableOpacity onPress={() => goToDetail()}>
@@ -146,11 +177,11 @@ class Card extends Component {
   }
 }
 
-	
-const mapStateToProps = state => {	
-  return {	
-    cardState: state.cartReducer,	
-  };	
-};	
-export default connect(mapStateToProps)(Card);	
+const mapStateToProps = state => {
+  return {
+    cardState: state.cartReducer,
+  };
+};
+
+export default connect(mapStateToProps)(Card);
 //export default Card;

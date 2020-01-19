@@ -28,6 +28,7 @@ import {
   Forgot,
   InputToken,
   Checkout,
+  searchScreen,
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
@@ -73,6 +74,7 @@ const StackHomeBuyer = createStackNavigator(
     DetailProdukBuyer,
     ProductCategory,
     SuccessOrder,
+    searchScreen,
   },
   {
     initialRouteName: 'HomeBuyer',

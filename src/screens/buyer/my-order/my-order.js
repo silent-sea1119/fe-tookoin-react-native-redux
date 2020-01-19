@@ -27,6 +27,7 @@ import {
   Left,
   Body,
   Right,
+  Toast,
 } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -39,8 +40,13 @@ import {withNavigationFocus} from 'react-navigation';
 import {getTransactionStatusBuyer} from '../../../utils/axios/my-order-seller';
 import {storeData, retrieveData} from '../../../utils';
 
+import Axios from 'axios';
+
 import styles from './my-order.style';
 import moment from 'moment';
+import {showToast} from '../../../components/toast';
+
+import {API_URL} from 'react-native-dotenv';
 
 class MyOrder extends Component {
   state = {
@@ -50,6 +56,7 @@ class MyOrder extends Component {
     incompletedOrder: [],
     completedOrder: [],
     loggedIn: false,
+    updatingStatus: false,
   };
 
   componentDidUpdate = async prevProps => {
@@ -63,6 +70,9 @@ class MyOrder extends Component {
           this.setState({loggedIn: false});
         }
       }
+    }
+    else{
+
     }
   };
 
@@ -99,6 +109,17 @@ class MyOrder extends Component {
       })
       .catch(err => console.log(error));
   };
+
+  cancelOrder = async (id_transaction) => {
+    let url = API_URL.concat(`/transaction/status/${id_transaction}?status=${7}`)
+    console.log(url)
+    await Axios.patch(url)
+    .then((data) => {
+      showToast(`Berhasil Membatalkan Transaksi`, `success`);
+      this.setState({updatingStatus: !this.state.updatingStatus})
+      this.getOrder();
+    }).catch(err => showToast(`Gagal Membatalkan Transaksi`, `warning`))
+  }
 
   render() {
     // const imageUri = require('../../../assets/images/belumAdaPesanan.png');
@@ -186,10 +207,8 @@ class MyOrder extends Component {
                               Billing Total
                             </Text>
                             <Text style={styles.textChild12a}>
-                            {`Rp ${order.subtotal}`|| `Rp 4000`}
+                              {`Rp ${order.subtotal}` || `Rp 4000`}
                             </Text>
-
-                            
                           </View>
 
                           <View style={styles.child12}>
@@ -223,7 +242,6 @@ class MyOrder extends Component {
                                 ? `Product sent by Seller`
                                 : `Waiting payment from buyer`}
                             </Text>
-
                           </View>
                         </View>
                         <View style={styles.child2}>
@@ -262,19 +280,32 @@ class MyOrder extends Component {
                             />
                           </View>
                           <View style={styles.child22}>
-                            <Button
-                              icon
-                              small
-                              bordered
-                              style={styles.buttonChild22}>
-                              <Icon
-                                name="comments"
-                                style={styles.iconChild22}
-                              />
-                              <Text style={styles.textChild22}>
-                                Chat Seller
-                              </Text>
-                            </Button>
+                            {order.status === 1 ? (
+                              <View style={{flexDirection: 'row'}}>
+                                  {/* <Button
+                                    icon
+                                    small
+                                    bordered
+                                    style={styles.buttonChild22}
+                                    onPress={e => console.log('bayar')}>
+                                    <Text style={styles.textChild22}>
+                                      Bayar
+                                    </Text>
+                                  </Button> */}
+                                  <Button
+                                    icon
+                                    small
+                                    bordered
+                                    style={styles.buttonChild22}
+                                    onPress={e => this.cancelOrder(order.id_transaction)}>
+                                    <Text style={styles.textChild22}>
+                                      Batalkan
+                                    </Text>
+                                  </Button>
+                              </View>
+                            ) : (
+                              <Text></Text>
+                            )}
                           </View>
                         </View>
                       </View>
@@ -347,10 +378,8 @@ class MyOrder extends Component {
                               Billing Total
                             </Text>
                             <Text style={styles.textChild12a}>
-                            {`Rp ${order.subtotal}`|| `Rp 4000`}
+                              {`Rp ${order.subtotal}` || `Rp 4000`}
                             </Text>
-
-
                           </View>
 
                           <View style={styles.child12}>
@@ -383,8 +412,6 @@ class MyOrder extends Component {
                                 ? `Canceled Order`
                                 : `Product received by Buyer`}
                             </Text>
-
-
                           </View>
                         </View>
                         <View style={styles.child2}>
@@ -414,7 +441,7 @@ class MyOrder extends Component {
                               }
                             />
                           </View>
-                          <View style={styles.child22}>
+                          {/* <View style={styles.child22}>
                             <Button
                               icon
                               small
@@ -428,7 +455,7 @@ class MyOrder extends Component {
                                 Chat Seller
                               </Text>
                             </Button>
-                          </View>
+                          </View> */}
                         </View>
                       </View>
                     );

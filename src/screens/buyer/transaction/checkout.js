@@ -11,17 +11,117 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconMI from 'react-native-vector-icons/MaterialIcons';
-import PictureExample from '../../../assets/images/logo.png'
+import PictureExample from '../../../assets/images/logo.png';
+import Axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            example: 1
+            example: 1,
+            total: '',
+            data: [],
+            address: '',
+            phone: ''
         }
     }
 
+    componentDidMount() {
+        this.handleGetData();
+    }
+
+    handleGetData = async () => {
+        const item = this.props.navigation.state.params.item;
+        let address = await AsyncStorage.getItem('address');
+        let phone = await AsyncStorage.getItem('phone');
+        let token = await AsyncStorage.getItem('token');
+        let config = {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        };
+
+        Axios
+            .get("http://3.80.150.111:8000/transaction/detail/buyer/" + item, config)
+            .then(response => {
+                const arrayTotal = [];
+                for (let i = 0; i < response.data.data.length; i++) {
+                    arrayTotal.push(response.data.data[i].subtotal)
+                }
+                let total = arrayTotal.reduce((a, b) => a + b, 0)
+                this.setState({ data: response.data.data, total: total, address: address, phone: phone });
+            })
+            .catch(err => console.log(err))
+    }
+
+    handlePayment = async () => {
+        const product = ['admin'];
+        const price = [3500];
+        const qty = [1];
+        const comments = ['admin'];
+        const { data } = this.state;
+
+        for (let i = 0; i < data.length; i++) {
+            product.push(data[i].name_product);
+            price.push(data[i].price);
+            qty.push(data[i].qty);
+            comments.push('nocoment');
+        }
+
+        // const payload = new FormData(); payload.append('key',
+        // '235CA757-AC86-44A6-8EB1-D3510AF5A322');
+        // payload.append('235CA757-AC86-44A6-8EB1-D3510AF5A322', 'payment');
+        // payload.append('product', product); payload.append('price', price);
+        // payload.append('quantity', qty); payload.append('comments', comments);
+        // payload.append('ureturn', ''); payload.append('unotif',
+        // 'http://3.80.150.111:8000/transaction'); payload.append('ucancel', '');
+        // payload.append('format', 'json');
+
+        const payload = {
+            key: '235CA757-AC86-44A6-8EB1-D3510AF5A322',
+            action: 'payment',
+            product: product,
+            price: price,
+            quantity: qty,
+            comments: comments,
+            ureturn: '',
+            unotif: 'http://3.80.150.111:8000/transaction',
+            ucancel: '',
+            format: 'json'
+        }
+
+        Axios
+            .post("https://my.ipaymu.com/payment.htm", payload)
+            .then(async (response) => {
+                if (response.data) {
+                    let token = await AsyncStorage.getItem('token');
+
+                    let config = {
+                        headers: {
+                            Authorization: 'Bearer ' + token
+                        }
+                    };
+
+                    Axios
+                        .patch("http://3.80.150.111:8000/transaction/sid/" + this.props.navigation.state.params.item, null, config)
+                        .then(result => {
+                            this
+                                .props
+                                .navigation
+                                .navigate('SuccessOrder', {
+                                    url: response.data.url,
+                                    sessionID: response.data.sessionID,
+                                    total: this.state.total
+                                })
+                        })
+                }
+            })
+            .catch(err => console.log(err))
+    }
+
     render() {
+        const { data } = this.state;
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
@@ -41,175 +141,41 @@ export default class App extends React.Component {
                     <View style={styles.body}>
                         <View style={styles.box}>
                             <Text style={styles.boxTitle}>Alamat Anda</Text>
-                            <Text style={styles.boxBody}>Jalan Kaliurang, Sleman Jogjakarta, Indonesia, Bumi, BimaSakti, Alam Semesta</Text>
-                            <Text style={styles.boxFooter}>+6280000000000</Text>
+                            <Text style={styles.boxBody}>{this.state.address}</Text>
+                            <Text style={styles.boxFooter}>{this.state.phone}</Text>
                         </View>
                     </View>
                     <View style={styles.hr}>
                         <Text style={styles.hrText}>Detail Pesanan</Text>
                     </View>
-                    <View style={styles.list}>
-                        <Image source={PictureExample} style={styles.image} />
-                        <View style={styles.listDetail}>
-                            <Text style={styles.listTitle}>Item Name</Text>
-                            <Text style={styles.listBody}>Unit Item</Text>
-                            <Text style={styles.listFooter}>Rp 30.000/ Unit</Text>
-                        </View>
-                        <View style={styles.listTools}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    if (this.state.example == 1) {
-                                        this.setState({ example: this.state.example });
-                                    } else {
-                                        this.setState({
-                                            example: this.state.example - 1
-                                        });
-                                    }
-                                }}>
-                                <IconMI style={styles.listToolsMinus} name="remove-circle-outline" />
-                            </TouchableOpacity>
-                            <Text style={styles.listToolsText}>{this.state.example}</Text>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    this.setState({
-                                        example: this.state.example + 1
-                                    })
-                                }}>
-                                <IconMI style={styles.listToolsPlus} name="add-circle-outline" />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    <View style={styles.list}>
-                        <Image source={PictureExample} style={styles.image} />
-                        <View style={styles.listDetail}>
-                            <Text style={styles.listTitle}>Item Name</Text>
-                            <Text style={styles.listBody}>Unit Item</Text>
-                            <Text style={styles.listFooter}>Rp 30.000/ Unit</Text>
-                        </View>
-                        <View style={styles.listTools}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    if (this.state.example == 1) {
-                                        this.setState({ example: this.state.example });
-                                    } else {
-                                        this.setState({
-                                            example: this.state.example - 1
-                                        });
-                                    }
-                                }}>
-                                <IconMI style={styles.listToolsMinus} name="remove-circle-outline" />
-                            </TouchableOpacity>
-                            <Text style={styles.listToolsText}>{this.state.example}</Text>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    this.setState({
-                                        example: this.state.example + 1
-                                    })
-                                }}>
-                                <IconMI style={styles.listToolsPlus} name="add-circle-outline" />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    <View style={styles.list}>
-                        <Image source={PictureExample} style={styles.image} />
-                        <View style={styles.listDetail}>
-                            <Text style={styles.listTitle}>Item Name</Text>
-                            <Text style={styles.listBody}>Unit Item</Text>
-                            <Text style={styles.listFooter}>Rp 30.000/ Unit</Text>
-                        </View>
-                        <View style={styles.listTools}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    if (this.state.example == 1) {
-                                        this.setState({ example: this.state.example });
-                                    } else {
-                                        this.setState({
-                                            example: this.state.example - 1
-                                        });
-                                    }
-                                }}>
-                                <IconMI style={styles.listToolsMinus} name="remove-circle-outline" />
-                            </TouchableOpacity>
-                            <Text style={styles.listToolsText}>{this.state.example}</Text>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    this.setState({
-                                        example: this.state.example + 1
-                                    })
-                                }}>
-                                <IconMI style={styles.listToolsPlus} name="add-circle-outline" />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    <View style={styles.list}>
-                        <Image source={PictureExample} style={styles.image} />
-                        <View style={styles.listDetail}>
-                            <Text style={styles.listTitle}>Item Name</Text>
-                            <Text style={styles.listBody}>Unit Item</Text>
-                            <Text style={styles.listFooter}>Rp 30.000/ Unit</Text>
-                        </View>
-                        <View style={styles.listTools}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    if (this.state.example == 1) {
-                                        this.setState({ example: this.state.example });
-                                    } else {
-                                        this.setState({
-                                            example: this.state.example - 1
-                                        });
-                                    }
-                                }}>
-                                <IconMI style={styles.listToolsMinus} name="remove-circle-outline" />
-                            </TouchableOpacity>
-                            <Text style={styles.listToolsText}>{this.state.example}</Text>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    this.setState({
-                                        example: this.state.example + 1
-                                    })
-                                }}>
-                                <IconMI style={styles.listToolsPlus} name="add-circle-outline" />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    <View style={styles.list}>
-                        <Image source={PictureExample} style={styles.image} />
-                        <View style={styles.listDetail}>
-                            <Text style={styles.listTitle}>Item Name</Text>
-                            <Text style={styles.listBody}>Unit Item</Text>
-                            <Text style={styles.listFooter}>Rp 30.000/ Unit</Text>
-                        </View>
-                        <View style={styles.listTools}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    if (this.state.example == 1) {
-                                        this.setState({ example: this.state.example });
-                                    } else {
-                                        this.setState({
-                                            example: this.state.example - 1
-                                        });
-                                    }
-                                }}>
-                                <IconMI style={styles.listToolsMinus} name="remove-circle-outline" />
-                            </TouchableOpacity>
-                            <Text style={styles.listToolsText}>{this.state.example}</Text>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    this.setState({
-                                        example: this.state.example + 1
-                                    })
-                                }}>
-                                <IconMI style={styles.listToolsPlus} name="add-circle-outline" />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                    {data.map(({
+                        name_product,
+                        unit,
+                        price,
+                        qty
+                    }, index) => {
+                        return (
+                            <View key={index} style={styles.list}>
+                                <Image source={PictureExample} style={styles.image} />
+                                <View style={styles.listDetail}>
+                                    <Text style={styles.listTitle}>{name_product}</Text>
+                                    <Text style={styles.listBody}>{unit}</Text>
+                                    <Text style={styles.listFooter}>Rp {price}/ {unit}</Text>
+                                </View>
+                                <View style={styles.listTools}>
+                                    <Text style={styles.listToolsText}>{qty}/ {unit}</Text>
+                                </View>
+                            </View>
+                        )
+
+                    })}
                 </ScrollView>
                 <View style={styles.footer}>
                     <View style={styles.footerLeft}>
                         <Text style={styles.footerText1}>Total Pembayaran</Text>
-                        <Text style={styles.footerText2}>Rp 30.000</Text>
+                        <Text style={styles.footerText2}>Rp {this.state.total}</Text>
                     </View>
-                    <TouchableOpacity style={styles.footerRight}>
+                    <TouchableOpacity onPress={this.handlePayment} style={styles.footerRight}>
                         <Text style={styles.btnText}>Pembayaran</Text>
                     </TouchableOpacity>
                 </View>
@@ -381,7 +347,7 @@ const styles = StyleSheet.create({
     footerText2: {
         fontSize: 16,
         color: "#4AAE4C",
-        fontWeight: "bold",
+        fontWeight: "bold"
     },
     btnText: {
         color: "#fff",

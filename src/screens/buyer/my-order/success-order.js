@@ -15,6 +15,15 @@ import image from "../../../assets/images/trolli.png";
 import ipaymuLogo from "../../../assets/images/ipaymu.png"
 
 class SuccessOrder extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            url: this.props.navigation.state.params.url,
+            sessionID: this.props.navigation.state.params.sessionID,
+            total: this.props.navigation.state.params.total
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -38,7 +47,7 @@ class SuccessOrder extends Component {
                     <View style={styles.hr} />
                     <View style={styles.amount}>
                         <Text>Total Tagihan</Text>
-                        <Text style={styles.amountNumber}>Rp 39.095</Text>
+                        <Text style={styles.amountNumber}>Rp {this.state.total}</Text>
                     </View>
                     <View style={styles.hr2} />
                     <View style={styles.payment}>
@@ -47,10 +56,10 @@ class SuccessOrder extends Component {
                         <View style={styles.box}>
                             <Image style={styles.ipaymu} source={ipaymuLogo} />
                             <Text>Session ID</Text>
-                            <Text>C0E6D95C-05D3-4039-9105-333333</Text>
+                            <Text>{this.state.sessionID}</Text>
                             <TouchableOpacity
                                 onPress={() => {
-                                    Linking.openURL("https://www.google.com")
+                                    Linking.openURL(this.state.url)
                                 }}>
                                 <Text style={styles.link}>Lanjutkan Pembayaran</Text>
                             </TouchableOpacity>

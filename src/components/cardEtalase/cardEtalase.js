@@ -1,5 +1,12 @@
 import React, {useState, Component} from 'react';
-import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  BackHandler,
+} from 'react-native';
 import styles from './cardEtalase.style';
 import {Icon} from 'react-native-elements';
 
@@ -8,6 +15,7 @@ class CardEtalase extends Component {
     super();
     this.state = {Quantity: 0};
   }
+
   render() {
     const {
       container,
@@ -23,12 +31,14 @@ class CardEtalase extends Component {
     const goToDetail = () => {
       this.props.navigation.navigate('AddProduct', {
         title: 'Edit',
+        id_product: this.props.id_product,
         nama_produk: this.props.name,
         price: this.props.price,
         unit: this.props.unit,
         label: this.props.label,
-        desc_produk: this.props.desc_produk,
+        desc_produk: this.props.desc_product,
         stock: this.props.stock,
+        id_category: this.props.id_category,
       });
     };
 

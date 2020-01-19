@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
   },
 
   buttonChild22: {
+    borderRadius: 10,
     borderColor: 'gray',
     color: 'gray',
   },

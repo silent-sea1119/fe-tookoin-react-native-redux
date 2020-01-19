@@ -36,9 +36,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Octicons from 'react-native-vector-icons/Octicons';
 import {withNavigationFocus} from 'react-navigation';
 
-// import Tab1 from './tabOne';
-// import Tab2 from './tabTwo';
-
 import {getTransactionStatusBuyer} from '../../../utils/axios/my-order-seller';
 import {storeData, retrieveData} from '../../../utils';
 
@@ -46,16 +43,6 @@ import styles from './my-order.style';
 import moment from 'moment';
 
 class MyOrder extends Component {
-  constructor(props) {
-    super(props);
-    // this.navigationWillFocusListener = props.navigation.addListener(
-    //   'willFocus',
-    //   () => {
-    //     // do something like this.setState() to update your view
-    //   },
-    // );
-  }
-
   state = {
     status: true,
     token: '',
@@ -72,8 +59,7 @@ class MyOrder extends Component {
           console.log('get newdata');
           this.setState({loggedIn: true});
           this.getOrder();
-        }
-        else{
+        } else {
           this.setState({loggedIn: false});
         }
       }
@@ -196,20 +182,14 @@ class MyOrder extends Component {
                               {`Rp${order.price} x ${order.qty}`}
                             </Text>
 
-                            <Text note style={styles.textNoteChild11}>
-                              Last Status
+                            <Text note style={styles.textNoteChild12}>
+                              Billing Total
                             </Text>
-                            <Text style={styles.textChild11a}>
-                              {order.status === 1
-                                ? `Waiting payment from buyer`
-                                : order.status === 2
-                                ? `Processing payment`
-                                : order.status === 3
-                                ? `In Packaging`
-                                : order.status === 4
-                                ? `Product sent by Seller`
-                                : `Waiting payment from buyer`}
+                            <Text style={styles.textChild12a}>
+                            {`Rp ${order.subtotal}`|| `Rp 4000`}
                             </Text>
+
+                            
                           </View>
 
                           <View style={styles.child12}>
@@ -228,12 +208,22 @@ class MyOrder extends Component {
                                 'dddd, DD-MM-YYYY',
                               ) || `Wednesday, 15 Jan 2020`}
                             </Text>
-                            <Text note style={styles.textNoteChild12}>
-                              Billing Total
+
+                            <Text note style={styles.textNoteChild11}>
+                              Last Status
                             </Text>
-                            <Text style={styles.textChild12a}>
-                              {order.subtotal || `Rp 4000`}
+                            <Text style={styles.textChild11a}>
+                              {order.status === 1
+                                ? `Waiting payment from buyer`
+                                : order.status === 2
+                                ? `Processing payment`
+                                : order.status === 3
+                                ? `In Packaging`
+                                : order.status === 4
+                                ? `Product sent by Seller`
+                                : `Waiting payment from buyer`}
                             </Text>
+
                           </View>
                         </View>
                         <View style={styles.child2}>
@@ -337,14 +327,53 @@ class MyOrder extends Component {
                         <View style={styles.child1}>
                           <View style={styles.child11}>
                             <Text note style={styles.textNoteChild11}>
+                              Seller
+                            </Text>
+                            <Text style={styles.textChild11}>
+                              {order.name_user || `#SR23555HJF8`}
+                            </Text>
+
+                            <Text note style={styles.textNoteChild11}>
+                              Item Purchased
+                            </Text>
+                            <Text style={styles.textChild11}>
+                              {`${order.name_product}` || `Sayur Bayam`}
+                            </Text>
+
+                            <Text style={styles.textChild11}>
+                              {`Rp${order.price} x ${order.qty}`}
+                            </Text>
+                            <Text note style={styles.textNoteChild12}>
+                              Billing Total
+                            </Text>
+                            <Text style={styles.textChild12a}>
+                            {`Rp ${order.subtotal}`|| `Rp 4000`}
+                            </Text>
+
+
+                          </View>
+
+                          <View style={styles.child12}>
+                            <Text note style={styles.textNoteChild12}>
                               Order Number
                             </Text>
                             <Text style={styles.textChild11}>
                               {order.id_transaction || `#SR23555HJF8`}
                             </Text>
+
+                            <Text note style={styles.textNoteChild12}>
+                              Transaction Date
+                            </Text>
+                            <Text style={styles.textChild12}>
+                              {moment(order.transaction_date).format(
+                                'dddd, DD-MM-YYYY',
+                              ) || `Wednesday, 15 Jan 2020`}
+                            </Text>
+
                             <Text note style={styles.textNoteChild11}>
                               Last Status
                             </Text>
+
                             <Text style={styles.textChild11a}>
                               {order.status === 5
                                 ? `Product received by Buyer`
@@ -354,23 +383,8 @@ class MyOrder extends Component {
                                 ? `Canceled Order`
                                 : `Product received by Buyer`}
                             </Text>
-                          </View>
 
-                          <View style={styles.child12}>
-                            <Text note style={styles.textNoteChild12}>
-                              Transaction Date
-                            </Text>
-                            <Text style={styles.textChild12}>
-                              {moment(order.transaction_date).format(
-                                'dddd, DD-MM-YYYY',
-                              ) || `Wednesday, 15 Jan 2020`}
-                            </Text>
-                            <Text note style={styles.textNoteChild12}>
-                              Billing Total
-                            </Text>
-                            <Text style={styles.textChild12a}>
-                              {order.subtotal || `Rp 4000`}
-                            </Text>
+
                           </View>
                         </View>
                         <View style={styles.child2}>

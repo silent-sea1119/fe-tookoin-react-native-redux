@@ -40,7 +40,9 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import {getTransactionStatusSeller} from '../../../utils/axios/my-order-seller';
 import {storeData, retrieveData} from '../../../utils';
 import {withNavigationFocus} from 'react-navigation';
-
+import {showToast} from '../../../components/toast';
+import Axios from 'axios';
+import {API_URL} from 'react-native-dotenv';
 // import Tab1 from './tabOne';
 // import Tab2 from './tabTwo';
 
@@ -60,16 +62,14 @@ class MyOrderSeller extends Component {
       if (await this.props.isFocused) {
         if (await retrieveData('token')) {
           console.log('get newdata');
-          this.setState({loggedIn: true});
+          // this.setState({loggedIn: true});
           this.getOrder();
-        }
-        else{
-          this.setState({loggedIn: false});
+        } else {
+          // this.setState({loggedIn: false});
         }
       }
     }
   };
-
 
   componentDidMount = async () => {
     if (!(await retrieveData('token'))) {
@@ -79,13 +79,26 @@ class MyOrderSeller extends Component {
     } else {
       this.setState({token: await retrieveData('token')});
     }
+    this.getOrder();
 
+
+  };
+
+  // componentDidUpdate = async prevProps => {
+  //   if (prevProps.isFocused !== this.props.isFocused) {
+  //     if (await this.props.isFocused) {
+  //       console.log('Get new data my-order');
+  //     }
+  //     // Call any action
+  //   }
+  // };
+
+  getOrder = () => {
     getTransactionStatusSeller(this.state.token).then(res => {
-
-      console.log('responseOrder',res)
+      console.log('responseOrder', res);
       // Filtering status order
       const incompletedOrder = res.data.filter(function(order) {
-        return order.status < 4;
+        return order.status <= 4;
       });
       this.setState({incompletedOrder: incompletedOrder});
       const completedOrder = res.data.filter(function(order) {
@@ -100,14 +113,30 @@ class MyOrderSeller extends Component {
     });
   };
 
-
-  componentDidUpdate = async prevProps => {
-    if (prevProps.isFocused !== this.props.isFocused) {
-      if (await this.props.isFocused) {
-        console.log('Get new data my-order')
-      }
-      // Call any action
-    }
+  responseOrder = async (id_transaction, status) => {
+    let url = API_URL.concat(
+      `/transaction/status/${id_transaction}?status=${status}`,
+    );
+    // console.log(url)
+    await Axios.patch(url)
+      .then(data => {
+        if (status == 3) {
+          showToast(`Berhasil Konfirmasi Packing Barang`, `success`);
+          this.setState({updatingStatus: !this.state.updatingStatus});
+          this.getOrder();
+        }
+        else if (status == 4) {
+          showToast(`Berhasil Konfirmasi Mengirimkan Barang`, `success`);
+          this.setState({updatingStatus: !this.state.updatingStatus});
+          this.getOrder();
+        }
+        // else if (status == 5) {
+        //   showToast(`Berhasil Konfirmasi Barang`, `success`);
+        //   this.setState({updatingStatus: !this.state.updatingStatus});
+        //   this.getOrder();
+        // }
+      })
+      .catch(err => showToast(`Gagal Membatalkan Transaksi`, `warning`));
   };
 
   render() {
@@ -164,10 +193,8 @@ class MyOrderSeller extends Component {
                             Billing Total
                           </Text>
                           <Text style={styles.textChild12a}>
-                            {`Rp ${order.subtotal}`|| `Rp 4000`}
+                            {`Rp ${order.subtotal}` || `Rp 4000`}
                           </Text>
-
-
                         </View>
 
                         <View style={styles.child12}>
@@ -239,14 +266,55 @@ class MyOrderSeller extends Component {
                           />
                         </View>
                         <View style={styles.child22}>
-                          <Button
-                            icon
-                            small
-                            bordered
-                            style={styles.buttonChild22}>
-                            <Icon name="comments" style={styles.iconChild22} />
-                            <Text style={styles.textChild22}>Chat Buyer</Text>
-                          </Button>
+                          {order.status === 1 ? (
+                            <View style={{flexDirection: 'row'}}>
+                              <Button
+                                icon
+                                small
+                                bordered
+                                style={styles.buttonChild22}
+                                // onPress={e =>
+                                //   this.responseOrder(order.id_transaction, 7)
+                                // }
+                                >
+                                <Text style={styles.textChild22}>
+                                  Chat Buyer
+                                </Text>
+                              </Button>
+                            </View>
+                          ) : order.status === 2 ? (
+                            <View style={{flexDirection: 'row'}}>
+                              <Button
+                                icon
+                                small
+                                bordered
+                                style={styles.buttonChild22}
+                                onPress={e =>
+                                  this.responseOrder(order.id_transaction, 3)
+                                }>
+                                <Text style={styles.textChild22}>
+                                  Packing Barang
+                                </Text>
+                              </Button>
+                            </View>
+                          ) : order.status === 3 ? (
+                            <View style={{flexDirection: 'row'}}>
+                              <Button
+                                icon
+                                small
+                                bordered
+                                style={styles.buttonChild22}
+                                onPress={e =>
+                                  this.responseOrder(order.id_transaction, 4)
+                                }>
+                                <Text style={styles.textChild22}>
+                                  Kirim Barang
+                                </Text>
+                              </Button>
+                            </View>
+                          ) : (
+                            <Text></Text>
+                          )}
                         </View>
                       </View>
                     </View>
@@ -298,8 +366,7 @@ class MyOrderSeller extends Component {
                     <View style={styles.cardParent} key={index}>
                       <View style={styles.child1}>
                         <View style={styles.child11}>
-
-                        <Text note style={styles.textNoteChild11}>
+                          <Text note style={styles.textNoteChild11}>
                             Buyer
                           </Text>
                           <Text style={styles.textChild11}>
@@ -310,25 +377,22 @@ class MyOrderSeller extends Component {
                             Item Purchased
                           </Text>
                           <Text style={styles.textChild11}>
-                            { `${order.name_product}` || `Sayur Bayam`}
+                            {`${order.name_product}` || `Sayur Bayam`}
                           </Text>
 
                           <Text style={styles.textChild11}>
-                            { `Rp${order.price} x ${order.qty}`}
+                            {`Rp${order.price} x ${order.qty}`}
                           </Text>
                           <Text note style={styles.textNoteChild12}>
                             Billing Total
                           </Text>
                           <Text style={styles.textChild12a}>
-                          {`Rp ${order.subtotal}`|| `Rp 4000`}
+                            {`Rp ${order.subtotal}` || `Rp 4000`}
                           </Text>
-
-                          
                         </View>
 
                         <View style={styles.child12}>
-
-                        <Text note style={styles.textNoteChild11}>
+                          <Text note style={styles.textNoteChild11}>
                             Order Number
                           </Text>
                           <Text style={styles.textChild11}>
@@ -355,13 +419,12 @@ class MyOrderSeller extends Component {
                               'dddd, DD-MM-YYYY',
                             ) || `Wednesday, 15 Jan 2020`}
                           </Text>
-
                         </View>
                       </View>
                       <View style={styles.child2}>
                         <View style={styles.child21}>
-                          <MaterialIcons
-                            name="payment"
+                        <FontAwesome5
+                            name="box-open"
                             style={
                               order.status === 5
                                 ? styles.iconChildActive
@@ -386,14 +449,37 @@ class MyOrderSeller extends Component {
                           />
                         </View>
                         <View style={styles.child22}>
-                          <Button
-                            icon
-                            small
-                            bordered
-                            style={styles.buttonChild22}>
-                            <Icon name="comments" style={styles.iconChild22} />
-                            <Text style={styles.textChild22}>Chat Buyer</Text>
-                          </Button>
+                          {order.status === 1 ? (
+                            <View style={{flexDirection: 'row'}}>
+                              <Button
+                                icon
+                                small
+                                bordered
+                                style={styles.buttonChild22}
+                                onPress={e =>
+                                  this.responseOrder(order.id_transaction, 7)
+                                }>
+                                <Text style={styles.textChild22}>Batalkan</Text>
+                              </Button>
+                            </View>
+                          ) : order.status === 4 ? (
+                            <View style={{flexDirection: 'row'}}>
+                              <Button
+                                icon
+                                small
+                                bordered
+                                style={styles.buttonChild22}
+                                onPress={e =>
+                                  this.responseOrder(order.id_transaction, 5)
+                                }>
+                                <Text style={styles.textChild22}>
+                                  Terima Barang
+                                </Text>
+                              </Button>
+                            </View>
+                          ) : (
+                            <Text></Text>
+                          )}
                         </View>
                       </View>
                     </View>

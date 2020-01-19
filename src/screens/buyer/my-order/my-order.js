@@ -70,9 +70,7 @@ class MyOrder extends Component {
           this.setState({loggedIn: false});
         }
       }
-    }
-    else{
-
+    } else {
     }
   };
 
@@ -94,7 +92,7 @@ class MyOrder extends Component {
       .then(res => {
         // Filtering status order
         const incompletedOrder = res.data.filter(function(order) {
-          return order.status < 4;
+          return order.status <= 4;
         });
         this.setState({incompletedOrder: incompletedOrder});
         const completedOrder = res.data.filter(function(order) {
@@ -110,16 +108,26 @@ class MyOrder extends Component {
       .catch(err => console.log(error));
   };
 
-  cancelOrder = async (id_transaction) => {
-    let url = API_URL.concat(`/transaction/status/${id_transaction}?status=${7}`)
-    console.log(url)
+  responseOrder = async (id_transaction, status) => {
+    let url = API_URL.concat(
+      `/transaction/status/${id_transaction}?status=${status}`,
+    );
+    // console.log(url)
     await Axios.patch(url)
-    .then((data) => {
-      showToast(`Berhasil Membatalkan Transaksi`, `success`);
-      this.setState({updatingStatus: !this.state.updatingStatus})
-      this.getOrder();
-    }).catch(err => showToast(`Gagal Membatalkan Transaksi`, `warning`))
-  }
+      .then(data => {
+        if (status == 7) {
+          showToast(`Berhasil Membatalkan Transaksi`, `success`);
+          this.setState({updatingStatus: !this.state.updatingStatus});
+          this.getOrder();
+        }
+        else if (status == 5) {
+          showToast(`Berhasil Konfirmasi Barang`, `success`);
+          this.setState({updatingStatus: !this.state.updatingStatus});
+          this.getOrder();
+        }
+      })
+      .catch(err => showToast(`Gagal Membatalkan Transaksi`, `warning`));
+  };
 
   render() {
     // const imageUri = require('../../../assets/images/belumAdaPesanan.png');
@@ -282,26 +290,33 @@ class MyOrder extends Component {
                           <View style={styles.child22}>
                             {order.status === 1 ? (
                               <View style={{flexDirection: 'row'}}>
-                                  {/* <Button
-                                    icon
-                                    small
-                                    bordered
-                                    style={styles.buttonChild22}
-                                    onPress={e => console.log('bayar')}>
-                                    <Text style={styles.textChild22}>
-                                      Bayar
-                                    </Text>
-                                  </Button> */}
-                                  <Button
-                                    icon
-                                    small
-                                    bordered
-                                    style={styles.buttonChild22}
-                                    onPress={e => this.cancelOrder(order.id_transaction)}>
-                                    <Text style={styles.textChild22}>
-                                      Batalkan
-                                    </Text>
-                                  </Button>
+                                <Button
+                                  icon
+                                  small
+                                  bordered
+                                  style={styles.buttonChild22}
+                                  onPress={e =>
+                                    this.responseOrder(order.id_transaction, 7)
+                                  }>
+                                  <Text style={styles.textChild22}>
+                                    Batalkan
+                                  </Text>
+                                </Button>
+                              </View>
+                            ) : order.status === 4 ? (
+                              <View style={{flexDirection: 'row'}}>
+                                <Button
+                                  icon
+                                  small
+                                  bordered
+                                  style={styles.buttonChild22}
+                                  onPress={e =>
+                                    this.responseOrder(order.id_transaction, 5)
+                                  }>
+                                  <Text style={styles.textChild22}>
+                                    Terima Barang
+                                  </Text>
+                                </Button>
                               </View>
                             ) : (
                               <Text></Text>

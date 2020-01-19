@@ -24,13 +24,18 @@ import {
   AddProduct,
   EditProfile,
   SuccessOrder,
-  Splashscreen
+  Splashscreen,
+  Forgot,
+  InputToken,
+  Checkout
 } from '../screens/index';
 
 const StackAuth = createStackNavigator(
   {
     Login,
     Register,
+    Forgot,
+    InputToken,
   },
   {
     initialRouteName: 'Login',
@@ -68,7 +73,8 @@ const StackHomeBuyer = createStackNavigator(
     Cart,
     DetailProdukBuyer,
     ProductCategory,
-    SuccessOrder
+    SuccessOrder,
+    Checkout
   },
   {
     initialRouteName: 'HomeBuyer',
@@ -144,9 +150,10 @@ const StackEtalaseSeller = createStackNavigator(
     Etalase,
     AddProduct,
   },
-  {initialRouteName:'Etalase',
-  headerMode: 'none'
-}
+  {
+    initialRouteName: 'Etalase',
+    headerMode: 'none'
+  }
 )
 
 const StackSplashscreen = createStackNavigator({

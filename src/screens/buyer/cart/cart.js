@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, ScrollView, Image} from 'react-native';
+import React, { Component } from 'react';
+import { Text, View, TouchableOpacity, ScrollView, Image } from 'react-native';
 import styles from './cart.style';
 import Product from '../../../components/cartProduct/cartProduct';
 import Footer from '../../../components/footer/footer';
@@ -11,7 +11,7 @@ class InboxBuyer extends Component {
   };
   componentDidMount() {
     let result = this.state.data.reduce((value, element) => value + element);
-    this.setState({result: result});
+    this.setState({ result: result });
   }
   render() {
     const {
@@ -25,7 +25,7 @@ class InboxBuyer extends Component {
     return (
       <View style={container}>
         <View style={header}>
-          <Text style={{fontSize: 14, color: 'black', fontWeight: 'bold'}}>
+          <Text style={{ fontSize: 14, color: 'black', fontWeight: 'bold' }}>
             Cart
           </Text>
         </View>
@@ -41,35 +41,37 @@ class InboxBuyer extends Component {
                 <Product price={this.state.data[5]} />
               </>
             ) : (
-              <>
-                <Image
-                  style={{width: '60%', resizeMode: 'contain'}}
-                  source={require('../../../assets/images/Inbox.png')}
-                />
-                <Text
-                  style={{
-                    fontSize: 16,
-                    color: 'black',
-                    fontWeight: 'bold',
-                    marginTop: -50,
-                    color: 'gray',
-                  }}>
-                  Cart is Empty
+                <>
+                  <Image
+                    style={{ width: '60%', resizeMode: 'contain' }}
+                    source={require('../../../assets/images/Inbox.png')}
+                  />
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: 'black',
+                      fontWeight: 'bold',
+                      marginTop: -50,
+                      color: 'gray',
+                    }}>
+                    Cart is Empty
                 </Text>
-              </>
-            )}
+                </>
+              )}
           </View>
         </ScrollView>
         <View style={totalProduct}>
           <View style={totalPrice}>
-            <Text style={{fontWeight: 'bold'}}>Total Price</Text>
-            <Text style={{fontWeight: 'bold', color: '#00B444', fontSize: 18}}>
+            <Text style={{ fontWeight: 'bold' }}>Total Price</Text>
+            <Text style={{ fontWeight: 'bold', color: '#00B444', fontSize: 18 }}>
               Rp {this.state.result}
             </Text>
           </View>
-          <View style={buttonCheckout}>
-            <Text style={{color: 'white', fontWeight: 'bold'}}>Checkout</Text>
-          </View>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Checkout')}>
+            <View style={buttonCheckout}>
+              <Text style={{ color: 'white', fontWeight: 'bold' }}>Checkout</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     );

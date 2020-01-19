@@ -23,6 +23,8 @@ class Etalase extends Component {
 
     this.setState({name_user: name_user});
   };
+
+  
   handleGetEtalaseItem = async () => {
     let url = SAPI_URL + '/product/etalase';
     let token = await AsyncStorage.getItem('token');

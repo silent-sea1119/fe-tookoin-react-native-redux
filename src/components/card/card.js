@@ -19,10 +19,17 @@ class Card extends Component {
       beli,
       kuantity,
     } = styles;
-
+    // console.log('DESCRIPTION : ', this.props.name, ' = ', this.props.desc_product);
     const goToDetail = () => {
+      console.log(
+        'DESCRIPTION : ',
+        this.props.name,
+        ' = ',
+        this.props.desc_product,
+      );
       this.props.navigation.push('DetailProdukBuyer', {
         id_product: this.props.id_product,
+        desc_product: this.props.desc_product,
         id_category: this.props.id_category,
         name: this.props.name,
         label: this.props.label,

@@ -10,18 +10,17 @@ import { connect } from 'react-redux';
 import { fetchCart } from '../../../redux/actions/cart/cartAction';
 import { SAPI_URL } from 'react-native-dotenv';
 import AsyncStorage from '@react-native-community/async-storage';
+import {withNavigationFocus} from 'react-navigation';
 
 // class InboxBuyer extends Component {
 class Cart extends Component {
   state = {
-    data: [],
+    data: [0],
     // data: [],
     result: 0,
   };
 
   componentDidMount() {
-    // let result = this.state.data.reduce((value, element) => value + element);
-    // this.setState({result: result});
     this.getDataCart();
   }
 
@@ -36,15 +35,21 @@ class Cart extends Component {
     };
 
     const dataCart = await this.props.dispatch(fetchCart(url, config));
-    const arrayTotal = [];
-    for (let i = 0; i < dataCart.value.data.data.length; i++) {
-      arrayTotal.push(dataCart.value.data.data[i].subtotal)
-    }
-    let total = arrayTotal.reduce((a, b) => a + b, 0)
+    console.log('your data999', dataCart);
+    console.log('your data1111', dataCart.value.data.data[0].price);
+
     this.setState({
       data: dataCart.value.data.data,
       result: total
     });
+  };
+  componentDidUpdate = async prevProps => {
+    if (prevProps.isFocused !== this.props.isFocused) {
+      if (await this.props.isFocused) {
+        this.getDataCart();
+      }
+      // Call any action
+    }
   };
 
   handleCheckout = async () => {
@@ -134,5 +139,5 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Cart);
+export default withNavigationFocus(connect(mapStateToProps)(Cart));
 // export default Cart;

@@ -36,7 +36,7 @@ const MAX_HEIGHT = 250;
 class DetailProdukBuyer extends Component {
   constructor() {
     super();
-    this.state = {showNavTitle: false, quantity: 0, detailProdukLocalState: ''};
+    this.state = {showNavTitle: false, quantity: 0, detailProdukLocalState: []};
   }
 
   componentDidMount() {
@@ -47,21 +47,21 @@ class DetailProdukBuyer extends Component {
   }
 
   getDataFromApi = async () => {
-    await this.props.dispatch(nyokot());
+    let JAM = await this.props.dispatch(nyokot());
 
     const id_productGet = this.props.navigation.getParam('id_product');
     const arrProductGet = this.props.productDetail.product.data.data;
     const productGet = arrProductGet.find(x => x.id_product == id_productGet);
-
+    console.log('JAMAMAMAM ',JAM)
     this.setState({
       detailProdukLocalState: productGet,
     });
   };
 
   render() {
-    const produk = this.state.detailProdukLocalState;
+    // const produk = this.state.detailProdukLocalState;
     // console.log(this.props.productDetail, 'ioppoipoipoip');
-
+    // console.log('RENDER', this.state.detailProdukLocalState.desc_product)
     const data = {
       title: this.props.navigation.getParam('name'),
       dose: `1 pcs (${this.props.navigation.getParam('unit')})`,
@@ -128,7 +128,7 @@ class DetailProdukBuyer extends Component {
             <View style={styles.PABprice}>
               <Text style={styles.price}>Rp {data.price}</Text>
               <Text note style={{fontSize: 14}}>
-                / {data.unit}
+                / {data.unit || this.props.unit}
               </Text>
             </View>
             <View style={styles.PABbutton}>
@@ -191,7 +191,11 @@ class DetailProdukBuyer extends Component {
             <View style={styles.descriptionProductDesc}>
               <Text style={{color: 'gray', fontSize: 14}}>
                 {/* {data.description} */}
-                {produk.desc_product}
+                {/* {produk.desc_product.length > 0 ? produk.desc_product : null} */}
+                {/* {this.state.detailProdukLocalState.desc_product.length > 0
+                  ? this.state.detailProdukLocalState.desc_product
+                  : 'Empty'} */}
+                  {this.props.navigation.getParam('desc_product')}
               </Text>
             </View>
           </View>
@@ -231,7 +235,7 @@ class DetailProdukBuyer extends Component {
 
           <View style={styles.producersParent}>
             <Text style={{color: 'gray', paddingHorizontal: 20, fontSize: 16}}>
-              About the Producers
+              About the Seller
             </Text>
 
             <View style={styles.producersTitle}>

@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
 
   child22: {
     // backgroundColor: 'yellow',
+    // flexDirection:'row',
     width: '40%',
     alignItems: 'flex-end',
     // justifyContent: "center",

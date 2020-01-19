@@ -1,18 +1,49 @@
-import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ScrollView, Image } from 'react-native';
+import React, {Component} from 'react';
+import {Text, View, TouchableOpacity, ScrollView, Image} from 'react-native';
 import styles from './cart.style';
 import Product from '../../../components/cartProduct/cartProduct';
 import Footer from '../../../components/footer/footer';
 
-class InboxBuyer extends Component {
+//redux
+import {connect} from 'react-redux';
+import {fetchCart} from '../../../redux/actions/cart/cartAction';
+import {SAPI_URL} from 'react-native-dotenv';
+import AsyncStorage from '@react-native-community/async-storage';
+
+// class InboxBuyer extends Component {
+class Cart extends Component {
   state = {
     data: [1000, 5000, 2000, 5000, 1000, 5000],
+    // data: [],
     result: 0,
   };
+
   componentDidMount() {
     let result = this.state.data.reduce((value, element) => value + element);
-    this.setState({ result: result });
+    this.setState({result: result});
+    this.getDataCart();
   }
+
+  getDataCart = async () => {
+    let url = SAPI_URL + '/cart';
+    // console.log('ini url', url)
+
+    let token = await AsyncStorage.getItem('token');
+    // console.log('ini token 555', token);
+
+    let config = {
+      headers: {Authorization: 'Bearer ' + token},
+    };
+
+    const dataCart = await this.props.dispatch(fetchCart(url, config));
+    console.log('your data999', dataCart);
+    console.log('your data1111', dataCart.value.data.data[0].price);
+    this.setState({
+      data: dataCart.value.data.data,
+    });
+    console.log('your ata 1212', this.state.data[0].price);
+  };
+
   render() {
     const {
       container,
@@ -25,51 +56,54 @@ class InboxBuyer extends Component {
     return (
       <View style={container}>
         <View style={header}>
-          <Text style={{ fontSize: 14, color: 'black', fontWeight: 'bold' }}>
-            Cart
+          <Text style={{fontSize: 14, color: 'black', fontWeight: 'bold'}}>
+            Cart asemsgilaxxx
           </Text>
         </View>
         <ScrollView>
           <View style={body}>
             {this.state.data.length > 0 ? (
-              <>
-                <Product price={this.state.data[0]} />
-                <Product price={this.state.data[1]} />
-                <Product price={this.state.data[2]} />
-                <Product price={this.state.data[3]} />
-                <Product price={this.state.data[4]} />
-                <Product price={this.state.data[5]} />
-              </>
-            ) : (
+              this.state.data.map((value, index) => (
                 <>
-                  <Image
-                    style={{ width: '60%', resizeMode: 'contain' }}
-                    source={require('../../../assets/images/Inbox.png')}
+                  {/* <Product price={this.state.data[0].price} /> */}
+                  <Product key={index}
+                  price={value.price} 
+                  name={value.name_product}
+                  quantity={value.qty}
                   />
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      color: 'black',
-                      fontWeight: 'bold',
-                      marginTop: -50,
-                      color: 'gray',
-                    }}>
-                    Cart is Empty
-                </Text>
                 </>
-              )}
+              ))
+            ) : (
+              <>
+                <Image
+                  style={{width: '60%', resizeMode: 'contain'}}
+                  source={require('../../../assets/images/Inbox.png')}
+                />
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: 'black',
+                    fontWeight: 'bold',
+                    marginTop: -50,
+                    color: 'gray',
+                  }}>
+                  Cart is Empty
+                </Text>
+              </>
+            )}
           </View>
         </ScrollView>
         <View style={totalProduct}>
           <View style={totalPrice}>
-            <Text style={{ fontWeight: 'bold' }}>Total Price</Text>
-            <Text style={{ fontWeight: 'bold', color: '#00B444', fontSize: 18 }}>
+            <Text style={{fontWeight: 'bold'}}>Total Price</Text>
+            <Text style={{fontWeight: 'bold', color: '#00B444', fontSize: 18}}>
               Rp {this.state.result}
             </Text>
           </View>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('Checkout')}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Checkout')}>
             <View style={buttonCheckout}>
-              <Text style={{ color: 'white', fontWeight: 'bold' }}>Checkout</Text>
+              <Text style={{color: 'white', fontWeight: 'bold'}}>Checkout</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -78,4 +112,11 @@ class InboxBuyer extends Component {
   }
 }
 
-export default InboxBuyer;
+const mapStateToProps = state => {
+  return {
+    cart: state.cartReducer,
+  };
+};
+
+export default connect(mapStateToProps)(Cart);
+// export default Cart;

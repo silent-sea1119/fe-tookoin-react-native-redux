@@ -13,8 +13,15 @@ import HomeSeller from './seller/home/home';
 import Etalase from './seller/etalase/etalase';
 import Cart from './buyer/cart/cart';
 import MyOrderSeller from './seller/my-order/my-order';
-import AddProduct from "./seller/product/product";
-import EditProfile from "./seller/profile/editprofile";
+import AddProduct from './seller/product/product';
+import EditProfile from './seller/profile/editprofile';
+import SuccessOrder from './buyer/my-order/success-order';
+import Splashscreen from './splashscreen';
+import Forgot from './auth/forgot/forgot';
+import InputToken from './auth/forgot/inputtoken';
+import Checkout from './buyer/transaction/checkout';
+import searchScreen from './buyer/searchScreen/searchScreen';
+import EditProfileBuyer from './buyer/editProfile/editprofile';
 
 export {
   Home,
@@ -33,5 +40,12 @@ export {
   Etalase,
   MyOrderSeller,
   AddProduct,
-  EditProfile
+  EditProfile,
+  SuccessOrder,
+  Splashscreen,
+  Forgot,
+  InputToken,
+  Checkout,
+  searchScreen,
+  EditProfileBuyer,
 };

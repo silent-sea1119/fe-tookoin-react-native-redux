@@ -4,7 +4,7 @@ import styles from './cartProduct.style';
 import {Icon} from 'react-native-elements';
 
 class cartProduct extends Component {
-  state = {quantity: 1};
+  state = {quantity: 2};
   handleQuantity = bool => {
     if (bool) {
       this.setState({quantity: this.state.quantity + 1});
@@ -37,7 +37,7 @@ class cartProduct extends Component {
                 }}></Text>
             </View>
             <View style={desc}>
-              <Text style={nameProduct}>Labu siam</Text>
+              <Text style={nameProduct}>{this.props.name}</Text>
               <Text style={{fontSize: 10, marginTop: 10}}>
                 Labu siam value 500 gram
               </Text>
@@ -47,30 +47,32 @@ class cartProduct extends Component {
               </View>
             </View>
             <View style={styleQuantity}>
-              <TouchableOpacity onPress={() => this.handleQuantity(false)}>
+              {/* <TouchableOpacity onPress={() => this.handleQuantity(false)}>
                 <Icon
                   name="minus-circle"
                   type="font-awesome"
                   size={28}
                   color="#00B444"
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <Text
                 style={{
                   fontSize: 20,
                   fontWeight: 'bold',
                   marginHorizontal: 10,
                 }}>
-                {this.state.quantity}
+                {/* {this.state.quantity} */}
+                {this.props.quantity}
+
               </Text>
-              <TouchableOpacity onPress={() => this.handleQuantity(true)}>
+              {/* <TouchableOpacity onPress={() => this.handleQuantity(true)}>
                 <Icon
                   name="plus-circle"
                   type="font-awesome"
                   size={28}
                   color="#00B444"
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
         ) : null}

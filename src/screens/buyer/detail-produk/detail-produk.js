@@ -18,7 +18,12 @@ import * as Animatable from 'react-native-animatable';
 import {BorderlessButton} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-//import
+//redux
+import {connect} from 'react-redux';
+import {nyokot} from '../../../redux/actions/product/productAction';
+import {SAPI_URL} from 'react-native-dotenv';
+import store from '../../../redux/store';
+
 // import tvShowContent from '../../../assets/tvShowContent';
 const imageUri = require('../../../assets/static-image/monster-egg.png');
 
@@ -31,15 +36,32 @@ const MAX_HEIGHT = 250;
 class DetailProdukBuyer extends Component {
   constructor() {
     super();
-    this.state = {showNavTitle: false, quantity: 0};
+    this.state = {showNavTitle: false, quantity: 0, detailProdukLocalState: []};
   }
 
   componentDidMount() {
     if (this.props.navigation.getParam('quantity') > 0) {
       this.setState({quantity: this.props.navigation.getParam('quantity')});
     }
+    this.getDataFromApi();
   }
+
+  getDataFromApi = async () => {
+    let JAM = await this.props.dispatch(nyokot());
+
+    const id_productGet = this.props.navigation.getParam('id_product');
+    const arrProductGet = this.props.productDetail.product.data.data;
+    const productGet = arrProductGet.find(x => x.id_product == id_productGet);
+    console.log('JAMAMAMAM ',JAM)
+    this.setState({
+      detailProdukLocalState: productGet,
+    });
+  };
+
   render() {
+    // const produk = this.state.detailProdukLocalState;
+    // console.log(this.props.productDetail, 'ioppoipoipoip');
+    // console.log('RENDER', this.state.detailProdukLocalState.desc_product)
     const data = {
       title: this.props.navigation.getParam('name'),
       dose: `1 pcs (${this.props.navigation.getParam('unit')})`,
@@ -91,9 +113,7 @@ class DetailProdukBuyer extends Component {
           )}
           renderForeground={() => (
             <View style={styles.titleContainer}>
-              <Text style={styles.imageTitle}>
-                {/* {tvShowContent.title} */}
-              </Text>
+              <Text style={styles.imageTitle}></Text>
             </View>
           )}>
           <TriggeringView
@@ -102,14 +122,13 @@ class DetailProdukBuyer extends Component {
             onDisplay={() => this.navTitleView.fadeOut(100)}>
             <Text style={styles.title}>{data.title}</Text>
             <Text style={{fontSize: 14}}>{data.dose}</Text>
-            {/* ({tvShowContent.year}) */}
           </TriggeringView>
 
           <View style={styles.priceAndButton}>
             <View style={styles.PABprice}>
               <Text style={styles.price}>Rp {data.price}</Text>
               <Text note style={{fontSize: 14}}>
-                / {data.unit}
+                / {data.unit || this.props.unit}
               </Text>
             </View>
             <View style={styles.PABbutton}>
@@ -171,7 +190,12 @@ class DetailProdukBuyer extends Component {
             </View>
             <View style={styles.descriptionProductDesc}>
               <Text style={{color: 'gray', fontSize: 14}}>
-                {data.description}
+                {/* {data.description} */}
+                {/* {produk.desc_product.length > 0 ? produk.desc_product : null} */}
+                {/* {this.state.detailProdukLocalState.desc_product.length > 0
+                  ? this.state.detailProdukLocalState.desc_product
+                  : 'Empty'} */}
+                  {this.props.navigation.getParam('desc_product')}
               </Text>
             </View>
           </View>
@@ -211,7 +235,7 @@ class DetailProdukBuyer extends Component {
 
           <View style={styles.producersParent}>
             <Text style={{color: 'gray', paddingHorizontal: 20, fontSize: 16}}>
-              About the Producers
+              About the Seller
             </Text>
 
             <View style={styles.producersTitle}>
@@ -275,7 +299,13 @@ class DetailProdukBuyer extends Component {
   }
 }
 
-export default DetailProdukBuyer;
+const mapStateToProps = state => {
+  return {
+    productDetail: state.productReducer,
+  };
+};
+
+export default connect(mapStateToProps)(DetailProdukBuyer);
 
 const styles2 = StyleSheet.create({
   image: {

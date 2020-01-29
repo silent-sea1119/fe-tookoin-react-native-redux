@@ -1,18 +1,86 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, ScrollView, Image} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+} from 'react-native';
 import styles from './cart.style';
 import Product from '../../../components/cartProduct/cartProduct';
 import Footer from '../../../components/footer/footer';
+import Axios from 'axios';
 
-class InboxBuyer extends Component {
+//redux
+import {connect} from 'react-redux';
+import {fetchCart} from '../../../redux/actions/cart/cartAction';
+import {SAPI_URL} from 'react-native-dotenv';
+import AsyncStorage from '@react-native-community/async-storage';
+import {withNavigationFocus} from 'react-navigation';
+
+// class InboxBuyer extends Component {
+class Cart extends Component {
   state = {
-    data: [1000, 5000, 2000, 5000, 1000, 5000],
+    data: [],
+    // data: [],
     result: 0,
   };
+
   componentDidMount() {
-    let result = this.state.data.reduce((value, element) => value + element);
-    this.setState({result: result});
+    this.getDataCart();
   }
+
+  getDataCart = async () => {
+    let url = SAPI_URL + '/cart';
+    // console.log('ini url', url)
+
+    let token = await AsyncStorage.getItem('token');
+    console.log('ini token 555', token);
+    let config = {
+      headers: {Authorization: 'Bearer ' + token},
+    };
+
+    const dataCart = await this.props.dispatch(fetchCart(url, config));
+    const arrayTotal = [];
+    // console.log('your data1111', dataCart.value.data.data[0].price);
+    for (let i = 0; i < dataCart.value.data.data.length; i++) {
+      arrayTotal.push(dataCart.value.data.data[i].subtotal);
+    }
+    let total = arrayTotal.reduce((a, b) => a + b, 0);
+    this.setState({
+      data: dataCart.value.data.data,
+      result: total,
+    });
+  };
+  componentDidUpdate = async prevProps => {
+    if (prevProps.isFocused !== this.props.isFocused) {
+      if (await this.props.isFocused) {
+        this.getDataCart();
+      }
+      // Call any action
+    }
+  };
+
+  handleCheckout = async () => {
+    let token = await AsyncStorage.getItem('token');
+    let config = {
+      headers: {Authorization: 'Bearer ' + token},
+    };
+
+    Axios.post(
+      'http://3.80.150.111:8000/cart/checkout/store/' +
+        this.state.data[0].id_seller,
+      null,
+      config,
+    )
+      .then(response => {
+        this.props.navigation.navigate('Checkout', {
+          item: response.data.data.insertId,
+        });
+      })
+      .catch(err => console.log(err));
+  };
+
   render() {
     const {
       container,
@@ -32,14 +100,17 @@ class InboxBuyer extends Component {
         <ScrollView>
           <View style={body}>
             {this.state.data.length > 0 ? (
-              <>
-                <Product price={this.state.data[0]} />
-                <Product price={this.state.data[1]} />
-                <Product price={this.state.data[2]} />
-                <Product price={this.state.data[3]} />
-                <Product price={this.state.data[4]} />
-                <Product price={this.state.data[5]} />
-              </>
+              this.state.data.map((value, index) => (
+                <View key={index}>
+                  {/* <Product price={this.state.data[0].price} /> */}
+                  <Product
+                    key={index}
+                    price={value.price}
+                    name={value.name_product}
+                    quantity={value.qty}
+                  />
+                </View>
+              ))
             ) : (
               <>
                 <Image
@@ -67,13 +138,22 @@ class InboxBuyer extends Component {
               Rp {this.state.result}
             </Text>
           </View>
-          <View style={buttonCheckout}>
-            <Text style={{color: 'white', fontWeight: 'bold'}}>Checkout</Text>
-          </View>
+          <TouchableOpacity onPress={this.handleCheckout}>
+            <View style={buttonCheckout}>
+              <Text style={{color: 'white', fontWeight: 'bold'}}>Checkout</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     );
   }
 }
 
-export default InboxBuyer;
+const mapStateToProps = state => {
+  return {
+    cart: state.cartReducer,
+  };
+};
+
+export default withNavigationFocus(connect(mapStateToProps)(Cart));
+// export default Cart;

@@ -4,8 +4,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     width: '100%',
-    // paddingVertical: 5,
-    marginVertical: 5,
+    padding:10,
     backgroundColor: 'white',
     // borderColor: 'red',
     // borderWidth: 1,

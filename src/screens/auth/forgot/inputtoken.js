@@ -19,7 +19,7 @@ class InputToken extends Component {
 
         if (newPassword != reType) {
             // Alert.alert("error".toUpperCase(), "Password is not same");
-            showToast(`Password did not match`, `warning`, 'bottom');
+            showToast(`Password did not match`, `warning`);
         } else {
             const data = {
                 password: newPassword,
@@ -29,9 +29,9 @@ class InputToken extends Component {
             Axios.post('http://3.80.150.111:8000/password/reset', data).then(response => {
                 if (response.data.status != 200) {
                     // Alert.alert("Failed", response.data.msg)
-                    showToast(response.data.msg, `warning`, 'bottom');
+                    showToast(response.data.msg, `warning`);
                 } else {
-                    showToast(response.data.msg, `success`, 'bottom');
+                    showToast(response.data.msg, `success`);
                     // Alert.alert("Success", response.data.msg)
                     setTimeout(() => {
                         this.props.navigation.navigate('Login')

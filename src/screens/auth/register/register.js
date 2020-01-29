@@ -131,17 +131,7 @@ class Register extends Component {
       );
     }
   };
-
-  showToast = (message, types) => {
-    Toast.show({
-      text: message,
-      buttonText: 'Okay',
-      type: types == 'warning' ? 'warning' : 'success',
-      duration: 3000,
-      position: 'bottom',
-    });
-  };
-
+  
   render() {
     const role = ['Buyer', 'Seller'];
     return (

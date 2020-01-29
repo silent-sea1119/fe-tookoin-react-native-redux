@@ -257,7 +257,7 @@ class MyOrder extends Component {
                             <MaterialIcons
                               name="payment"
                               style={
-                                order.status === 1
+                                order.status === 2 || order.status === 1
                                   ? styles.iconChildActive
                                   : styles.iconChild21
                               }
